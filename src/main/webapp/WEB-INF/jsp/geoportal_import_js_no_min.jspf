@@ -241,6 +241,9 @@ function openAdminPanelWindow() {
 <script type="text/javascript" src="scripts/alerts/SimpleAlertInsertForm.js"></script>
 <script type="text/javascript" src="scripts/alerts/SimpleAlertDetailForm.js"></script>
 
+<!-- Test PLUGIN -->
+<script type="text/javascript" src="scripts/test/TestPlugin.js"></script>
+
 <!-- Scripts - Measure -->
 <script type="text/javascript" src="scripts/measure/measure.js"></script>
 

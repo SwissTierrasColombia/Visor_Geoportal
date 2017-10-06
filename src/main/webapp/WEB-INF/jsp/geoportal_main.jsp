@@ -390,53 +390,23 @@
 							<!-- END COMMENTS -->
 							
 							
-							<!--  ALERTS -->
+							<!--  XXXXXXX -->
+							<% 
+							// XXXXXXX PERMISSION
+							if (LoginService.currentUserHasPermission(session, Permissions.TEST_PLUGIN)){ 
+							%>
 							<div class="icon-container-all">
 								<!-- Icon -->
-								<div id="gis_alertsBtn" data-tool="alerts" data-locale_key="Advanced_Panel_Alerts_Enable" data-locale_ref="title" class="localizedElement icon-container" onclick="AdvancedPanel.toggleAdvancedTools($(this));"><i class="fa fa-flag fa-2x"></i></div>
-								
-								<% // ALERTS READ PERMISSION
-								/*
-								 * Simple Alert Panel is available to all user that are not Alerts Admin, 
-								 * (ie dont have the ALERTS_READ permission)
-								*/
-									if (!LoginService.currentUserHasPermission(session, Permissions.ALERTS_READ)) { 
-								%>
-							 	
-								<!-- Simple Alert panel -->
-								<div id="simple-advance-alerts-panel" class="tools-panel custom-hidden">									
-									<div id="simple-advance-alerts-panel-links">
-										<div id="simple-advance-alerts-panel-add-alert-link" data-tab="simple-advance-alerts-panel-add" class="simple-advance-alerts-panel-link simple-advance-alerts-panel-link-active" onclick="alerts.simplePanelSwitchMenu($(this));">
-											<div class="simple-advance-alerts-panel-links-icon"><i class="fa fa-plus fa-2x"></i></div>
-											<div data-locale_key=Advanced_Alerts_Insert_New data-locale_ref="text" class="localizedElement"></div>
-										</div>
-										<div id="simple-advance-alerts-panel-verify-alert-link" data-tab="simple-advance-alerts-panel-verify" class="simple-advance-alerts-panel-link" onclick="alerts.simplePanelSwitchMenu($(this));">
-											<div class="simple-advance-alerts-panel-links-icon"><i class="fa fa-check fa-2x"></i></div>
-											<div data-locale_key="Advanced_Alerts_Alert_Verify" data-locale_ref="text" class="localizedElement"></div>
-										</div>
-									</div>
-									
-									<!-- Add new Alert -->
-									<div id="simple-advance-alerts-panel-add" class="itemform simple-advance-alerts-panel-tab-item" style="border-bottom: none;">
-										<button id="alert-insert-new-btn" data-locale_key="General_Add" data-locale_ref="text" class="localizedElement" onclick="alerts.addNewAlertSimple();"></button>
-									</div>
-									
-									<!-- Verify -->
-									<div id="simple-advance-alerts-panel-verify" class="itemform simple-advance-alerts-panel-tab-item custom-hidden">
-										<div data-locale_key="Advanced_Alerts_Label_Reference_Code" data-locale_ref="text" class="form-label-title localizedElement"></div>
-										<input id="alert-verify-referenceCode-input">
-										<button id="alert-verify-btn" data-locale_key="General_Verify" data-locale_ref="text" class="localizedElement" onclick="alerts.verifyAlert($('#alert-verify-referenceCode-input'));"></button>
-									</div>
-								</div>
-								<%  } //end ALERTS READ PERMISSION %>
-																		
+								<div id="gis_testBtn" data-tool="test" data-locale_key="Advanced_Panel_Comments_Enable" data-locale_ref="title" 
+								class="localizedElement icon-container" onclick="AdvancedPanel.toggleAdvancedTools($(this));">
+								<i class="fa fa-file-text-o fa-2x"></i></div>
 							</div>
-							<!-- END ALERTS -->
-<!-- 							 TEST -->
-<!-- 							<div class="icon-container-all"> -->
-<!-- 								Icon -->
-<!-- 								<div id="test_INTERS" data-locale_key="Advanced_Panel_Alerts_Enable" data-locale_ref="title" class="localizedElement icon-container" onclick="provaIntersezione();"><i class="fa fa-flag fa-2x"></i></div> -->
-<!-- 							</div> -->
+																			
+							<% } //end XXXXXXX PERMISSION %>
+							
+							
+							
+							
 						</div>
 	
 						<!-- ************* -->
