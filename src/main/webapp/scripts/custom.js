@@ -411,16 +411,13 @@ function zoomToDefaultMapCenter() {
 //				mapConfig.projection), map.getProjectionObject()), mapConfig.zoom);	
 //		
 //	}
-<<<<<<< HEAD
-	if (!Utils.isNullOrUndefined(mapConfig.defaultExtent)) {
-		var bounds = new OpenLayers.Bounds([-8913046,-353565, -7230209, 1353733]);
-		map.zoomToExtent(bounds);
-=======
+
+
 	 if (!Utils.isNullOrUndefined(mapConfig.defaultExtent)) {
 		 var bounds = new OpenLayers.Bounds(mapConfig.defaultExtent);
 		 bounds = bounds.transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject());
 		 map.zoomToExtent(bounds);
->>>>>>> b5ad83fbbcd69aafa07f89023ddc8adfacbb85d9
+
 	}
 }
 
