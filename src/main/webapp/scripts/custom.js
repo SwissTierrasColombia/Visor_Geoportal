@@ -411,9 +411,10 @@ function zoomToDefaultMapCenter() {
 //				mapConfig.projection), map.getProjectionObject()), mapConfig.zoom);	
 //		
 //	}
-	if (!Utils.isNullOrUndefined(mapConfig.defaultExtent)) {
-		var bounds = new OpenLayers.Bounds([-9973337, 1439825, -9254827, 1894167]);
-		map.zoomToExtent(bounds);
+	 if (!Utils.isNullOrUndefined(mapConfig.defaultExtent)) {
+		 var bounds = new OpenLayers.Bounds(mapConfig.defaultExtent);
+		 bounds = bounds.transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject());
+		 map.zoomToExtent(bounds);
 	}
 }
 
@@ -434,8 +435,10 @@ function zoomToExtent(bounds, closestZoomLevel) {
  */
 function getConfig(callbackFn) {
 	try {
+		var customConfig = getUrlParameter('config');
+		var url = customConfig ? customConfig : Services.mapConfig;
 		$.ajax({
-			url : Services.mapConfig,
+			url : url,
 			type : "GET",
 			dataType : "json",
 			cache : false,
@@ -992,3 +995,18 @@ function saveLabel() {
 	if(controls.redlines.instance != null && (controls.redlines.instance.select.active || controls.redlines.instance.modify.active))
 		redlines.saveLabel();
 }
+
+function getUrlParameter(sParam) {
+    var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+        sURLVariables = sPageURL.split('&'),
+        sParameterName,
+        i;
+
+    for (i = 0; i < sURLVariables.length; i++) {
+        sParameterName = sURLVariables[i].split('=');
+
+        if (sParameterName[0] === sParam) {
+            return sParameterName[1] === undefined ? true : sParameterName[1];
+        }
+    }
+};
