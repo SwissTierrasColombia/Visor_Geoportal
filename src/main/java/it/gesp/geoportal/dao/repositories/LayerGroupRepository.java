@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
@@ -58,21 +59,44 @@ public class LayerGroupRepository extends BaseRepository<LayerGroup> {
 //		}
 	}
 	
+	/**
+	 * Fetch the layerGroups by a given map id.
+	 * @param session
+	 * @param mapId
+	 * @return
+	 */
 	@SuppressWarnings("unchecked")
 	public List<LayerGroup> getLayerGroupsByMapId(Session session, int mapId) {
-//		try {
+		return getLayerGroupsByMapId(session, mapId, false);
+	}
+	
+	
+	/**
+	 * Fetch the layerGroups by a given map id.
+	 * If fetch relationships is specified, layers belonging to the group are fetched as well
+	 * in one query.
+	 * @param session
+	 * @param mapId
+	 * @param fetchRelationships
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	public List<LayerGroup> getLayerGroupsByMapId(Session session, int mapId, boolean fetchRelationships) {
 
-			List<LayerGroup> layerGroups = null;
-			Criteria criteria = session.createCriteria(LayerGroup.class);
-			criteria.add(Restrictions.eq("idMap", mapId));
-			layerGroups = criteria.list();
-			
-			return layerGroups;
+		String hql = "from LayerGroup where idMap = :idMap";
+		Query q = session.createQuery(hql);
+		q.setParameter("idMap", mapId);
+		
+		List<LayerGroup> layerGroups = q.list();
 
-//		} catch (Exception x) {
-//			// Log
-//			throw x;
-//		}
+//			List<LayerGroup> layerGroups = null;
+//			Criteria criteria = session.createCriteria(LayerGroup.class);
+//			criteria.add(Restrictions.eq("idMap", mapId));
+//			layerGroups = criteria.list();
+//			
+//			return layerGroups;
+		return layerGroups;
+
 	}
 	
 	@SuppressWarnings("unchecked")

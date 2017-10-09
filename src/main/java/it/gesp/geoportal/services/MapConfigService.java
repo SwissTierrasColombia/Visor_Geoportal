@@ -183,7 +183,7 @@ public class MapConfigService {
 		/*
 		 * Get groups
 		 */
-		List<LayerGroup> groups = new LayerGroupRepository().getLayerGroupsByMapId(session, map.getIdMap());
+		List<LayerGroup> groups = new LayerGroupRepository().getLayerGroupsByMapId(session, map.getIdMap(), true);
 		for (LayerGroup group : groups) {
 			String groupCode = "" + group.getIdLayerGroup();
 			String groupName = group.getLayerGroupName();

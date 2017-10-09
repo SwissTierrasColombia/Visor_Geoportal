@@ -13,6 +13,10 @@ public interface Permissions {
 	String COMMENTS_READ = "COMMENTS_READ";
 	String COMMENTS_INSERT = "COMMENTS_INSERT";
 	
+	/*
+	 * TEST PLUGIN
+	 */
+	String TEST_PLUGIN = "TEST_PLUGIN";
 	
 	/*
 	 * Alerts

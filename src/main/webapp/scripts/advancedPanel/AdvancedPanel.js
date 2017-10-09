@@ -50,14 +50,14 @@ AdvancedPanel.toggleAdvancedTools = function(toolRefButton) {
 		searchP.deactivate();
 	}
 	
-	if(tool != "alerts") {
-		if (tool === "print") {
-			alerts.closePanelGeneralForPrint();
-		}
-		else {
-			alerts.closePanelGeneral();	
-		}
-	}
+//	if(tool != "alerts") {
+//		if (tool === "print") {
+//			alerts.closePanelGeneralForPrint();
+//		}
+//		else {
+//			alerts.closePanelGeneral();	
+//		}
+//	}
 	
 	if(tool != "print") {
 		print.deactivate();
@@ -70,6 +70,9 @@ AdvancedPanel.toggleAdvancedTools = function(toolRefButton) {
 	if(tool != "catalogcsw") {
 		catalogCsw.deactivate();
 	}
+	if(tool != "test") {
+		testPlugin.deactivate();
+	}
 	
 	switch (tool) {
 	case "redlines":
@@ -80,9 +83,9 @@ AdvancedPanel.toggleAdvancedTools = function(toolRefButton) {
 		comments.toggle(toolRefButton);
 		break;
 		
-	case "alerts":
-		alerts.toggle(toolRefButton);
-		break;
+//	case "alerts":
+//		alerts.toggle(toolRefButton);
+//		break;
 		
 	case "searchwfs":
 		searchP.toggle(toolRefButton);		
@@ -107,5 +110,10 @@ AdvancedPanel.toggleAdvancedTools = function(toolRefButton) {
 //	case "gisOverview":
 //		gisOverview.toggle(toolRefButton);		
 //		break;
+	
+	case "test":
+		testPlugin.toggle(toolRefButton);
+		break;
 	}
+	
 };
