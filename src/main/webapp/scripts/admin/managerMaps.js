@@ -457,11 +457,11 @@ var mMaps = {
 		else
 			classEnabled = "fa-square-o";
 		
-		var deleteButton = 
+		var checkButton = 
 
 			$("<div>").attr({
 			"class": "row-layer-group-act-delete localizedElement", 
-			"data-locale_key": "Manager_Map_RemoveLayerGroup", 
+			"data-locale_key": "Manager_Map_ActivateLayerByDefault", 
 			"data-locale_ref": "title"
 		}).append($("<i>").attr({"class": "fa " + classEnabled + " fa-2x"}))
 		.click(function(){
@@ -481,7 +481,7 @@ var mMaps = {
 			mMaps.requests.activateLayerByDefault(layerId,layerGroupId,itemChecked);
 		});
 		
-		return deleteButton;
+		return checkButton;
 	},
 	
 	/**

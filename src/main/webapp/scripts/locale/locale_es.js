@@ -502,6 +502,7 @@ var LANG_ES = {
 		Manager_Map_ReAssocLayerTooltip: "Mover la capa a otro grupo",
 		Manager_Map_AssocLayerTooltip: "Mover la capa a otro grupo",
 		Manager_Map_RemoveLayerGroup: "Eliminar la capa del grupo",
+		Manager_Map_ActivateLayerByDefault: "Activar / Desactivar capa de manera predeterminada",
 		Manager_Maps_HeaderForm_DelGroup: "Confirmar la eliminacion del grupo",
 		Manager_Maps_TitleForm_DelGroup: "Confirmación",
 		Manager_Maps_HeaderForm_DelGroupText: "Cada capa del grupo serà eliminada del grupo. Continuar?",

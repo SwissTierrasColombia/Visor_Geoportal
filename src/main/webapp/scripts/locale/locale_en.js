@@ -502,6 +502,7 @@ var LANG_EN = {
 		Manager_Map_AssocLayerTooltip: "Move layer into a group in the lists",
 		Manager_Map_RemoveLayerGroup: "Remove layer from group",
 		Manager_Maps_HeaderForm_DelGroup: "Confirm group delete",
+		Manager_Map_ActivateLayerByDefault: "Activate / Deactivate layer by default",
 		Manager_Maps_TitleForm_DelGroup: "Confirmation",
 		Manager_Maps_HeaderForm_DelGroupText: "Deleting the group will remove the layers associated to the group.Each layer of group will be unlink from group. Do you want to continue?",
 		
