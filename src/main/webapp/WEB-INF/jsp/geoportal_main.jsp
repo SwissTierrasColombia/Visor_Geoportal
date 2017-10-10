@@ -127,11 +127,8 @@
 							<div id="gis_measureLineBtn" data-locale_key="Base_Panel_MeasureLine" data-locale_ref="title" class="icon-container ctrlButtons localizedElement"><i class="fa fa-arrows-h fa-2x"></i></div>
 							<div id="gis_measureAreaBtn" data-locale_key="Base_Panel_MeasureArea" data-locale_ref="title" class="icon-container ctrlButtons localizedElement"><i class="fa fa-square-o fa-2x"></i></div>
 							<div id="gis_gisOverviewBtn"" data-locale_key="Base_Panel_ShowOverview" data-locale_ref="title" class="icon-container localizedElement custom-hidden" onclick="gisOverview.toggle($(this));"><i class="fa fa-globe fa-2x"></i></div>
-							<div id="baselayer-container">
-								<select id="baselayers-select" class="ui-select"></select>
-								<span id="baselayer-info-btn"></span>
-							</div>						
-						
+							<div id="gis_gisBaseLayerBtn"" data-locale_key="Base_Panel_SelectBaseMap" data-locale_ref="title" class="icon-container ctrlButtons localizedElement" onclick="baseMapLayerIcon.onclick();"><i class="fa fa-map fa-2x"></i></div>
+							<div id="baselayers-select" class="no-display"></div>						
 						</div>
 						
 						<!-- ******************** -->

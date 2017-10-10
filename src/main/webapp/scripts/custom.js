@@ -842,14 +842,6 @@ $(function() {
 	});
 	
 	/**
-	 * Define change event on baselayer select box - On change set new baselayer
-	 * for the map
-	 */
-	$("#baselayers-select").change(function() {
-		LoadLayersUtils.setActiveBaseLayer($(this).find("option:selected"));
-	});
-
-	/**
 	 * Define "Enter press" on input label
 	 * - if select or modify redlines control is active it enables function on redlines
 	 * - if select or modify redlines control is active it enables function on redlines

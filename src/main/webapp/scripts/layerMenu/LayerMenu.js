@@ -10,15 +10,36 @@ LayerMenu.groups = null;
  * BASE LAYER (BACKGROUND) FUNCTIONS
  */
 LayerMenu.addToBaseLayersMenu = function(bLayerConfig, layerOL) {
+	//	var combo = $("#baselayers-select");
+	//
+	//	combo.append($("<option/>", {
+	//		"value" : bLayerConfig.getId(),
+	//		"text" : bLayerConfig.getTitle(),
+	//	}).data({
+	//		"layerOl" : layerOL,
+	//		"enabled" : bLayerConfig.isEnabled()
+	//	}));
 	var combo = $("#baselayers-select");
-
-	combo.append($("<option/>", {
-		"value" : bLayerConfig.getId(),
+	
+	var option = $('<div class="baselayer-circle" title="' + bLayerConfig.getTitle() + '"><img src="images/basemaps/' + bLayerConfig.getTitle() + '.jpg" class="se-circle" alt="' + bLayerConfig.getTitle() + '"></div>').data({
 		"text" : bLayerConfig.getTitle(),
-	}).data({
+		"value" : bLayerConfig.getId(),
 		"layerOl" : layerOL,
 		"enabled" : bLayerConfig.isEnabled()
-	}));
+	});
+	
+	option.click(function (){
+		baseMapLayerIcon.change($(this));
+		$.each(baseMapLayerIcon.getAllSelectDOM(), function(index, bLayer) {
+			$(bLayer).removeClass("se-selected");
+		});
+		$(this).addClass("se-selected");
+		setTimeout(function(){
+			baseMapLayerIcon.onclick();
+		},200);
+	});
+	
+	combo.append(option);
 };
 
 LayerMenu.isBackgroundGroup = function(groupCode) {
@@ -37,14 +58,14 @@ LayerMenu.isBackgroundGroup = function(groupCode) {
 };
 
 LayerMenu.getSelectedBasemapLayer = function() {
-	var selectedOption = $("#baselayers-select option:selected");
-	var selectedVal = parseInt(selectedOption.val());
+	var selectedOption = baseMapLayerIcon.getCurrentSelectedDOM();
+	var selectedVal = parseInt(selectedOption.data("value"));
 	return catalog.getLayerConfigById(selectedVal);
 };
 
 LayerMenu.getSelectedBasemapLayerTitle = function() {
-	var selectedOption = $("#baselayers-select option:selected");
-	return selectedOption.text();
+	var selectedOption = baseMapLayerIcon.getCurrentSelectedDOM();
+	return selectedOption.data("text");
 };
 
 
@@ -802,3 +823,61 @@ LayerMenu._removeFromSelectedLayerPanel = function(menuItem) {
 	
 	return true;
 };
+
+
+/**
+ * BaseMapLayerIcon class
+ */
+
+BaseMapLayerIcon = function (){
+	
+	this.state = false;
+	
+	this.currentSelection = 0;
+	
+	this.initialMarginLeft = '-44px';
+	
+	this.finalMarginLeft = '0px';
+	
+	this.getCurrentSelectDOM = function () {
+		return $($("#baselayers-select").children().get(this.currentSelection));
+	};
+	
+	this.getAllSelectDOM = function () {
+		return $("#baselayers-select").children();
+	};
+	
+	this.setCurrentSelection = function (currentSelection) {
+		this.currentSelection = currentSelection;
+	};
+	
+	this.change = function (currentEDOMSelected){		
+		currentEDOMSelected = (typeof currentDomSelected == null)?this.getCurrentSelectDOM():currentEDOMSelected;
+		LoadLayersUtils.setActiveBaseLayer(currentEDOMSelected);
+	};
+	
+	this.hide = function (){
+		$("#baselayers-select .baselayer-circle").css('marginLeft', this.finalMarginLeft);
+		$("#baselayers-select .baselayer-circle").animate({marginLeft: this.initialMarginLeft}, function (){
+			$("#baselayers-select").addClass("no-display");
+		});
+	};
+	
+	this.show = function (){
+		$("#baselayers-select").removeClass("no-display");
+		$("#baselayers-select .baselayer-circle").css('marginLeft', this.initialMarginLeft);
+		$("#baselayers-select .baselayer-circle").animate({marginLeft: this.finalMarginLeft});
+	};
+	
+	this.onclick = function () {
+		this.state = !this.state;
+		if(this.state){
+			this.show();
+		} else {
+			this.hide();
+		}
+	};
+	
+}
+
+window.baseMapLayerIcon = new BaseMapLayerIcon();
