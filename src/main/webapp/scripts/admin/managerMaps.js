@@ -738,6 +738,18 @@ var mMaps = {
 				mMaps.updateData();
 			}, null);				
 		}, 
+		
+		activateLayerByDefault: function(layerId, layerGroupId, isLayerActive){
+			Utils.ajaxCall(Services.getMapConfigUrl(), "POST", "json", {
+				oper : "activateLayerByDefault",
+				layerId : layerId,
+				layerGroupId : layerGroupId,
+				isLayerActive : isLayerActive
+			}, function() {
+				mMaps.updateData();
+			}, null);
+		},
+		
 		reorderGroup: function(layerGroupId, position) {
 			Utils.ajaxCall(Services.getMapConfigUrl(), "POST", "json", {
 				oper: "reorderLayerGroup",
