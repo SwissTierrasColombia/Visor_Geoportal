@@ -239,8 +239,8 @@
 										<!-- BBOX manager panel -->
 										<div id="search-bbox-panel" class="custom-hidden">
 											<div id="search-bbox-selected-buttons">
-												<div id="search-bbox-select-button" data-locale_key="Advanced_Panel_Search_SearchBboxSelectButton" data-locale_ref="title" class="localizedElement" onclick="controls.search.activate();"><i class="fa fa-pencil-square-o fa-medium"></i></div>
-												<div id="search-bbox-toggle-button" data-locale_key="Advanced_Panel_Search_SearchBboxHideButton" data-locale_ref="title" class="localizedElement custom-hidden" onclick="searchP.toggleVisibilityBbox();"><i class="fa fa-eye fa-medium"></i></div>
+												<div id="search-bbox-select-button" data-locale_key="Advanced_Panel_Search_SearchBboxSelectButton" data-locale_ref="title" class="localizedElement" onclick="controls.search.activate();"><i class="fa fa-pencil-square-o fa-2x"></i></div>
+												<div id="search-bbox-toggle-button" data-locale_key="Advanced_Panel_Search_SearchBboxHideButton" data-locale_ref="title" class="localizedElement custom-hidden" onclick="searchP.toggleVisibilityBbox();"><i class="fa fa-eye fa-2x"></i></div>
 											</div>
 											<div id="search-bbox-selected-text"></div>
 										</div>				
@@ -794,8 +794,8 @@
 										<!-- BBOX manager panel -->
 										<div id="csw-catalog-bbox-panel" class="custom-hidden">
 											<div id="csw-catalog-bbox-selected-buttons">
-												<div id="csw-catalog-bbox-select-button" data-locale_key="Advanced_Panel_Search_SearchBboxSelectButton" data-locale_ref="title" class="localizedElement" onclick="controls.catalog.activate();"><i class="fa fa-pencil-square-o fa-medium"></i></div>
-												<div id="csw-catalog-bbox-toggle-button" data-locale_key="Advanced_Panel_Search_SearchBboxHideButton" data-locale_ref="title" class="localizedElement custom-hidden" onclick="catalogCsw.toggleVisibilityBbox();"><i class="fa fa-eye fa-medium"></i></div>
+												<div id="csw-catalog-bbox-select-button" data-locale_key="Advanced_Panel_Search_SearchBboxSelectButton" data-locale_ref="title" class="localizedElement" onclick="controls.catalog.activate();"><i class="fa fa-pencil-square-o fa-2x"></i></div>
+												<div id="csw-catalog-bbox-toggle-button" data-locale_key="Advanced_Panel_Search_SearchBboxHideButton" data-locale_ref="title" class="localizedElement custom-hidden" onclick="catalogCsw.toggleVisibilityBbox();"><i class="fa fa-eye fa-2x"></i></div>
 											</div>
 											<div id="csw-catalog-bbox-selected-text"></div>
 										</div>				
