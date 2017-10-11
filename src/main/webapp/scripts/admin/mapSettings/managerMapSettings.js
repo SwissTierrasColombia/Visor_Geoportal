@@ -1,4 +1,183 @@
 var mMapSettings = {
+	pFormAddMap: null,
+	validatorFormAddMap: null,
+		
+	init: function(){
+		
+		if(this.pFormAddMap == null){
+			this.pFormAddMap = $("#form-addmap-dialog");
+			
+			this.validatorFormAddMap = new Validate({
+				form: this.pFormAddMap
+			});
+			
+//			var buttons = {};
+//			buttons[LocaleManager.getKey('General_Cancel')] = function(){
+//				Utils.closeDialogForm(mMaps.pFormAddMap);
+//			};
+//			
+//			buttons[LocaleManager.getKey('General_Save')] = function(){
+//				//mMaps.submitAddMap();
+//				mMapSettings.requests.saveData();
+//			};
+//			
+//			DialogUtils.renderDialog(LocaleManager.getKey("General_TitleForm"), buttons, {
+//				modal: false,
+//				resizable: false,
+//				height: 200,
+//				width: 400,
+//				closeFn: function() {
+//					Utils.cleanForm(this.pFormAddMap);
+//				}
+//			}, this.pFormAddMap);
+		}
+	},
+	
+	
+	/*
+	
+	openUpdateForm: function() {
+	 	this.createUpdateFormPanel();
+		Utils.cleanForm(this.pForm);
+		
+		var selectedRow = Utils.getSelectedRow(this.dt)[0];
+		this.populateDataForm(selectedRow);
+		
+		this.pForm.dialog("open");
+	 */
+	
+	/**
+	 * Open dialog to insert a new map
+	 * @Author: Agencia de implementacion
+	 * */
+	openDialogAddMap: function(){
+		this.createUpdateFormPanel();
+		Utils.cleanForm(this.pFormAddMap);
+		if(this.pFormAddMap != null)
+			if(this.validatorFormAddMap != null){
+				this.validatorFormAddMap.reset();
+			}
+		
+		// populatePage?
+		//mMapSettings.requests.getData();
+		
+		this.pFormAddMap.dialog("open");
+		
+		return;
+	},
+	openDialogUpdateMap:  function(){
+		this.createUpdateFormPanel();
+		Utils.cleanForm(this.pFormAddMap);
+		if(this.pFormAddMap != null)
+			if(this.validatorFormAddMap != null){
+				this.validatorFormAddMap.reset();
+			}
+		
+		// populatePage?
+		mMapSettings.requests.getData();
+		
+		this.pFormAddMap.dialog("open");
+		
+		return;
+	},
+	
+	
+	createUpdateFormPanel: function() {
+		//$("#form-dialog-header").data("locale_key", "Manager_Layers_HeaderForm_Update");
+		//LocaleManager.refreshLocalizedElement($("#form-dialog-header"));
+		
+		//Reset validator
+		if(this.validatorFormAddMap) {
+			this.validatorFormAddMap.reset();
+		}
+		
+		var buttons = {};
+		buttons[LocaleManager.getKey('General_Cancel')] = function(){
+			//Utils.closeDialogForm(mMaps.pFormAddMap);
+			$(this).dialog("close");
+		};
+		
+		buttons[LocaleManager.getKey('General_Save')] = function(){
+			//mMaps.submitAddMap();
+			mMapSettings.requests.updateData();
+			$(this).dialog("close");
+		};
+		
+		DialogUtils.renderDialog(LocaleManager.getKey("General_TitleForm"), buttons, {
+			modal: false,
+			resizable: false,
+			height: 400,
+			width: 700,
+			closeFn: function() {
+				Utils.cleanForm(this.pFormAddMap);
+			}
+		}, this.pFormAddMap);
+		
+		return this.pFormAddMap;
+	},
+	
+	createAddFormPanel: function() {
+		//$("#form-dialog-header").data("locale_key", "Manager_Layers_HeaderForm_Update");
+		//LocaleManager.refreshLocalizedElement($("#form-dialog-header"));
+		
+		//Reset validator
+		if(this.validatorFormAddMap) {
+			this.validatorFormAddMap.reset();
+		}
+		
+		var buttons = {};
+		buttons[LocaleManager.getKey('General_Cancel')] = function(){
+			//Utils.closeDialogForm(mMaps.pFormAddMap);
+			$(this).dialog("close");
+		};
+		
+		buttons[LocaleManager.getKey('General_Save')] = function(){
+			//mMaps.submitAddMap();
+			mMapSettings.requests.addData();
+			$(this).dialog("close");
+		};
+		
+		DialogUtils.renderDialog(LocaleManager.getKey("General_TitleForm"), buttons, {
+			modal: false,
+			resizable: false,
+			height: 400,
+			width: 700,
+			closeFn: function() {
+				Utils.cleanForm(this.pFormAddMap);
+			}
+		}, this.pFormAddMap);
+		
+		return this.pFormAddMap;
+	},
+	/**
+	 * Submit new map
+	 * @Author Agencia de implementacion
+	 * */
+	submitAddMap: function(){
+		var isValid = this.validatorFormAddMap.valid();
+		if(!isValid){
+			return;
+		}
+		
+		var mapName = $("#map-input-name").val();
+		this.requests.addNewMap(mapName);
+		return true;
+	},
+	
+	/**
+	 * TODO add map
+	 * @Author Agencia de implementacion
+	 * */
+	addNewMap: function(mapNameParam){
+		Utils.ajaxCall(Services.getMapConfigUrl(), "POST", "json",{
+			oper: "addMap",
+			mapName: mapNameParam
+		}, function(){
+			mMaps.updateData();
+			Utils.closeDialogForm(mMaps.pFormAddMap);
+		}, null);
+	},
+	
 	
 	getDataFromPage: function() {
 		var settings = new Object();
@@ -220,14 +399,14 @@ var mMapSettings = {
 			
 			Utils.ajaxCallSynch("./mapConfig", "POST", "json", {
 				oper: "mapSettings"
-			}, function(response) {				
+			}, function(response) {
 				if(response.success) {
 					mMapSettings.populatePage(response.result);
 				}
 			});
 		},
 		
-		saveData: function() {
+		updateData: function() {
 			var isValid = validator.valid();
 			if(!isValid) {
 				return;
@@ -236,6 +415,26 @@ var mMapSettings = {
 			var settings = mMapSettings.getDataFromPage();
 			Utils.ajaxCallSynch("./mapConfig", "POST", "json", {
 				oper: "saveMapSettings",
+				settings: JSON.stringify(settings) 
+			}, function(response) {				
+				if(response.success) {
+					AlertDialog.createOkDefaultDialog(LocaleManager.getKey("Manager_Item_ConfigSystem"), LocaleManager.getKey("Manager_Config_Saved_Ok"), "info", function() {
+						//Reload
+						mMapSettings.requests.getData();
+					});
+				}
+			});
+		},
+		
+		addData: function(){
+			var isValid = validator.valid();
+			if(!isValid) {
+				return;
+			}
+			
+			var settings = mMapSettings.getDataFromPage();
+			Utils.ajaxCallSynch("./mapConfig", "POST", "json", {
+				oper: "createNewMap",
 				settings: JSON.stringify(settings) 
 			}, function(response) {				
 				if(response.success) {
