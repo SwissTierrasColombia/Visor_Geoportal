@@ -92,6 +92,7 @@ var LANG_EN = {
 		Base_Panel_MeasureLine: "Measure line",
 		Base_Panel_MeasureArea: "Measure area",
 		Base_Panel_ShowOverview: "Show overview",
+		Base_Panel_SelectBaseMap: "Select basemap",
 		Base_Panel_AddWMS: "Add WMS",
 		Base_Panel_Download: "Download layer",
 		Base_Panel_Download_Confirm: "Download the layer",

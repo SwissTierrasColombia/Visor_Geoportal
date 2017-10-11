@@ -94,6 +94,7 @@ var LANG_ES = {
 		Base_Panel_MeasureLine: "Medir una linea",
 		Base_Panel_MeasureArea: "Medir un area",
 		Base_Panel_ShowOverview: "Mostrar Overview",
+		Base_Panel_SelectBaseMap: "Seleccionar capa base",
 		Base_Panel_AddWMS: "Añadir un WMS",
 		Base_Panel_Download: "Descargar capa seleccionada",
 		Base_Panel_Download_Confirm: "Descargar la capa",

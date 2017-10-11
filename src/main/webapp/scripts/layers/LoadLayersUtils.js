@@ -214,13 +214,12 @@ LoadLayersUtils.loadBaseLayersFromConfig = function(bLayerConfigs) {
  * lo imposta come attivo in mappa
  */
 LoadLayersUtils.enableActiveBaseLayerFromComboBox = function() {
-	var blMenu = $("#baselayers-select");
 	var activeBl = null;
 
 	// Cerca tra gli items del menù a tendina quello impostato come enabled
-	$.each(blMenu.find("option"), function(index, bLayer) {
+	$.each(baseMapLayerIcon.getAllSelectDOM(), function(index, bLayer) {
 		if ($(bLayer).data("enabled")) {
-			blMenu.val($(bLayer).val());
+			blMenu.val($(bLayer).data("value"));
 			activeBl = $(bLayer);
 			return false;
 		}
@@ -229,7 +228,8 @@ LoadLayersUtils.enableActiveBaseLayerFromComboBox = function() {
 	// Se non trova layer impostati come attivi nel menù a tendina
 	// imposta il primo layer della combo come attivo
 	if (activeBl == null) {
-		var firstBL = $("#baselayers-select option:first");
+		var firstBL = baseMapLayerIcon.getCurrentSelectDOM();
+		firstBL.addClass("se-selected");
 		if (firstBL.length > 0) {
 			activeBl = $(firstBL[0]);
 		}
@@ -252,9 +252,9 @@ LoadLayersUtils.enableActiveBaseLayerFromComboBox = function() {
  */
 LoadLayersUtils.setActiveBaseLayer = function(bLayer) {
 	var olLayer = bLayer.data("layerOl");
-	var layerId = parseInt(bLayer.val());
+	var layerId = parseInt(bLayer.data("value"));
 	
-	$.each($("#baselayers-select option"), function(index, layer) {
+	$.each(baseMapLayerIcon.getAllSelectDOM(), function(index, layer) {
 		$(layer).data("layerOl").setVisibility(false);
 	});
 

@@ -77,10 +77,7 @@
 						<button id="gis_logout" style="display:none;" data-locale_key="Logout_Button_Title" data-locale_ref="text" class="localizedElement"></button>		
 					</div>
 						
-					<div id="baselayer-container">
-						<select id="baselayers-select" class="ui-select"></select>
-						<span id="baselayer-info-btn"></span>
-					</div>
+
 				</div>
 				
 				<!-- WEBGIS CONTAINER (map and footer) -->
@@ -130,6 +127,8 @@
 							<div id="gis_measureLineBtn" data-locale_key="Base_Panel_MeasureLine" data-locale_ref="title" class="icon-container ctrlButtons localizedElement"><i class="fa fa-arrows-h fa-2x"></i></div>
 							<div id="gis_measureAreaBtn" data-locale_key="Base_Panel_MeasureArea" data-locale_ref="title" class="icon-container ctrlButtons localizedElement"><i class="fa fa-square-o fa-2x"></i></div>
 							<div id="gis_gisOverviewBtn"" data-locale_key="Base_Panel_ShowOverview" data-locale_ref="title" class="icon-container localizedElement custom-hidden" onclick="gisOverview.toggle($(this));"><i class="fa fa-globe fa-2x"></i></div>
+							<div id="gis_gisBaseLayerBtn"" data-locale_key="Base_Panel_SelectBaseMap" data-locale_ref="title" class="icon-container ctrlButtons localizedElement" onclick="baseMapLayerIcon.onclick();"><i class="fa fa-map fa-2x"></i></div>
+							<div id="baselayers-select" class="no-display"></div>						
 						</div>
 						
 						<!-- ******************** -->
@@ -240,8 +239,8 @@
 										<!-- BBOX manager panel -->
 										<div id="search-bbox-panel" class="custom-hidden">
 											<div id="search-bbox-selected-buttons">
-												<div id="search-bbox-select-button" data-locale_key="Advanced_Panel_Search_SearchBboxSelectButton" data-locale_ref="title" class="localizedElement" onclick="controls.search.activate();"><i class="fa fa-pencil-square-o fa-medium"></i></div>
-												<div id="search-bbox-toggle-button" data-locale_key="Advanced_Panel_Search_SearchBboxHideButton" data-locale_ref="title" class="localizedElement custom-hidden" onclick="searchP.toggleVisibilityBbox();"><i class="fa fa-eye fa-medium"></i></div>
+												<div id="search-bbox-select-button" data-locale_key="Advanced_Panel_Search_SearchBboxSelectButton" data-locale_ref="title" class="localizedElement" onclick="controls.search.activate();"><i class="fa fa-pencil-square-o fa-2x"></i></div>
+												<div id="search-bbox-toggle-button" data-locale_key="Advanced_Panel_Search_SearchBboxHideButton" data-locale_ref="title" class="localizedElement custom-hidden" onclick="searchP.toggleVisibilityBbox();"><i class="fa fa-eye fa-2x"></i></div>
 											</div>
 											<div id="search-bbox-selected-text"></div>
 										</div>				
@@ -795,8 +794,8 @@
 										<!-- BBOX manager panel -->
 										<div id="csw-catalog-bbox-panel" class="custom-hidden">
 											<div id="csw-catalog-bbox-selected-buttons">
-												<div id="csw-catalog-bbox-select-button" data-locale_key="Advanced_Panel_Search_SearchBboxSelectButton" data-locale_ref="title" class="localizedElement" onclick="controls.catalog.activate();"><i class="fa fa-pencil-square-o fa-medium"></i></div>
-												<div id="csw-catalog-bbox-toggle-button" data-locale_key="Advanced_Panel_Search_SearchBboxHideButton" data-locale_ref="title" class="localizedElement custom-hidden" onclick="catalogCsw.toggleVisibilityBbox();"><i class="fa fa-eye fa-medium"></i></div>
+												<div id="csw-catalog-bbox-select-button" data-locale_key="Advanced_Panel_Search_SearchBboxSelectButton" data-locale_ref="title" class="localizedElement" onclick="controls.catalog.activate();"><i class="fa fa-pencil-square-o fa-2x"></i></div>
+												<div id="csw-catalog-bbox-toggle-button" data-locale_key="Advanced_Panel_Search_SearchBboxHideButton" data-locale_ref="title" class="localizedElement custom-hidden" onclick="catalogCsw.toggleVisibilityBbox();"><i class="fa fa-eye fa-2x"></i></div>
 											</div>
 											<div id="csw-catalog-bbox-selected-text"></div>
 										</div>				
