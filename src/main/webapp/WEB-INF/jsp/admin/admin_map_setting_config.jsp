@@ -143,7 +143,11 @@
 				<div data-locale_key="Manager_Map_Settings_Title" data-locale_ref="text" class="localizedElement"></div>
 				<div data-locale_key="Manager_Map_Settings_Subtitle" data-locale_ref="text" class="localizedElement"></div>
 			</div>
-			
+			<input type="hidden" id="map-input-id">
+			<div class="itemform">
+				<div data-locale_key="Manager_Map_Settings_Label_NameMap" data-locale_ref="text" class="localizedElement form-label-title"></div>
+				<div><input type="text" id="name-input" required></div>
+			</div>
 			<div class="itemform">
 				<div data-locale_key="Manager_Map_Settings_Projection" data-locale_ref="text" class="localizedElement form-label-title"></div>
 				<div><input id="projection-input" name="projection-input" required></div>
