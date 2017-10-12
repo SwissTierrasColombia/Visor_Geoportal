@@ -51,15 +51,12 @@ var mMapSettings = {
 	 * @Author: Agencia de implementacion
 	 * */
 	openDialogAddMap: function(){
-		this.createUpdateFormPanel();
+		this.createAddFormPanel();
 		Utils.cleanForm(this.pFormAddMap);
 		if(this.pFormAddMap != null)
 			if(this.validatorFormAddMap != null){
 				this.validatorFormAddMap.reset();
 			}
-		
-		// populatePage?
-		//mMapSettings.requests.getData();
 		
 		this.pFormAddMap.dialog("open");
 		
@@ -73,7 +70,7 @@ var mMapSettings = {
 				this.validatorFormAddMap.reset();
 			}
 		
-		// populatePage?
+		// populate form with existing data
 		mMapSettings.requests.getData();
 		
 		this.pFormAddMap.dialog("open");
@@ -133,7 +130,7 @@ var mMapSettings = {
 		
 		buttons[LocaleManager.getKey('General_Save')] = function(){
 			//mMaps.submitAddMap();
-			mMapSettings.requests.addData();
+			mMapSettings.requests.addNewMap();
 			$(this).dialog("close");
 		};
 		
@@ -149,35 +146,6 @@ var mMapSettings = {
 		
 		return this.pFormAddMap;
 	},
-	/**
-	 * Submit new map
-	 * @Author Agencia de implementacion
-	 * */
-	submitAddMap: function(){
-		var isValid = this.validatorFormAddMap.valid();
-		if(!isValid){
-			return;
-		}
-		
-		var mapName = $("#map-input-name").val();
-		this.requests.addNewMap(mapName);
-		return true;
-	},
-	
-	/**
-	 * TODO add map
-	 * @Author Agencia de implementacion
-	 * */
-	addNewMap: function(mapNameParam){
-		Utils.ajaxCall(Services.getMapConfigUrl(), "POST", "json",{
-			oper: "addMap",
-			mapName: mapNameParam
-		}, function(){
-			mMaps.updateData();
-			Utils.closeDialogForm(mMaps.pFormAddMap);
-		}, null);
-	},
-	
 	
 	getDataFromPage: function() {
 		var settings = new Object();
@@ -426,7 +394,7 @@ var mMapSettings = {
 			});
 		},
 		
-		addData: function(){
+		addNewMap: function(){
 			var isValid = validator.valid();
 			if(!isValid) {
 				return;

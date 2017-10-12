@@ -101,17 +101,17 @@
 						data-locale_ref="text" class="localizedElement m-panel-title"></div>
 			<div class="m-toolbars manager-toolbar">
 				<div id="m-maps-add" data-locale_key="Manager_Map_Button_AddMap"
-								data-locale_ref="title"
-								class="localizedElement grid-toolbar-item"
-								onclick="mMapSettings.openDialogAddMap();">
-								<i class="fa fa-plus fa-2x"></i>
+					 data-locale_ref="title"
+					 class="localizedElement grid-toolbar-item"
+					 onclick="mMapSettings.openDialogAddMap();">
+					<i class="fa fa-plus fa-2x"></i>
 				</div>
 				
-				<div id="m-maps-add" data-locale_key="Manager_Map_Button_AddMap"
-								data-locale_ref="title"
-								class="localizedElement grid-toolbar-item"
-								onclick="mMapSettings.openDialogUpdateMap();">
-								<i class="fa fa-edit fa-2x"></i>
+				<div id="m-maps-update" data-locale_key="Manager_Map_Button_AddMap"
+					 data-locale_ref="title"
+					 class="localizedElement grid-toolbar-item"
+					 onclick="mMapSettings.openDialogUpdateMap();">
+					<i class="fa fa-edit fa-2x"></i>
 				</div>
 			</div>
 			</div>

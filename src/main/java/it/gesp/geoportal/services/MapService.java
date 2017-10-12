@@ -29,6 +29,50 @@ public class MapService {
 		}
 	}
 	
+	public void createMap(MapDTO mapDTO) throws Exception{
+		
+		MapRepository mapRepository = new MapRepository();
+		
+		Session session = null;
+		try{
+			session = SessionFactoryManager.openSession();
+			Transaction tx = session.beginTransaction();
+			try{
+				Map newMap = new Map();
+				newMap.setMapName(mapDTO.getMapName());
+				newMap.setProjection(mapDTO.getProjection());
+				newMap.setUnits(mapDTO.getUnits());
+				
+				newMap.setShowOverview(mapDTO.getShowOverview());
+				newMap.setCustomScales(mapDTO.getCustomScalesAsJson());
+				newMap.setDotsPerInch(mapDTO.getDotsPerInch());
+				newMap.setCustomResolutions(mapDTO.getCustomResolutionsAsJson());
+				newMap.setEnableCustomScalesResolutions(mapDTO.getEnableCustomScalesResolutions());
+				newMap.setMaxScale(mapDTO.getMaxScale());
+						
+				//Default extent
+				newMap.setDefaultExtentMinX(mapDTO.getDefaultExtentMinX());
+				newMap.setDefaultExtentMinY(mapDTO.getDefaultExtentMinY());
+				newMap.setDefaultExtentMaxX(mapDTO.getDefaultExtentMaxX());
+				newMap.setDefaultExtentMaxY(mapDTO.getDefaultExtentMaxY());
+				
+				mapRepository.save(session, newMap);
+				
+				tx.commit();
+			}catch (Exception x) {
+				//log.debug(x);
+				tx.rollback();
+				throw x;
+			}
+			
+		}catch(Exception x) {
+			log.debug(x);
+			throw x;
+		} finally {
+			session.close();
+		}
+	}
+	
 	public void updateMap(MapDTO mapDTO) throws Exception {
 		
 		MapRepository mapRepository = new MapRepository();
