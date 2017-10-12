@@ -160,7 +160,7 @@ var mMapSettings = {
 		
 		settings.idMap = $("#map-input-id").val();
 		settings.mapName = $("#name-input").val();
-		//console.log(settings.mapName);
+		
 		settings.projection = $("#projection-input").val();
 		settings.units = $("#units-input").val();
 		
@@ -221,8 +221,8 @@ var mMapSettings = {
 	},
 	
 	populatePage: function(settings) {
-		console.log(settings);
 		
+		$("#map-input-id").val(settings.idMap);
 		$("#name-input").val(settings.mapName);
 		$("#projection-input").val(settings.projection);
 		$("#units-input").val(settings.units);
@@ -262,7 +262,6 @@ var mMapSettings = {
 		 */
 		var scaleList = settings.customScales;
 		this.populateScales(scaleList);
-		console.log("no escribe nad1a");
 		/*
 		 * Populate resolutions
 		 */
