@@ -629,20 +629,17 @@ Utils.cleanForm = function(form) {
 	// Clean input value form
 	if(form) {
 		$.each(form.find("input"), function(index, item){
-			
-			if ($(item).is(":checkbox")) {
+			var itemSelector = $(item);
+			if (itemSelector.is(":checkbox") || itemSelector.is(":radio") ) {
 				//Set to false
-				$(item).prop('checked', false);
-				
+				itemSelector.prop('checked', false);
 			} else {
-				$(item).val("");	
+				itemSelector.val("");	
 			}
 		});
 		$.each(form.find("textarea"), function(index, item){
 			$(item).val("");
 		});
-		
-		
 	}
 	
 	return;
