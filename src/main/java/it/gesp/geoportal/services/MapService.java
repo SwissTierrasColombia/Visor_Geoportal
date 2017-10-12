@@ -29,6 +29,20 @@ public class MapService {
 		}
 	}
 	
+	public Map getMapById(int mapId){
+		Session session = null;
+		try{
+			session = SessionFactoryManager.openSession();
+			MapRepository mr = new MapRepository();
+			return mr.getById(session, Map.class, mapId);
+		}catch (Exception x) {
+			log.debug(x);
+			return null;
+		} finally {
+			session.close();
+		}
+	}
+	
 	public void createMap(MapDTO mapDTO) throws Exception{
 		
 		MapRepository mapRepository = new MapRepository();
@@ -87,6 +101,8 @@ public class MapService {
 				if (existingMap == null) {
 					throw OperationInvalidException.createMissingIdExeption("Map",  mapDTO.getIdMap());
 				}
+				
+				existingMap.setMapName(mapDTO.getMapName());
 				
 				existingMap.setProjection(mapDTO.getProjection());
 				

@@ -60,7 +60,7 @@ public class Map {
 		this.idMap = idMap;
 	}
 	
-	@Column(name = "s_name", nullable = false)
+	@Column(name = "s_name", nullable = false, unique=true)
 	public String getMapName() {
 		return mapName;
 	}

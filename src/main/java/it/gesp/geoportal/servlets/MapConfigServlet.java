@@ -110,8 +110,14 @@ public class MapConfigServlet extends HttpServlet {
 					ServletUtils.writeAndFlush(log, w, jsonRes);
 					return;
 				}
-
-				it.gesp.geoportal.dao.entities.Map map = new MapService().getMapByName("icf_map");
+				
+				String mapIdStr = request.getParameter("idMap");
+				if (Utils.isNullOrEmpty(mapIdStr)) {
+					log.debug("Error parsing idMap parameter");
+					throw new DataInvalidException();
+				}
+				int mapId = Integer.parseInt(mapIdStr);
+				it.gesp.geoportal.dao.entities.Map map = new MapService().getMapById(mapId);
 				MapDTO mapDTO = MapDTO.parseFromMap(map);
 				
 				jsonRes = GeoportalResponse.createSuccessResponse(mapDTO, true);
@@ -144,8 +150,6 @@ public class MapConfigServlet extends HttpServlet {
 				Gson gson = JsonFactory.getGson();
 				MapDTO mapDTO = gson.fromJson(settingsJsonNewMap, MapDTO.class);
 				
-				//no id
-				
 				MapService mapService = new MapService();
 				mapService.createMap(mapDTO);
 				
@@ -176,8 +180,6 @@ public class MapConfigServlet extends HttpServlet {
 				
 				Gson gson = JsonFactory.getGson();
 				MapDTO mapDTO = gson.fromJson(settingsJson, MapDTO.class);
-				
-				mapDTO.setIdMap(idMap);
 				
 				MapService mapService = new MapService();
 				mapService.updateMap(mapDTO);
