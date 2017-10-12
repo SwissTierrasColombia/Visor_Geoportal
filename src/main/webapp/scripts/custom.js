@@ -213,10 +213,10 @@ function loadAll() {
 
 			//Transform coordinates to other coordinate system
 			//position.transform(map.getProjectionObject(), new OpenLayers.Projection("EPSG:4326"));
-			position.transform(map.getProjectionObject(), new OpenLayers.Projection("EPSG:32616"));
-			//position.transform(map.getProjectionObject(), new OpenLayers.Projection("EPSG:900913"));
+			//position.transform(map.getProjectionObject(), new OpenLayers.Projection("EPSG:32616"));
+			position.transform(map.getProjectionObject(), new OpenLayers.Projection("EPSG:900913"));
 			
-			$("#gis_coordinates").text('(Wgs84/Utm 16N) X: ' + position.lon.toFixed(numDigits) + ', Y: '+ position.lat.toFixed(numDigits));
+			$("#gis_coordinates").text('(Web Mercator) X: ' + position.lon.toFixed(numDigits) + ', Y: '+ position.lat.toFixed(numDigits));
 			
 			if(
 				controls.redlines.instance != null &&
@@ -356,7 +356,7 @@ function loadAll() {
 		 * SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&
 		 * SRS=EPSG%3A4326&BBOX=-89.573364,12.961736,-82.827759,16.699348&WIDTH=600&HEIGHT=300
 		 */
-		var hondurasExtent = new OpenLayers.Bounds(-89.573364, 12.961736, -82.827759, 16.69934);
+		var hondurasExtent = new OpenLayers.Bounds(-8913046,-353565, -7230209, 1353733);
 		hondurasExtent = hondurasExtent.transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject());
 		
 		var overviewImage = new OpenLayers.Layer.Image(
@@ -411,10 +411,13 @@ function zoomToDefaultMapCenter() {
 //				mapConfig.projection), map.getProjectionObject()), mapConfig.zoom);	
 //		
 //	}
+
+
 	 if (!Utils.isNullOrUndefined(mapConfig.defaultExtent)) {
 		 var bounds = new OpenLayers.Bounds(mapConfig.defaultExtent);
 		 bounds = bounds.transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject());
 		 map.zoomToExtent(bounds);
+
 	}
 }
 
@@ -838,14 +841,6 @@ $(function() {
 		 */
 	});
 	
-	/**
-	 * Define change event on baselayer select box - On change set new baselayer
-	 * for the map
-	 */
-	$("#baselayers-select").change(function() {
-		LoadLayersUtils.setActiveBaseLayer($(this).find("option:selected"));
-	});
-
 	/**
 	 * Define "Enter press" on input label
 	 * - if select or modify redlines control is active it enables function on redlines
