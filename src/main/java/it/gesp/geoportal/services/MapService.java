@@ -6,6 +6,8 @@ import it.gesp.geoportal.dao.entities.Map;
 import it.gesp.geoportal.dao.repositories.MapRepository;
 import it.gesp.geoportal.exceptions.OperationInvalidException;
 
+import java.util.List;
+
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -43,6 +45,20 @@ public class MapService {
 		}
 	}
 	
+	public List<Map> getAllMaps(){
+		Session session = null;
+		try{
+			session = SessionFactoryManager.openSession();
+			MapRepository mr = new MapRepository();
+			return mr.getAll(session, Map.class);
+		}catch(Exception x){
+			log.debug(x);
+			return null;
+		}finally{
+			session.close();
+		}
+	}
+	
 	public void createMap(MapDTO mapDTO) throws Exception{
 		
 		MapRepository mapRepository = new MapRepository();
@@ -69,6 +85,9 @@ public class MapService {
 				newMap.setDefaultExtentMinY(mapDTO.getDefaultExtentMinY());
 				newMap.setDefaultExtentMaxX(mapDTO.getDefaultExtentMaxX());
 				newMap.setDefaultExtentMaxY(mapDTO.getDefaultExtentMaxY());
+				
+				if(mapDTO.getThumbnail()!=null)
+					newMap.setThumbnail(mapDTO.getThumbnail());
 				
 				mapRepository.save(session, newMap);
 				
@@ -106,10 +125,6 @@ public class MapService {
 				
 				existingMap.setProjection(mapDTO.getProjection());
 				
-				//existingMap.setZoom(mapDTO.getZoom());
-				//existingMap.setCenterXCoord(mapDTO.getCenterx());
-				//existingMap.setCenterYCoord(mapDTO.getCentery());
-				
 				existingMap.setMaxScale(mapDTO.getMaxScale());
 				existingMap.setUnits(mapDTO.getUnits());
 				
@@ -130,14 +145,8 @@ public class MapService {
 				
 				//Dots per inch override
 				existingMap.setDotsPerInch(mapDTO.getDotsPerInch());
-				
-				//LL
-				//existingMap.setMaxExtentLL("" + mapDTO.getMinx() + "," + mapDTO.getMiny());
-				//existingMap.setMaxExtentLL("" + mapDTO.getCenterx() + "," + mapDTO.getCentery());
-				
-				//UR
-				//existingMap.setMaxExtentUR("" + mapDTO.getMaxx() + "," + mapDTO.getMaxy());
-				//existingMap.setMaxExtentUR("" + mapDTO.getCenterx() + "," + mapDTO.getCentery());
+				if(mapDTO.getThumbnail()!=null)
+					existingMap.setThumbnail(mapDTO.getThumbnail());
 				
 				mapRepository.update(session, existingMap);
 				

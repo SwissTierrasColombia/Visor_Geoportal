@@ -28,26 +28,19 @@ public class Map {
 	private String mapName;
 	private String projection;
 	private String units;
-//	private String maxExtent;
-//	private String centerCoords;
-	//private String maxExtentLL;
-	//private String maxExtentUR;
 	
 	private double defaultExtentMinX;
 	private double defaultExtentMinY;
 	private double defaultExtentMaxX;
 	private double defaultExtentMaxY;
 	
-	
-	//private double centerXCoord;
-	//private double centerYCoord;
 	private boolean showOverview;
-	//private int zoom;
 	private Double maxScale;
 	private Double dotsPerInch;
 	private String enableCustomScalesResolutions;
 	private String customScales;
 	private String customResolutions;
+	private String thumbnail;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -87,147 +80,6 @@ public class Map {
 		this.units = units;
 	}
 
-
-//	@Column(name = "n_zoom", nullable = false)
-//	public int getZoom() {
-//		return zoom;
-//	}
-//
-//	public void setZoom(int zoom) {
-//		this.zoom = zoom;
-//	}
-	
-//	@Column(name = "s_max_extent_ll", nullable = false)
-//	public String getMaxExtentLL() {
-//		return maxExtentLL;
-//	}
-//
-//	public void setMaxExtentLL(String maxExtentLL) {
-//		this.maxExtentLL = maxExtentLL;
-//	}
-//
-//	@Column(name = "s_max_extent_ur", nullable = false)
-//	public String getMaxExtentUR() {
-//		return maxExtentUR;
-//	}
-//
-//	public void setMaxExtentUR(String maxExtentUR) {
-//		this.maxExtentUR = maxExtentUR;
-//	}
-
-//	@Column(name = "d_center_x", nullable = false)
-//	public double getCenterXCoord() {
-//		return centerXCoord;
-//	}
-//
-//	public void setCenterXCoord(double centerXCoord) {
-//		this.centerXCoord = centerXCoord;
-//	}
-//
-//	@Column(name = "d_center_y", nullable = false)
-//	public double getCenterYCoord() {
-//		return centerYCoord;
-//	}
-//
-//	public void setCenterYCoord(double centerYCoord) {
-//		this.centerYCoord = centerYCoord;
-//	}
-
-//	@Column(name = "s_center", nullable = false)
-//	public String getCenterCoords() {
-//		return centerCoords;
-//	}
-//
-//	public void setCenterCoords(String centerCoords) {
-//		this.centerCoords = centerCoords;
-//	}
-	
-//	@Transient
-//	public List<Double> getMaxExtentAsObject() {
-//		
-//		List<Double> resultList = new ArrayList<Double>();
-//		
-//		String maxExtent_ll = getMaxExtentLL();
-//		String[] parts = maxExtent_ll.split(",");
-//		for(String part : parts) {
-//			double d = Double.parseDouble(part);
-//			resultList.add(d);
-//		}
-//		
-//		String maxExtent_ur = getMaxExtentUR();
-//		parts = maxExtent_ur.split(",");
-//		for(String part : parts) {
-//			double d = Double.parseDouble(part);
-//			resultList.add(d);
-//		}
-//		
-//		return resultList;
-//	}
-	
-//	@Transient
-//	public Double getMinX() {
-//		Double res = null;
-//		
-//		try {
-//		String maxExtentLL = getMaxExtentLL();
-//		String[] coords = maxExtentLL.split(",");
-//		if (coords.length > 0) {
-//			res = Double.parseDouble(coords[0]);
-//		}
-//		} catch (Exception x) {
-//			//Error parsing....
-//		}
-//		return res;
-//	}
-//	
-//	@Transient
-//	public Double getMinY() {
-//		Double res = null;
-//		
-//		try {
-//		String maxExtentLL = getMaxExtentLL();
-//		String[] coords = maxExtentLL.split(",");
-//		if (coords.length > 1) {
-//			res = Double.parseDouble(coords[1]);
-//		}
-//		} catch (Exception x) {
-//			//Error parsing....
-//		}
-//		return res;
-//	}
-//	
-//	@Transient
-//	public Double getMaxX() {
-//		Double res = null;
-//		
-//		try {
-//		String maxExtentUR = getMaxExtentUR();
-//		String[] coords = maxExtentUR.split(",");
-//		if (coords.length > 0) {
-//			res = Double.parseDouble(coords[0]);
-//		}
-//		} catch (Exception x) {
-//			//Error parsing....
-//		}
-//		return res;
-//	}
-//	
-//	@Transient
-//	public Double getMaxY() {
-//		Double res = null;
-//		
-//		try {
-//		String maxExtentUR = getMaxExtentUR();
-//		String[] coords = maxExtentUR.split(",");
-//		if (coords.length > 1) {
-//			res = Double.parseDouble(coords[1]);
-//		}
-//		} catch (Exception x) {
-//			//Error parsing....
-//		}
-//		return res;
-//	}
-	
 	@Transient
 	public List<Double> getDefaultExtentAsObject() {
 		List<Double> resultList = new ArrayList<Double>();
@@ -239,16 +91,6 @@ public class Map {
 		return resultList;
 	}
 	
-//	@Transient
-//	public List<Double> getCenterCoordsAsObject() {
-//		List<Double> resultList = new ArrayList<Double>();
-//		
-//		resultList.add(getCenterXCoord());
-//		resultList.add(getCenterYCoord());
-//		
-//		return resultList;
-//	}
-
 	@Column(name = "f_show_overview", nullable = false)
 	public boolean isShowOverview() {
 		return showOverview;
@@ -360,4 +202,15 @@ public class Map {
 	public void setDefaultExtentMaxY(double defaultExtentMaxY) {
 		this.defaultExtentMaxY = defaultExtentMaxY;
 	}
+	
+	@Column(name="thumbnail")
+	public String getThumbnail() {
+		return thumbnail;
+	}
+
+	public void setThumbnail(String thumbnail) {
+		this.thumbnail = thumbnail;
+	}
+	
+	
 }
