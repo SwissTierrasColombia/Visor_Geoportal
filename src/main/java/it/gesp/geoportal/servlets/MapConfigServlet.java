@@ -277,14 +277,17 @@ public class MapConfigServlet extends HttpServlet {
 				}
 				
 				String layerGroupName = request.getParameter("layerGroupName");
-				if (Utils.isNullOrEmpty(layerGroupName)) {
-					log.debug("Error parsing layerGroupName parameter");
+				String idMapStr = request.getParameter("idMap");
+				if (Utils.isNullOrEmpty(layerGroupName) || Utils.isNullOrEmpty(idMapStr)) {
+					log.debug("Error parsing layerGroupName parameter or idMap parameter");
 					throw new DataInvalidException();
 				}
 				
+				int mapId = Integer.parseInt(idMapStr);
+				
 				LayerGroup layerGroup = new LayerGroup();
 				layerGroup.setLayerGroupName(layerGroupName);
-				layerGroup.setIdMap(idMap);
+				layerGroup.setIdMap(mapId);
 				
 				layerGroupService.addLayerGroup(layerGroup);
 				jsonRes = GeoportalResponse.createSuccessResponse(null, true);
