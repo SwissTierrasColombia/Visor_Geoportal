@@ -1,8 +1,15 @@
 var mMapSettings = {
 	pFormAddMap: null,
 	validatorFormAddMap: null,
+	dtPanel: null,
+	dt: null,
 		
 	init: function(){
+		
+		if(this.dtPanel == null) {
+			this.dtPanel = $("#maps-dt");
+			this.initDt();
+		}
 		
 		if(this.pFormAddMap == null){
 			this.pFormAddMap = $("#form-addmap-dialog");
@@ -10,41 +17,56 @@ var mMapSettings = {
 			this.validatorFormAddMap = new Validate({
 				form: this.pFormAddMap
 			});
-			
-//			var buttons = {};
-//			buttons[LocaleManager.getKey('General_Cancel')] = function(){
-//				Utils.closeDialogForm(mMaps.pFormAddMap);
-//			};
-//			
-//			buttons[LocaleManager.getKey('General_Save')] = function(){
-//				//mMaps.submitAddMap();
-//				mMapSettings.requests.saveData();
-//			};
-//			
-//			DialogUtils.renderDialog(LocaleManager.getKey("General_TitleForm"), buttons, {
-//				modal: false,
-//				resizable: false,
-//				height: 200,
-//				width: 400,
-//				closeFn: function() {
-//					Utils.cleanForm(this.pFormAddMap);
-//				}
-//			}, this.pFormAddMap);
 		}
+		
+		
 	},
 	
-	
-	/*
-	
-	openUpdateForm: function() {
-	 	this.createUpdateFormPanel();
-		Utils.cleanForm(this.pForm);
-		
-		var selectedRow = Utils.getSelectedRow(this.dt)[0];
-		this.populateDataForm(selectedRow);
-		
-		this.pForm.dialog("open");
-	 */
+	// Init list of Maps (datatable)
+	initDt: function() {
+		if(this.dt == null) {
+			this.dt = this.dtPanel.on('search.dt', function (e) { 
+				Utils.deselectAllVisibleRows(mMapSettings.dt);
+				mMapSettings.toggleButtonsOnSelect();
+			}).dataTable({
+				"dom": '<"toolbar">frtp',
+				"scrollX": true,
+		        "scrollY": "500px",
+		        "processing": true,
+		        "scrollCollapse": true,
+		        "paginationType": "full",
+				"ajax": function (data, callback, settings) {	        		
+	        	    Utils.ajaxCall("./mapConfig?oper=getMapList", "get", "json", data, function(response){
+	        	    	var data = response.result;
+	        	    	callback(data);
+	        	    });
+	        	},
+				"columns": [
+				            { "data": "idMap", "name": "idMap", "title": "ID", "sortable": false, "visible": true},
+				            { "data": "mapName", "name": "mapName", "title":  LocaleManager.getKey("Manager_Map_Settings_Label_NameMap"), "sortable": true, "visible": true },
+				            { "data": "projection", "name": "projection", "title":  LocaleManager.getKey("Manager_Map_Settings_Projection_simple"), "sortable": true, "visible": true },
+				            { "data": "units", "name": "units", "title":  LocaleManager.getKey("Manager_Map_Settings_Units_simple"), "sortable": true, "visible": true }
+	            ],
+		        "language": {
+	                "url": "scripts/locale/datatable/dt_" + LocaleManager.locale + ".lang"
+	            },
+	            "paginate": false
+			});
+			
+			mMapSettings.toggleButtonsOnSelect();
+			this.dt.find("tbody").on('click', 'tr', function(e){
+			
+				if($(this).hasClass('selected')) {
+					$(this).removeClass('selected');
+				}
+				else {
+					Utils.deselectAllVisibleRows(mMapSettings.dt);
+					$(this).addClass('selected');					
+				}
+				mMapSettings.toggleButtonsOnSelect();
+			});
+		}
+	},
 	
 	/**
 	 * Open dialog to insert a new map
@@ -53,6 +75,11 @@ var mMapSettings = {
 	openDialogAddMap: function(){
 		this.createAddFormPanel();
 		Utils.cleanForm(this.pFormAddMap);
+		
+		// clean scales, resolutions
+		this.populateScales(new Array());
+		this.populateResolutions(new Array());
+		
 		if(this.pFormAddMap != null)
 			if(this.validatorFormAddMap != null){
 				this.validatorFormAddMap.reset();
@@ -71,8 +98,9 @@ var mMapSettings = {
 			}
 		
 		// populate form with existing data
-		// TODO ID debe ser dinámico
-		mMapSettings.requests.getData(8);
+		var selectedRow = Utils.getSelectedRow(this.dt)[0];
+		
+		mMapSettings.requests.getMapData(selectedRow.idMap);
 		
 		this.pFormAddMap.dialog("open");
 		
@@ -81,9 +109,9 @@ var mMapSettings = {
 	
 	
 	createUpdateFormPanel: function() {
-		//$("#form-dialog-header").data("locale_key", "Manager_Layers_HeaderForm_Update");
-		//LocaleManager.refreshLocalizedElement($("#form-dialog-header"));
-		
+		$("#form-dialog-header").data("locale_key", "Manager_Map_HeaderForm_Update");
+		LocaleManager.refreshLocalizedElement($("#form-dialog-header"));
+
 		//Reset validator
 		if(this.validatorFormAddMap) {
 			this.validatorFormAddMap.reset();
@@ -98,8 +126,13 @@ var mMapSettings = {
 		buttons[LocaleManager.getKey('General_Save')] = function(){
 			//mMaps.submitAddMap();
 			var settings = mMapSettings.getDataFromPage();
+
+			var isValid = mMapSettings.validatorFormAddMap.valid();
+			if(!isValid) {
+				return;
+			}
 			
-			mMapSettings.requests.updateData(settings);
+			mMapSettings.requests.updateMap(settings);
 			$(this).dialog("close");
 		};
 		
@@ -117,8 +150,8 @@ var mMapSettings = {
 	},
 	
 	createAddFormPanel: function() {
-		//$("#form-dialog-header").data("locale_key", "Manager_Layers_HeaderForm_Update");
-		//LocaleManager.refreshLocalizedElement($("#form-dialog-header"));
+		$("#form-dialog-header").data("locale_key", "Manager_Map_HeaderForm_Add");
+		LocaleManager.refreshLocalizedElement($("#form-dialog-header"));
 		
 		//Reset validator
 		if(this.validatorFormAddMap) {
@@ -127,15 +160,17 @@ var mMapSettings = {
 		
 		var buttons = {};
 		buttons[LocaleManager.getKey('General_Cancel')] = function(){
-			//Utils.closeDialogForm(mMaps.pFormAddMap);
 			$(this).dialog("close");
 		};
 		
 		buttons[LocaleManager.getKey('General_Save')] = function(){
-			//mMaps.submitAddMap();
+			var isValid = mMapSettings.validatorFormAddMap.valid();
+			if(!isValid) {
+				return;
+			}
+			
 			var settings = mMapSettings.getDataFromPage();
 			
-			// 
 			delete settings.idMap;
 			
 			mMapSettings.requests.addNewMap(settings);
@@ -163,8 +198,7 @@ var mMapSettings = {
 		
 		settings.projection = $("#projection-input").val();
 		settings.units = $("#units-input").val();
-		
-		
+
 		//Set mapscale if it is a valid value
 		var maxScale = $("#default-maxscale-input").val();
 		if (Utils.isFloat(maxScale)) {
@@ -228,10 +262,6 @@ var mMapSettings = {
 		$("#units-input").val(settings.units);
 		
 		$("#default-maxscale-input").val(settings.maxScale);
-		
-//		$("#default-zoomlevel-input").val(settings.zoom);
-//		$("#centerx-input").val(settings.centerx);
-//		$("#centery-input").val(settings.centery);
 		
 		$("#minx-input").val(settings.defaultExtentMinX);
 		$("#miny-input").val(settings.defaultExtentMinY);
@@ -371,13 +401,7 @@ var mMapSettings = {
 	
 	requests: {		
 		
-		getData: function(idMap) {
-			
-			//Reset validator
-			if(validator) {
-				validator.reset();
-			}
-			
+		getMapData: function(idMap) {			
 			Utils.ajaxCallSynch("./mapConfig", "POST", "json", {
 				oper: "mapSettings",
 				idMap: idMap
@@ -388,11 +412,7 @@ var mMapSettings = {
 			});
 		},
 		
-		updateData: function(settings) {
-			var isValid = validator.valid();
-			if(!isValid) {
-				return;
-			}
+		updateMap: function(settings) {
 			
 			Utils.ajaxCallSynch("./mapConfig", "POST", "json", {
 				oper: "saveMapSettings",
@@ -401,20 +421,13 @@ var mMapSettings = {
 				if(response.success) {
 					AlertDialog.createOkDefaultDialog(LocaleManager.getKey("Manager_Item_ConfigSystem"), LocaleManager.getKey("Manager_Config_Saved_Ok"), "info", function() {
 						//Reload
-						// TODO Verificar si es necesaria la recarga de los datos
-						mMapSettings.requests.getData(idMap);
+						mMapSettings.reloadGrid();
 					});
 				}
 			});
 		},
 		
 		addNewMap: function(settings){
-			var isValid = validator.valid();
-			if(!isValid) {
-				return;
-			}
-			
-			
 			Utils.ajaxCallSynch("./mapConfig", "POST", "json", {
 				oper: "createNewMap",
 				settings: JSON.stringify(settings) 
@@ -422,11 +435,26 @@ var mMapSettings = {
 				if(response.success) {
 					AlertDialog.createOkDefaultDialog(LocaleManager.getKey("Manager_Item_ConfigSystem"), LocaleManager.getKey("Manager_Config_Saved_Ok"), "info", function() {
 						//Reload
-						//mMapSettings.requests.getData();
+						mMapSettings.reloadGrid();
 					});
 				}
 			});
 		}
 		
+	},
+	// Enable proper button to enable/disable layerSource
+	toggleButtonsOnSelect: function() {
+		var selectedRow = Utils.getSelectedRow(this.dt)[0];
+		if (!Utils.isNullOrUndefined(selectedRow)) {
+			// $("#layers-delete").show();
+			$("#m-maps-update").show();
+		}
+		else  {
+			// $("#layers-delete").hide();
+			$("#m-maps-update").hide();
+		}
+	},
+	reloadGrid: function(callback, resetPaging) {
+		this.dt.api().ajax.reload(callback, resetPaging);
 	}
 };

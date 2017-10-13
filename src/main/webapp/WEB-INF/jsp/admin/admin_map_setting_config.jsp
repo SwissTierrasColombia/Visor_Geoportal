@@ -11,6 +11,7 @@
 <%@ include file="admin_config_common_js.jspf"%>
 
 <!-- Manager Map Settings scripts and CSS-->
+
 <link rel="stylesheet" href="css/admin/managerMapSettings.css"
 	type="text/css">
 <script type="text/javascript"
@@ -23,14 +24,7 @@
 	$(document).ready(function() {
 		LocaleManager.refreshLocale();
 		AdminMenu.setMapSettingsConfigPageActive();
-		//mMapSettings.requests.getData();
-
-		validator = new Validate({
-			form : $("#mapSettingAdminContainer")
-		});
-
-		$("#submit").button();
-		$("#cancel").button();
+		
 		mMapSettings.init();
 	});
 </script>
@@ -84,6 +78,12 @@
 }
 </style>
 
+<style>
+	table.dataTable, table.dataTable th, table.dataTable td {
+		white-space: normal !important;
+	}
+</style>
+
 </head>
 
 <body>
@@ -115,35 +115,26 @@
 				</div>
 			</div>
 			</div>
+			
+			<div id="m-maps-list">
+				<table id="maps-dt"></table>
+			</div>
 		</div>
 
-		
-		<form id="mapSettingAdminContainer" onSubmit="return false;">		
-
-			
-			<button id="submit" data-locale_key="General_Save"
-					data-locale_ref="text" class="localizedElement"
-					onclick="mMapSettings.requests.saveData();"></button>
-			<button id="cancel" data-locale_key="General_Cancel"
-					data-locale_ref="text" class="localizedElement"
-					onclick="mMapSettings.requests.getData();"></button>
-			
-		</form>
-		
 		</jsp:body>
 
 	</t:generic_admin_page>
 
 
 	<form id="form-addmap-dialog" onSubmit="return false;" style="display:none;">
-		<div data-locale_key="Manager_Maps_HeaderForm_AddMap"
+		<div id="form-dialog-header" data-locale_key="Manager_Maps_HeaderForm_Add"
 			data-locale_ref="text" class="localizedElement data-grid-form-header"></div>
 		
 			<div class="header">
-				<div data-locale_key="Manager_Map_Settings_Title" data-locale_ref="text" class="localizedElement"></div>
-				<div data-locale_key="Manager_Map_Settings_Subtitle" data-locale_ref="text" class="localizedElement"></div>
 			</div>
 			<input type="hidden" id="map-input-id">
+			<div class="form-items-container">
+			<div class="form-items-left">
 			<div class="itemform">
 				<div data-locale_key="Manager_Map_Settings_Label_NameMap" data-locale_ref="text" class="localizedElement form-label-title"></div>
 				<div><input type="text" id="name-input" required></div>
@@ -157,22 +148,6 @@
 				<div data-locale_key="Manager_Map_Settings_Units" data-locale_ref="text" class="localizedElement form-label-title"></div>
 				<div><input id="units-input" name="units-input" required></div>
 			</div>
-			
-			<!--  DEFAULT ZOOMLEVEL & CENTER (OLD -->
-<!-- 			<div class="itemform"> -->
-<!-- 				<div data-locale_key="Manager_Map_Settings_Default_ZoomLevel" data-locale_ref="text" class="localizedElement form-label-title"></div> -->
-<!-- 				<div><input id="default-zoomlevel-input" type="number" name="default-zoomlevel-input" required></div> -->
-<!-- 			</div> -->
-			
-<!-- 			<div class="itemform"> -->
-<!-- 				<div data-locale_key="Manager_Map_Settings_Center_X" data-locale_ref="text" class="localizedElement form-label-title"></div> -->
-<!-- 				<div><input id="centerx-input" type="number" name="centerx-input" required></div> -->
-<!-- 			</div> -->
-			
-<!-- 			<div class="itemform"> -->
-<!-- 				<div data-locale_key="Manager_Map_Settings_Center_Y" data-locale_ref="text" class="localizedElement form-label-title"></div> -->
-<!-- 				<div><input id="centery-input" type="number" name="centery-input" required></div> -->
-<!-- 			</div> -->
 			
 			<!--  DEFAULT EXTENT -->
 			<div class="itemform">
@@ -263,11 +238,9 @@
 				<div data-locale_key="Manager_Map_Settings_Show_Overview" data-locale_ref="text" class="localizedElement form-label-title"></div>
 				<div><input type="checkbox" id="show_overview"  name="show_overview"></div>
 			</div>
-				
-<!-- 			<div class="itemform"> -->
-<!-- 				<div data-locale_key="Manager_Map_Settings_Show_Overview" data-locale_ref="text" class="localizedElement form-label-title"></div> -->
-<!-- 				<div><input id="show_overview" type="checkbox" name="show_overview"></div> -->
-<!-- 			</div> -->
+			
+			</div>
+			</div>
 	</form>
 
 
