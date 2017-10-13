@@ -395,6 +395,9 @@ function loadAll() {
 			searchResultPanel.zoomToFeature(fid);
 		}}
 	);
+
+    //init themes panel
+    themesPlugin.init();
 }
 
 function zoomToDefaultMapCenter() {
