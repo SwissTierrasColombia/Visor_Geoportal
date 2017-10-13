@@ -493,6 +493,7 @@ var LANG_ES = {
 		
 		
 		// - Manager maps
+		Manager_Map_TitlePanelMaps: "Lista de mapas",
 		Manager_Map_TitlePanelGroups: "Lista de grupos",
 		Manager_Map_TitlePanelLayers: "Lista de capas",
 		Manager_Map_Button_AddLayer: "Añadir una capa",

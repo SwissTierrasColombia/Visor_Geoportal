@@ -492,6 +492,7 @@ var LANG_EN = {
 		Manager_User_Insert_PasswordNotMatching: "The passwords do not match",
 		
 		// - Manager maps
+		Manager_Map_TitlePanelMaps: "Map list",
 		Manager_Map_TitlePanelGroups: "Group list",
 		Manager_Map_TitlePanelLayers: "Layer list",
 		Manager_Map_Button_AddLayer: "Add layer",
