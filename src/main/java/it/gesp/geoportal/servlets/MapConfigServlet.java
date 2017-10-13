@@ -127,7 +127,7 @@ public class MapConfigServlet extends HttpServlet {
 			
 			/**
 			 * GET MAP LIST
-			 * @aAthor Agencia de Implementacion
+			 * @Author Agencia de Implementacion
 			 * */
 			else if("getMapList".equalsIgnoreCase(oper)){
 				/*
@@ -223,8 +223,15 @@ public class MapConfigServlet extends HttpServlet {
 					ServletUtils.writeAndFlush(log, w, jsonRes);
 					return;
 				}
-
-				List<MapConfigVw> layerGroups = layerGroupService.getGroupsAndLayersByMapId(idMap);
+				
+				String idMapStr = request.getParameter("idMap");
+				if (Utils.isNullOrEmpty(idMapStr)) {
+					log.debug("Error parsing idMap parameter");
+					throw new DataInvalidException();
+				}
+				int mapId = Integer.parseInt(idMapStr);
+				
+				List<MapConfigVw> layerGroups = layerGroupService.getGroupsAndLayersByMapId(mapId);
 				List <LayerGroupDTO> grooupsAndLayers = LayerGroupDTO.createGroupsAndLayersDTO(layerGroups);
 				
 				PaginationObject<User> paginationObject = PaginationObject.createFromList(grooupsAndLayers);
@@ -414,9 +421,14 @@ public class MapConfigServlet extends HttpServlet {
 					return;
 				}
 				
+				String idMapStr = request.getParameter("idMap");
+				if (Utils.isNullOrEmpty(idMapStr)) {
+					log.debug("Error parsing idMap parameter");
+					throw new DataInvalidException();
+				}
+				int mapId = Integer.parseInt(idMapStr);
 				
-				//List<Layer> layers = layerService.getLayersByMapId(idMap);
-				List<LayerDTO> layers = layerService.getUnassociatedLayers(idMap);
+				List<LayerDTO> layers = layerService.getUnassociatedLayers(mapId);
 				PaginationObject<Layer> paginationObject = PaginationObject.createFromList(layers);
 				jsonRes = GeoportalResponse.createSuccessResponse(paginationObject, true);
 				ServletUtils.writeAndFlush(log, w, jsonRes);
