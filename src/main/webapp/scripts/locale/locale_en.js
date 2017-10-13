@@ -492,6 +492,7 @@ var LANG_EN = {
 		Manager_User_Insert_PasswordNotMatching: "The passwords do not match",
 		
 		// - Manager maps
+		Manager_Map_TitlePanelMaps: "Map list",
 		Manager_Map_TitlePanelGroups: "Group list",
 		Manager_Map_TitlePanelLayers: "Layer list",
 		Manager_Map_Button_AddLayer: "Add layer",
@@ -508,9 +509,12 @@ var LANG_EN = {
 		Manager_Maps_HeaderForm_DelGroupText: "Deleting the group will remove the layers associated to the group.Each layer of group will be unlink from group. Do you want to continue?",
 		
 		// - Manager map settngs
+		Manager_Map_HeaderForm_Add: "Add new map",
+		Manager_Map_HeaderForm_Update: "Update map",
 		Manager_Map_Settings_Title: "Map settings",
 		Manager_Map_Settings_Subtitle: "Projection, unit of measure, ...",
 		Manager_Map_Settings_Projection: "Map Projection EPSG Code (eg: EPSG:4326):",
+		Manager_Map_Settings_Projection_simple: "EPSG Code",
 		Manager_Map_Settings_Center_X: "Center X:",
 		Manager_Map_Settings_Center_Y: "Center Y:",
 		Manager_Map_Settings_Enable_CustomScalesResolutions: "Enable custom scales / resolutions:",
@@ -529,6 +533,7 @@ var LANG_EN = {
 		Manager_Map_Settings_Default_ZoomLevel: "Default zoom level:",
 		Manager_Map_Settings_Default_MaxScale: "Max scale:",
 		Manager_Map_Settings_Units: "Units (degrees, m, ft, km, mi, inches):",
+		Manager_Map_Settings_Units_simple: "Units",
 		Manager_Map_Settings_Default_Extent_MinX: "Minimum X:",
 		Manager_Map_Settings_Default_Extent_MaxX: "Maximum X:",
 		Manager_Map_Settings_Default_Extent_MinY: "Minimum Y:",
