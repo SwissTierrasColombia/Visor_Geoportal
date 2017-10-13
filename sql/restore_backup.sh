@@ -4,12 +4,11 @@
 exec_scripts_db(){
 
 # wait for postgres to come up
-printf "Waiting for postgres (localhost-only)."
+echo "Waiting for postgres (localhost-only)."
 until `nc -z 127.0.0.1 5432`; do
-    printf "."
     sleep 1
 done
-printf "\npostgres ready\n"
+echo "postgres ready"
 
 # Set a default database name
 if [ -z "$POSTGRES_DBNAME" ]; then
@@ -18,15 +17,23 @@ fi
 
 # rationale: Wait for database become available
 printf "Wait a moment while creating the database $POSTGRES_DBNAME."
-while ! su - postgres -c "psql -d $POSTGRES_DBNAME -l &> /dev/null"
+until su - postgres -c "psql -d $POSTGRES_DBNAME -l &> /dev/null" &> /dev/null
 do
-  printf "."
   sleep 2
 done
-printf "\ndone creation\n"
+echo "done creation"
 
-#su - postgres -c "psql -f /sql/creation_scripts.sql -d $POSTGRES_DBNAME"
-#su - postgres -c "psql -f /sql/newScript.sql -d $POSTGRES_DBNAME"
+# Set a default database name
+if [ -z "$POSTGRES_SCRIPTS" ]; then
+  POSTGRES_SCRIPTS=""
+fi
+
+for POSTGRES_SCRIPT in $POSTGRES_SCRIPTS; do
+	echo "Execute $script"
+	su - postgres -c "psql -f $POSTGRES_SCRIPT -d $POSTGRES_DBNAME"
+	echo "done $script"
+done
+echo "done exec_scripts_db..."
 
 }
 
@@ -39,4 +46,5 @@ exec_scripts_db &
 
 # rationale: execute original CMD entry
 # link: https://github.com/kartoza/docker-postgis/blob/develop/start-postgis.sh
+echo "Starting postgres!"
 /start-postgis.sh

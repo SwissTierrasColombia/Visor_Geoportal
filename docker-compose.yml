@@ -4,10 +4,13 @@ services:
     build: .
     ports:
       - 5432:5432
+    volumes:
+      - ./sql:/scripts_sql
     environment:
       - ALLOW_IP_RANGE="0.0.0.0/0"
       - POSTGRES_USER="geoportal_user"
       - POSTGRES_PASS="geoportal_user"
       - POSTGRES_DBNAME="geoportal"
+      - POSTGRES_SCRIPTS="/scripts_sql/geoportal.backup.sql"
       
 # exec with $ docker-compose up
