@@ -323,7 +323,13 @@ public class MapConfigServlet extends HttpServlet {
 					throw new DataInvalidException();
 				}
 				
-				layerGroupService.updateLayerGroup(idMap, layerGroupId, layerGroupName);
+				String idMapStr = request.getParameter("idMap");
+				if (Utils.isNullOrEmpty(idMapStr)) {
+					log.debug("Error parsing idMap parameter");
+					throw new DataInvalidException();
+				}
+				int mapId =  Integer.parseInt(idMapStr);
+				layerGroupService.updateLayerGroup(mapId, layerGroupId, layerGroupName);
 				jsonRes = GeoportalResponse.createSuccessResponse(null, true);
 				ServletUtils.writeAndFlush(log, w, jsonRes);
 			}
