@@ -7,8 +7,17 @@ var mMaps = {
 	pFormModGroup: null,
 	validatorFormUpdateGroup: null,
 	pFormConfirmDelGroup: null,
+	dtPanel: null,
+	dt: null,
 	
 	init: function() {
+		
+		if(this.dtPanel == null) {
+			this.dtPanel = $("#maps-dt");
+			this.initDt();
+		}
+		
+		
 		this.pGroups = $("#m-groups-list");
 		this.pLayers = $("#m-layers-list");
 		
@@ -89,8 +98,54 @@ var mMaps = {
 				buttons: buttons
 			});	
 		}
-		
-		this.updateData();
+	},
+	
+	// Init list of Maps (datatable)
+	initDt: function() {
+		if(this.dt == null) {
+			this.dt = this.dtPanel.on('search.dt', function (e) { 
+				Utils.deselectAllVisibleRows(mMaps.dt);
+				// TODO Verificar llamado
+				mMaps.showContentOnSelect();
+			}).dataTable({
+				"dom": '<"toolbar">frtp',
+				"scrollX": true,
+		        "scrollY": "500px",
+		        "processing": true,
+		        "scrollCollapse": true,
+		        "paginationType": "full",
+				"ajax": function (data, callback, settings) {	        		
+	        	    Utils.ajaxCall("./mapConfig?oper=getMapList", "get", "json", data, function(response){
+	        	    	var data = response.result;
+	        	    	callback(data);
+	        	    });
+	        	},
+				"columns": [
+				            { "data": "idMap", "name": "idMap", "title": "ID", "sortable": false, "visible": true},
+				            { "data": "mapName", "name": "mapName", "title":  LocaleManager.getKey("Manager_Map_Settings_Label_NameMap"), "sortable": true, "visible": true },
+				            { "data": "projection", "name": "projection", "title":  LocaleManager.getKey("Manager_Map_Settings_Projection_simple"), "sortable": true, "visible": true },
+				            { "data": "units", "name": "units", "title":  LocaleManager.getKey("Manager_Map_Settings_Units_simple"), "sortable": true, "visible": true }
+	            ],
+		        "language": {
+	                "url": "scripts/locale/datatable/dt_" + LocaleManager.locale + ".lang"
+	            },
+	            "paginate": false
+			});
+			// TODO Verificar llamado
+			mMaps.showContentOnSelect();
+			
+			this.dt.find("tbody").on('click', 'tr', function(e){
+
+				if($(this).hasClass('selected')) {
+					$(this).removeClass('selected');
+				}
+				else {
+					Utils.deselectAllVisibleRows(mMaps.dt);
+					$(this).addClass('selected');					
+				}
+				mMaps.showContentOnSelect();
+			});
+		}
 	},
 	
 	/**
@@ -122,11 +177,11 @@ var mMaps = {
 					mMaps.requests.assocLayerToGroupLayer(okCheckFn, null, params);
 				},				
 				okCheck: function(response) {
-					mMaps.updateData();
+					mMaps.updateData(mMaps.getSelectedIdMap());
 					return true;
 				},
 				koCheck: function() {
-					mMaps.updateData();
+					mMaps.updateData(mMaps.getSelectedIdMap());
 					return false;
 				}
 			}
@@ -148,11 +203,11 @@ var mMaps = {
 					mMaps.requests.assocLayerToGroupLayer(okCheckFn, null, params);
 				},				
 				okCheck: function(response) {
-					mMaps.updateData();
+					mMaps.updateData(mMaps.getSelectedIdMap());
 					return true;
 				},
 				koCheck: function() {
-					mMaps.updateData();
+					mMaps.updateData(mMaps.getSelectedIdMap());
 					return false;
 				}
 			}
@@ -180,11 +235,13 @@ var mMaps = {
 					mMaps.requests.assocLayerToGroupLayer(okCheckFn, null, params);
 				},				
 				okCheck: function(response) {
-					mMaps.updateData();
+					// TODO Verificar llamado con parámetro
+					mMaps.updateData(mMaps.getSelectedIdMap());
 					return true;
 				},
 				koCheck: function() {
-					mMaps.updateData();
+					// TODO Verificar llamado con parámetro
+					mMaps.updateData(mMaps.getSelectedIdMap());
 					return false;
 				}
 			}
@@ -206,11 +263,13 @@ var mMaps = {
 					mMaps.requests.assocLayerToGroupLayer(okCheckFn, null, params);
 				},				
 				okCheck: function(response) {
-					mMaps.updateData();
+					// TODO Verificar llamado con parámetro
+					mMaps.updateData(mMaps.getSelectedIdMap());
 					return true;
 				},
 				koCheck: function() {
-					mMaps.updateData();
+					// TODO Verificar llamado con parámetro
+					mMaps.updateData(mMaps.getSelectedIdMap());
 					return false;
 				}
 			}
@@ -630,7 +689,7 @@ var mMaps = {
 		}
 		
 		var groupName = $("#group-input-name").val();
-		this.requests.addNewGroup(groupName);
+		this.requests.addNewGroup(groupName, this.getSelectedIdMap());
 		return true;
 	},
 	
@@ -647,15 +706,44 @@ var mMaps = {
 		groupObj.id = $("#group-input-id-mod").val();
 		groupObj.name = $("#group-input-name-mod").val();
 		
-		this.requests.modifyGroup(groupObj);
+		this.requests.modifyGroup(groupObj, this.getSelectedIdMap());
 		return true;
 	},
 	
-	updateData: function() {
-		this.requests.getGroupedLayers();
-		this.requests.getLayers();
+	updateData: function(idMap) {
+		// TODO Retirar cuando todo se haya ajustado al cargue de mapas
+		//idMap = typeof idMap !== 'undefined' ? idMap : 8;
+		
+		this.requests.getGroupedLayers(idMap);
+		this.requests.getLayers(idMap);
 		
 		return;
+	},
+	
+	// Enable proper button to enable/disable layerSource
+	showContentOnSelect: function() {
+		var selectedRow = Utils.getSelectedRow(this.dt)[0];
+		if (!Utils.isNullOrUndefined(selectedRow)) {
+			$("#m-groups").show();
+			$("#m-layers").show();
+			
+			this.updateData(this.getSelectedIdMap());
+		}
+		else  {
+			$("#m-groups").hide();
+			$("#m-layers").hide();
+		}
+	},
+	
+	getSelectedIdMap: function(){
+		var selectedRow = Utils.getSelectedRow(this.dt)[0];
+		
+		var result = undefined;
+		
+		if(selectedRow!==undefined)
+			result = selectedRow.idMap;
+		
+		return result;
 	},
 	
 	/**
@@ -667,17 +755,19 @@ var mMaps = {
 		groupsDone: false,
 		layersDone: false,
 		
-		getGroupedLayers: function() {
+		getGroupedLayers: function(idMapParam) {
 			Utils.ajaxCall(Services.getMapConfigUrl(), "POST", "json", {
-				oper: "layerGroupsAndLayers"
+				oper: "layerGroupsAndLayers",
+				idMap: idMapParam
 			}, function(response){
 				mMaps.viewAllGroups(response.result.data);
 			}); 			
 		},
 		
-		getLayers: function() {
+		getLayers: function(idMapParam) {
 			Utils.ajaxCall(Services.getMapConfigUrl(), "POST", "json", {
-				oper: "unAssociatedlayers"
+				oper: "unAssociatedlayers",
+				idMap: idMapParam
 			}, function(response){
 				mMaps.viewAllLayers(response.result.data);
 			}); 
@@ -714,16 +804,18 @@ var mMaps = {
 				layerId: layerId
 			}, function(response){
 				if(response.success)
-					mMaps.updateData();
+					mMaps.updateData(mMaps.getSelectedIdMap());
 			}, null);			
 		},
 		
-		addNewGroup: function(groupName) {
+		addNewGroup: function(groupName, idMapParam) {
+			
 			Utils.ajaxCall(Services.getMapConfigUrl(), "POST", "json", {
 				oper: "addLayerGroup",
-				layerGroupName: groupName
+				layerGroupName: groupName,
+				idMap: idMapParam
 			}, function() {
-				mMaps.updateData();
+				mMaps.updateData(idMapParam);
 				Utils.closeDialogForm(mMaps.pFormAddGroup);
 			}, null);	
 		},
@@ -735,7 +827,7 @@ var mMaps = {
 				layerId: layerId,
 				position: position
 			}, function() {
-				mMaps.updateData();
+				mMaps.updateData(mMaps.getSelectedIdMap());
 			}, null);				
 		}, 
 		
@@ -746,7 +838,7 @@ var mMaps = {
 				layerGroupId : layerGroupId,
 				isLayerActive : isLayerActive
 			}, function() {
-				mMaps.updateData();
+				mMaps.updateData(mMaps.getSelectedIdMap());
 			}, null);
 		},
 		
@@ -756,7 +848,7 @@ var mMaps = {
 				layerGroupId: layerGroupId,
 				position: position
 			}, function() {
-				mMaps.updateData();
+				mMaps.updateData(mMaps.getSelectedIdMap());
 			}, null);				
 		},
 		
@@ -766,7 +858,7 @@ var mMaps = {
 				layerGroupId: layerGroupId,
 				forceDeletion: forceDel
 			}, function(response) {
-				mMaps.updateData();
+				mMaps.updateData(mMaps.getSelectedIdMap());
 			}, function(response) {
 				if(!Utils.isNullOrUndefined(response.code) && response.code === "EXC_LAYERGROUP_DELETE_ERROR_LAYERS_ASSOCIATED") {
 					mMaps.openDialogConfirmDelGroup(layerGroupId);
@@ -782,13 +874,14 @@ var mMaps = {
 			});
 		},
 		
-		modifyGroup: function(groupObj) {
+		modifyGroup: function(groupObj, idMapParam) {
 			Utils.ajaxCall(Services.getMapConfigUrl(), "POST", "json", {
 				oper: "updateLayerGroup",
 				layerGroupId: groupObj.id,
-				layerGroupName: groupObj.name
+				layerGroupName: groupObj.name,
+				idMap: idMapParam
 			}, function() {
-				mMaps.updateData();
+				mMaps.updateData(idMapParam);
 				Utils.closeDialogForm(mMaps.pFormModGroup);
 			}, null);				
 		}

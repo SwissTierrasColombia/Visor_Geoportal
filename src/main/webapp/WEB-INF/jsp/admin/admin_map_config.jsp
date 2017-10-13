@@ -32,6 +32,12 @@
 
 </style>
 
+<style>
+table.dataTable, table.dataTable th, table.dataTable td {
+white-space: normal !important;
+}
+</style>
+
 </head>
 
 <body>
@@ -43,26 +49,32 @@
 	    </jsp:attribute>
 	    
 	    <jsp:body>
-				<div id="m-groups">
-					<div id="m-panel-header">
-						<div data-locale_key="Manager_Map_TitlePanelGroups" data-locale_ref="text" class="localizedElement m-panel-title"></div>
-						<div class="m-toolbars manager-toolbar">
-							<div id="m-groups-add" data-locale_key="Manager_Map_Button_AddGroup" data-locale_ref="title" class="localizedElement grid-toolbar-item" onclick="mMaps.openDialogAddGroup();"><i class="fa fa-plus fa-2x"></i></div>
+	    		<div id="m-maps">
+				   	<div id="m-panel-header">
+				   	<div data-locale_key="Manager_Map_TitlePanelMaps" data-locale_ref="text" class="localizedElement m-panel-title"></div>
+				   	</div>
+					<table id="maps-dt"></table>
+				</div>
+					<div id="m-groups">
+						<div id="m-panel-header">
+							<div data-locale_key="Manager_Map_TitlePanelGroups" data-locale_ref="text" class="localizedElement m-panel-title"></div>
+							<div class="m-toolbars manager-toolbar">
+								<div id="m-groups-add" data-locale_key="Manager_Map_Button_AddGroup" data-locale_ref="title" class="localizedElement grid-toolbar-item" onclick="mMaps.openDialogAddGroup();"><i class="fa fa-plus fa-2x"></i></div>
+							</div>
+						</div>
+						<div id="m-groups-body">
+							<div id="m-groups-list"></div>
 						</div>
 					</div>
-					<div id="m-groups-body">
-						<div id="m-groups-list"></div>
+					<div id="m-layers">
+						<div id="m-panel-header">
+							<div data-locale_key="Manager_Map_TitlePanelLayers" data-locale_ref="text" class="localizedElement m-panel-title"></div>
+						</div>
+						<div id="m-layers-body">
+							<div id="m-layers-list"></div>
+						</div>
 					</div>
-				</div>
-				<div id="m-layers">
-					<div id="m-panel-header">
-						<div data-locale_key="Manager_Map_TitlePanelLayers" data-locale_ref="text" class="localizedElement m-panel-title"></div>
-					</div>
-					<div id="m-layers-body">
-						<div id="m-layers-list"></div>
-					</div>
-				</div>
-			
+
 	    </jsp:body>
 	</t:generic_admin_page>
 	
