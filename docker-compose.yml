@@ -1,0 +1,13 @@
+version: '3'
+services:
+  database:
+    build: .
+    ports:
+      - 5432:5432
+    environment:
+      - ALLOW_IP_RANGE="0.0.0.0/0"
+      - POSTGRES_USER="geoportal_user"
+      - POSTGRES_PASS="geoportal_user"
+      - POSTGRES_DBNAME="geoportal"
+      
+# exec with $ docker-compose up

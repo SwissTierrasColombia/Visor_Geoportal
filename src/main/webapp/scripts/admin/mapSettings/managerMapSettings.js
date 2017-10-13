@@ -51,15 +51,12 @@ var mMapSettings = {
 	 * @Author: Agencia de implementacion
 	 * */
 	openDialogAddMap: function(){
-		this.createUpdateFormPanel();
+		this.createAddFormPanel();
 		Utils.cleanForm(this.pFormAddMap);
 		if(this.pFormAddMap != null)
 			if(this.validatorFormAddMap != null){
 				this.validatorFormAddMap.reset();
 			}
-		
-		// populatePage?
-		//mMapSettings.requests.getData();
 		
 		this.pFormAddMap.dialog("open");
 		
@@ -73,8 +70,9 @@ var mMapSettings = {
 				this.validatorFormAddMap.reset();
 			}
 		
-		// populatePage?
-		mMapSettings.requests.getData();
+		// populate form with existing data
+		// TODO ID debe ser dinámico
+		mMapSettings.requests.getData(8);
 		
 		this.pFormAddMap.dialog("open");
 		
@@ -99,7 +97,9 @@ var mMapSettings = {
 		
 		buttons[LocaleManager.getKey('General_Save')] = function(){
 			//mMaps.submitAddMap();
-			mMapSettings.requests.updateData();
+			var settings = mMapSettings.getDataFromPage();
+			
+			mMapSettings.requests.updateData(settings);
 			$(this).dialog("close");
 		};
 		
@@ -133,7 +133,12 @@ var mMapSettings = {
 		
 		buttons[LocaleManager.getKey('General_Save')] = function(){
 			//mMaps.submitAddMap();
-			mMapSettings.requests.addData();
+			var settings = mMapSettings.getDataFromPage();
+			
+			// 
+			delete settings.idMap;
+			
+			mMapSettings.requests.addNewMap(settings);
 			$(this).dialog("close");
 		};
 		
@@ -149,38 +154,12 @@ var mMapSettings = {
 		
 		return this.pFormAddMap;
 	},
-	/**
-	 * Submit new map
-	 * @Author Agencia de implementacion
-	 * */
-	submitAddMap: function(){
-		var isValid = this.validatorFormAddMap.valid();
-		if(!isValid){
-			return;
-		}
-		
-		var mapName = $("#map-input-name").val();
-		this.requests.addNewMap(mapName);
-		return true;
-	},
-	
-	/**
-	 * TODO add map
-	 * @Author Agencia de implementacion
-	 * */
-	addNewMap: function(mapNameParam){
-		Utils.ajaxCall(Services.getMapConfigUrl(), "POST", "json",{
-			oper: "addMap",
-			mapName: mapNameParam
-		}, function(){
-			mMaps.updateData();
-			Utils.closeDialogForm(mMaps.pFormAddMap);
-		}, null);
-	},
-	
 	
 	getDataFromPage: function() {
 		var settings = new Object();
+		
+		settings.idMap = $("#map-input-id").val();
+		settings.mapName = $("#name-input").val();
 		
 		settings.projection = $("#projection-input").val();
 		settings.units = $("#units-input").val();
@@ -242,6 +221,9 @@ var mMapSettings = {
 	},
 	
 	populatePage: function(settings) {
+		
+		$("#map-input-id").val(settings.idMap);
+		$("#name-input").val(settings.mapName);
 		$("#projection-input").val(settings.projection);
 		$("#units-input").val(settings.units);
 		
@@ -280,7 +262,6 @@ var mMapSettings = {
 		 */
 		var scaleList = settings.customScales;
 		this.populateScales(scaleList);
-		
 		/*
 		 * Populate resolutions
 		 */
@@ -390,7 +371,7 @@ var mMapSettings = {
 	
 	requests: {		
 		
-		getData: function() {
+		getData: function(idMap) {
 			
 			//Reset validator
 			if(validator) {
@@ -398,7 +379,8 @@ var mMapSettings = {
 			}
 			
 			Utils.ajaxCallSynch("./mapConfig", "POST", "json", {
-				oper: "mapSettings"
+				oper: "mapSettings",
+				idMap: idMap
 			}, function(response) {
 				if(response.success) {
 					mMapSettings.populatePage(response.result);
@@ -406,13 +388,12 @@ var mMapSettings = {
 			});
 		},
 		
-		updateData: function() {
+		updateData: function(settings) {
 			var isValid = validator.valid();
 			if(!isValid) {
 				return;
 			}
 			
-			var settings = mMapSettings.getDataFromPage();
 			Utils.ajaxCallSynch("./mapConfig", "POST", "json", {
 				oper: "saveMapSettings",
 				settings: JSON.stringify(settings) 
@@ -420,19 +401,20 @@ var mMapSettings = {
 				if(response.success) {
 					AlertDialog.createOkDefaultDialog(LocaleManager.getKey("Manager_Item_ConfigSystem"), LocaleManager.getKey("Manager_Config_Saved_Ok"), "info", function() {
 						//Reload
-						mMapSettings.requests.getData();
+						// TODO Verificar si es necesaria la recarga de los datos
+						mMapSettings.requests.getData(idMap);
 					});
 				}
 			});
 		},
 		
-		addData: function(){
+		addNewMap: function(settings){
 			var isValid = validator.valid();
 			if(!isValid) {
 				return;
 			}
 			
-			var settings = mMapSettings.getDataFromPage();
+			
 			Utils.ajaxCallSynch("./mapConfig", "POST", "json", {
 				oper: "createNewMap",
 				settings: JSON.stringify(settings) 
@@ -440,7 +422,7 @@ var mMapSettings = {
 				if(response.success) {
 					AlertDialog.createOkDefaultDialog(LocaleManager.getKey("Manager_Item_ConfigSystem"), LocaleManager.getKey("Manager_Config_Saved_Ok"), "info", function() {
 						//Reload
-						mMapSettings.requests.getData();
+						//mMapSettings.requests.getData();
 					});
 				}
 			});

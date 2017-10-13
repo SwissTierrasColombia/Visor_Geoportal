@@ -534,6 +534,10 @@ var LANG_EN = {
 		Manager_Map_Settings_Default_Extent_MinY: "Minimum Y:",
 		Manager_Map_Settings_Default_Extent_MaxY: "Maximum Y:",
 		
+		Manager_Map_Settings_Label_NameMap: "Map name",
+		Manager_Map_Settings_Button_AddMap: "Add map",
+		Manager_Map_Settings_Button_UpdateMap: "Update map",
+		
 		// - Manager layer sources
 		
 		//grid

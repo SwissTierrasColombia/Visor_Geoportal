@@ -534,6 +534,10 @@ var LANG_ES = {
 		Manager_Map_Settings_Default_Extent_MaxX: "X maxima",
 		Manager_Map_Settings_Default_Extent_MinY: "Y minima",
 		Manager_Map_Settings_Default_Extent_MaxY: "Y maxima",
+
+		Manager_Map_Settings_Label_NameMap: "Nombre del mapa",
+		Manager_Map_Settings_Button_AddMap: "Agregar mapa",
+		Manager_Map_Settings_Button_UpdateMap: "Actualizar mapa",
 		
 		// - Manager layer sources
 		

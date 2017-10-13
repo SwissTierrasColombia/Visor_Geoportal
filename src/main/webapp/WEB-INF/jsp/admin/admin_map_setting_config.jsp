@@ -101,17 +101,17 @@
 						data-locale_ref="text" class="localizedElement m-panel-title"></div>
 			<div class="m-toolbars manager-toolbar">
 				<div id="m-maps-add" data-locale_key="Manager_Map_Button_AddMap"
-								data-locale_ref="title"
-								class="localizedElement grid-toolbar-item"
-								onclick="mMapSettings.openDialogAddMap();">
-								<i class="fa fa-plus fa-2x"></i>
+					 data-locale_ref="title"
+					 class="localizedElement grid-toolbar-item"
+					 onclick="mMapSettings.openDialogAddMap();">
+					<i class="fa fa-plus fa-2x"></i>
 				</div>
 				
-				<div id="m-maps-add" data-locale_key="Manager_Map_Button_AddMap"
-								data-locale_ref="title"
-								class="localizedElement grid-toolbar-item"
-								onclick="mMapSettings.openDialogUpdateMap();">
-								<i class="fa fa-edit fa-2x"></i>
+				<div id="m-maps-update" data-locale_key="Manager_Map_Button_AddMap"
+					 data-locale_ref="title"
+					 class="localizedElement grid-toolbar-item"
+					 onclick="mMapSettings.openDialogUpdateMap();">
+					<i class="fa fa-edit fa-2x"></i>
 				</div>
 			</div>
 			</div>
@@ -143,7 +143,11 @@
 				<div data-locale_key="Manager_Map_Settings_Title" data-locale_ref="text" class="localizedElement"></div>
 				<div data-locale_key="Manager_Map_Settings_Subtitle" data-locale_ref="text" class="localizedElement"></div>
 			</div>
-			
+			<input type="hidden" id="map-input-id">
+			<div class="itemform">
+				<div data-locale_key="Manager_Map_Settings_Label_NameMap" data-locale_ref="text" class="localizedElement form-label-title"></div>
+				<div><input type="text" id="name-input" required></div>
+			</div>
 			<div class="itemform">
 				<div data-locale_key="Manager_Map_Settings_Projection" data-locale_ref="text" class="localizedElement form-label-title"></div>
 				<div><input id="projection-input" name="projection-input" required></div>

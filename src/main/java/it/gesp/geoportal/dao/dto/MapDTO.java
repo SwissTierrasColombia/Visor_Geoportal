@@ -19,16 +19,10 @@ public class MapDTO {
 	private Double centerx;
 	private Double centery;
 	
-//	private Double minx;
-//	private Double miny;
-//	private Double maxx;
-//	private Double maxy;
-	
 	private Double defaultExtentMinX;
 	private Double defaultExtentMinY;
 	private Double defaultExtentMaxX;
 	private Double defaultExtentMaxY;
-	
 	
 	private Boolean showOverview;
 	
@@ -37,6 +31,7 @@ public class MapDTO {
 
 	private List<Integer> customScales;
 	private List<Double> customResolutions;
+	private String thumbnail;
 	
 	public int getIdMap() {
 		return idMap;
@@ -94,37 +89,6 @@ public class MapDTO {
 		this.centery = centery;
 	}
 
-//	public Double getMinx() {
-//		return minx;
-//	}
-//
-//	public void setMinx(Double minx) {
-//		this.minx = minx;
-//	}
-//
-//	public Double getMiny() {
-//		return miny;
-//	}
-//
-//	public void setMiny(Double miny) {
-//		this.miny = miny;
-//	}
-//
-//	public Double getMaxx() {
-//		return maxx;
-//	}
-//
-//	public void setMaxx(Double maxx) {
-//		this.maxx = maxx;
-//	}
-//
-//	public Double getMaxy() {
-//		return maxy;
-//	}
-//
-//	public void setMaxy(Double maxy) {
-//		this.maxy = maxy;
-//	}
 	
 	public static MapDTO parseFromMap(Map map) {
 		MapDTO mapDTO = new MapDTO();
@@ -134,12 +98,6 @@ public class MapDTO {
 		mapDTO.setProjection(map.getProjection());
 		mapDTO.setMaxScale(map.getMaxScale());
 		mapDTO.setUnits(map.getUnits());
-		
-		
-		//Center & Zoom
-//		mapDTO.setZoom(map.getZoom());
-//		mapDTO.setCenterx(map.getCenterXCoord());
-//		mapDTO.setCentery(map.getCenterYCoord());
 		
 		//Default Extent
 		mapDTO.setDefaultExtentMinX(map.getDefaultExtentMinX());
@@ -157,17 +115,8 @@ public class MapDTO {
 		
 		//Dots per inch override
 		mapDTO.setDotsPerInch(map.getDotsPerInch());
-		
-		//Extent
-//		List<Double> extentList = map.getMaxExtentAsObject();
-//		
-//		if (extentList.size() == 4) {
-//			mapDTO.setMinx(extentList.get(0));
-//			mapDTO.setMiny(extentList.get(1));
-//			mapDTO.setMaxx(extentList.get(2));
-//			mapDTO.setMaxy(extentList.get(3));
-//		}
-		
+		if(map.getThumbnail()!=null)
+			mapDTO.setThumbnail(map.getThumbnail());
 		return mapDTO;
 	}
 
@@ -262,6 +211,14 @@ public class MapDTO {
 
 	public void setDefaultExtentMaxY(Double defaultExtentMaxY) {
 		this.defaultExtentMaxY = defaultExtentMaxY;
+	}
+
+	public String getThumbnail() {
+		return thumbnail;
+	}
+
+	public void setThumbnail(String thumbnail) {
+		this.thumbnail = thumbnail;
 	}
 	
 }
