@@ -21,18 +21,22 @@ div.olControlZoom {
 }
 
 div.olControlZoom a {
-	background-image:url('../images/zoom_out.png');
-	height: 44px;
-	width: 44px;
-	background-color: transparent;
+	height: 39px;
+	width: 39px;
 	color: transparent;
+	background: #5A738E;
+	-moz-border-radius: 19px;
+	-webkit-border-radius: 19px;
+	border-radius: 19px;
+	background-size: 39px 39px;
+	background-repeat: no-repeat;
+	margin-top: 8px;
 }
 div.olControlZoom a:hover {
-	background-image:url('../images/zoom_out.png');
-	height: 44px;
-	width: 44px;
-	background-color: transparent;
-	color: transparent;
+	background: #23527c;
+	height: 39px;/*needed to rewrite ol classes*/
+	width: 39px;/*needed to rewrite ol classes*/
+	background-size: 39px 39px; /*needed to rewrite ol classes*/
 }
 
 .olControlOverviewMapElement {
@@ -44,9 +48,18 @@ div.olControlZoom a:hover {
 .olControlZoomIn {
 	background-image:url('../images/zoom_in.png') !important;
 }
+
+.olControlZoomOut {
+	background-image:url('../images/zoom_out.png') !important;
+}
+
 /* SCALEBAR */
 .olControlScaleBar {
  	left: 5px;
 /* 	right: 0px; */
 	bottom: 25px !important;
+}
+
+.ui-widget-content{
+	color: #777;
 }

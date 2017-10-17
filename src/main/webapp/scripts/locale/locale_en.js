@@ -631,6 +631,12 @@ var LANG_EN = {
 		Metadata_Label_Form_CurrentBBOX: "Select a bbox",
 		Metadata_Label_Button_CenterMap: "Center map",
 		Metadata_Label_Button_Details: "View details",
-		Metadata_Csw_Error_Requests: "Error during CSW requests"
+		Metadata_Csw_Error_Requests: "Error during CSW requests",
+                
+                // Themes
+		Advanced_Panel_Themes: "Change Topic",
+                Advanced_Panel_Themes_Label_keyword: "Topics",
+                Advanced_Panel_Themes_Label_No_Data: "No topics available",
+                Advanced_Panel_Themes_Label_Open_Theme: "View topic"
 		
 };

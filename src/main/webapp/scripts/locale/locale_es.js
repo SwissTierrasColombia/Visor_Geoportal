@@ -122,8 +122,8 @@ var LANG_ES = {
 		KMLUpload_Label_ChooseFile: "Seleccionar archivo",
 		KMLUpload_Label_ChooseFileUpload: "Seleccionar un archivo KML",
 		KMLUpload_Label_SelectProjection: "Eligir un sistema de referencia",
-		KMLUpload_Label_ExtractAttributes: "Estraer atributos",
-		KMLUpload_Label_ExtractStyles: "Estraer estilos",
+		KMLUpload_Label_ExtractAttributes: "Extraer atributos",
+		KMLUpload_Label_ExtractStyles: "Extraer estilos",
 		KMLUpload_LabelSubmit: "Cargar",
 		
 		// Print
@@ -131,7 +131,7 @@ var LANG_ES = {
 		Print_Label_SearchBboxDeactive: "Extension actual",
 		Print_Label_SearchBboxActive: "Seleccionar una area de impresion",
 		
-		Print_Label_Layout: "Disposición de impresiòn",
+		Print_Label_Layout: "Disposición de impresión",
 		Print_Label_Format: "Formato de impresión",
 		Print_Label_Scale: "Escala",
 		Print_Label_Dpi: "Dpi",
@@ -632,5 +632,12 @@ var LANG_ES = {
 		Metadata_Label_Form_CurrentBBOX: "Dibujar area de interes",
 		Metadata_Label_Button_CenterMap: "Centrar el mapa",
 		Metadata_Label_Button_Details: "Ver detalles",
-		Metadata_Csw_Error_Requests: "Error en la solicitud CSW de los datos"
+		Metadata_Csw_Error_Requests: "Error en la solicitud CSW de los datos",
+                
+                // Themes
+		Advanced_Panel_Themes: "Cambiar temática",
+                Advanced_Panel_Themes_Label_keyword: "Temáticas",
+                Advanced_Panel_Themes_Label_No_Data: "No hay temáticas disponibles",
+                Advanced_Panel_Themes_Label_Open_Theme: "Abrir"
+		
 };
