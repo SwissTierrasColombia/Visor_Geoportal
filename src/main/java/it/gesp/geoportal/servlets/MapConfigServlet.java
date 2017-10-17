@@ -70,12 +70,6 @@ public class MapConfigServlet extends HttpServlet {
 		User currentUser = LoginService.getLoggedInUserFromSession(currentSession);
 		//currentUser = new UserService().getUserByUsername("mosef", true);
 		
-		it.gesp.geoportal.dao.entities.Map currentMap = new MapService().getMapByName("icf_map");
-		int idMap = currentMap.getIdMap();
-		
-		LayerGroupService layerGroupService = new LayerGroupService();
-		LayerService layerService = new LayerService();
-		
 		PrintWriter w = response.getWriter();
 		String jsonRes = null;
 
@@ -94,6 +88,23 @@ public class MapConfigServlet extends HttpServlet {
 			ServletUtils.writeAndFlush(log, w, jsonRes);
 			return;
 		}
+		
+		int idMap = -1;
+		try{
+			it.gesp.geoportal.dao.entities.Map defaultMap = new MapService().getAllMaps().get(0);
+			idMap = defaultMap.getIdMap();
+		}catch(Exception e){
+			
+			jsonRes = GeoportalResponse.createErrorResponse(userMessages.getString("NO_STORED_MAP_ERROR"));
+			ServletUtils.writeAndFlush(log, w, jsonRes);
+			return;
+		}
+		
+		
+		
+		LayerGroupService layerGroupService = new LayerGroupService();
+		LayerService layerService = new LayerService();
+		
 
 		try {
 
