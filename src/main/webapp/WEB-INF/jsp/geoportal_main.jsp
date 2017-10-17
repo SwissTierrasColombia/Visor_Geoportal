@@ -22,10 +22,13 @@
 				<div class="header">
 					<div>
 						<div class="logo-banner-left icfClass">
-							<img src="images/banner/logoproyecto.png" alt="Proyecto SECO">
+							<img src="images/banner/LOGO-WEBGEO.png" alt="IDE AT">
+						</div>
+						<div class="logo-banner-left icfClass">
+							<img src="images/banner/logoproyecto.png" alt="PROYECTO SECO">
 						</div>
 <!-- 						<div class="logo-banner-left hondurasClass"> -->
-<!-- 							<img src="images/banner/Honduras_flag.gif" alt="HONDURAS"> -->
+<!-- 							<img src="images/banner/logoproyecto.png" alt="PROYECTO SECO"> -->
 <!-- 						</div> -->
 <!-- 						<div class="logo-banner-left icfClass"> -->
 <!-- 							<img src="images/banner/icf_logo_white.jpg" alt="ICF"> -->
