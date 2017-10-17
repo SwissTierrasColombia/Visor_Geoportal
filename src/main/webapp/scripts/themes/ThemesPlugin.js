@@ -55,7 +55,8 @@ var themesPlugin = {
                     '        <div class="image view view-first">' +
                     '            <img style="width: 100%; display: block;" sytle="background-size: 100% 100%;" src="holder.js/100px100p?bg=' + this.chroma[i + 2] + '&text=theme preview" alt="image" />' +
                     '            <div class="mask">' +
-                    '               <a href="' + window.location.pathname + '?config=' + this.themes[i].id + '">'+
+//                    '               <a href="' + window.location.pathname + '?config=' + this.themes[i].id + '">'+
+                    '               <a href="#" data-theme-id="' + this.themes[i].id + '" id="theme_' + this.themes[i].id + '_anchor">'+
                     '                   <p id="open-text" data-locale_key="Advanced_Panel_Themes_Label_Open_Theme" data-locale_ref="text" class="localizedElement"></p>' +
                     '                   <div class="tools tools-bottom">' +
                     '                       <i class="fa fa-share"></i>' +
@@ -67,6 +68,11 @@ var themesPlugin = {
                     '    <hr style="margin:5px 0;">' +
                     '</div>');
             this.themesListPanel.append(panel);
+
+            var anchor = $(panel).find('#theme_' + this.themes[i].id + '_anchor');
+            $(anchor).on('click', function(){
+                window.location = window.location.pathname + '?config=' + $(this).data('theme-id');
+            });
             
             LocaleManager.refreshLocalizedElement($(panel).find("#open-text"));
             

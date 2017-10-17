@@ -109,7 +109,7 @@ function loadAll() {
 	}
 	
 	map = new OpenLayers.Map('map', mapOptions);
-
+        
 	/*
 	 * Create Layer Switcher Control
 	 */
