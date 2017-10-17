@@ -269,7 +269,7 @@ var featureInfoResults = {
         //Add geometry to the body
         featBody.data("feature", feature);
 
-        if (attrMapping != null && attrMapping.hasOwnProperty("template")) {
+        if (attrMapping !== null && attrMapping.hasOwnProperty("template")) {
             var attributes = feature.attributes;
             if (attrMapping.hasOwnProperty("attributes"))
                 $.extend(attributes, attrMapping.attributes);
@@ -316,13 +316,7 @@ var featureInfoResults = {
                         $("<i>").attr({"class": "fa fa-circle"})
                         );
 
-                var field = $("<div>").attr({"class": "info-left"}).text(function () {
-                    if (attrMapping.hasOwnProperty('labels') && attrMapping['labels'].hasOwnProperty(key)) {
-                        return attrMapping['labels'][key];
-                    } else {
-                        return key;
-                    }
-                });
+                var field = $("<div>").attr({"class": "info-left"}).text(key);
                 var valueField = $("<div>").attr({"class": "info-right word-wrap"}).text(value);
 
                 rowInfo.append(iconRow, field, valueField);
