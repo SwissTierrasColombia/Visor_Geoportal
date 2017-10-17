@@ -1,0 +1,24 @@
+version: '3'
+services:
+  pgadmin4:
+     image: dpage/pgadmin4
+     ports:
+      - 80:80
+     volumes:
+      - .:/app
+     environment:
+      - PGADMIN_DEFAULT_EMAIL=geoportal@proadmintierra.info
+      - PGADMIN_DEFAULT_PASSWORD=geoportal_user
+  database:
+    build: .
+    ports:
+      - 5432:5432
+    volumes:
+      - ./sql:/scripts_sql
+    environment:
+      - ALLOW_IP_RANGE="0.0.0.0/0"
+      - POSTGRES_USER="geoportal_user"
+      - POSTGRES_PASS="geoportal_user"
+      - POSTGRES_DBNAME="geoportal_new"
+      - POSTGRES_SCRIPTS="/scripts_sql/geoportal.backup.sql"
+# exec with $ docker-compose up

@@ -1,48 +1,42 @@
 <%-- <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%> --%>
-<%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
-<%@ page import="it.gesp.geoportal.locale.LocaleUtils, it.gesp.geoportal.services.LoginService,it.gesp.geoportal.constants.Permissions,it.gesp.geoportal.dao.entities.User,it.gesp.geoportal.services.LogService" %>
+<%@taglib prefix="t" tagdir="/WEB-INF/tags"%>
+<%@ page
+	import="it.gesp.geoportal.locale.LocaleUtils, it.gesp.geoportal.services.LoginService,it.gesp.geoportal.constants.Permissions,it.gesp.geoportal.dao.entities.User,it.gesp.geoportal.services.LogService"%>
 
 <!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
-<%@ include file="admin_config_common_js.jspf" %>
+<%@ include file="admin_config_common_js.jspf"%>
 
 <!-- Manager Map Settings scripts and CSS-->
-<link rel="stylesheet" href="css/admin/managerMapSettings.css" type="text/css">
-<script type="text/javascript" src="scripts/admin/mapSettings/managerMapSettings.js"></script>
+
+<link rel="stylesheet" href="css/admin/managerMapSettings.css"
+	type="text/css">
+<script type="text/javascript"
+	src="scripts/admin/mapSettings/managerMapSettings.js"></script>
 
 <!-- Start script -->
 <script>
 	var validator = null;
 
-	$(document).ready(function(){
+	$(document).ready(function() {
 		LocaleManager.refreshLocale();
 		AdminMenu.setMapSettingsConfigPageActive();
-		mMapSettings.requests.getData();
 		
-		validator = new Validate({
-			form: $("#mapSettingAdminContainer")
-		});
-		
-		$("#submit").button();
-		$("#cancel").button();
-		
+		mMapSettings.init();
 	});
-	
 </script>
 
 <style>
-
-#scales_buttons input, #scales_buttons div,
-#resolutions_buttons input, #resolutions_buttons div {
+#scales_buttons input, #scales_buttons div, #resolutions_buttons input,
+	#resolutions_buttons div {
 	float: left;
-} 
+}
 
-#scales-add, #scales-delete,
-#resolutions-add, #resolutions-delete {
-/* 	padding: 3px 3px 0px 3px !important; */
+#scales-add, #scales-delete, #resolutions-add, #resolutions-delete {
+	/* 	padding: 3px 3px 0px 3px !important; */
 	padding: 1px 2px 0px 2px !important;
 	font-size: 9px !important;
 	margin-top: 2px;
@@ -65,13 +59,15 @@
 	padding-left: 300px;
 }
 
-#list_scales .ui-selecting,
-#list_resolutions .ui-selecting { background: #b0bed9; }
-#list_scales .ui-selected,
-#list_resolutions .ui-selected { background: #b0bed9; }
-	
-#list_scales li,
-#list_resolutions li {
+#list_scales .ui-selecting, #list_resolutions .ui-selecting {
+	background: #b0bed9;
+}
+
+#list_scales .ui-selected, #list_resolutions .ui-selected {
+	background: #b0bed9;
+}
+
+#list_scales li, #list_resolutions li {
 	margin: 2px;
 	padding: 0.4em;
 	height: 18px;
@@ -80,7 +76,12 @@
 #radio_container {
 	padding-top: 0px;
 }
+</style>
 
+<style>
+	table.dataTable, table.dataTable th, table.dataTable td {
+		white-space: normal !important;
+	}
 </style>
 
 </head>
@@ -89,17 +90,55 @@
 	<t:generic_admin_page>
 		<jsp:attribute name="header">
 	    </jsp:attribute>
-	    <jsp:attribute name="footer">
+		<jsp:attribute name="footer">
 	    </jsp:attribute>
-	
+
 		<jsp:body>
 		
-		<form id="mapSettingAdminContainer" onSubmit="return false;">		
-			<div class="header">
-				<div data-locale_key="Manager_Map_Settings_Title" data-locale_ref="text" class="localizedElement"></div>
-				<div data-locale_key="Manager_Map_Settings_Subtitle" data-locale_ref="text" class="localizedElement"></div>
+		<div id="m-maps">
+			<div id="m-panel-header">
+				<div data-locale_key="Manager_Map_TitlePanelMaps"
+						data-locale_ref="text" class="localizedElement m-panel-title"></div>
+			<div class="m-toolbars manager-toolbar">
+				<div id="m-maps-add" data-locale_key="Manager_Map_Button_AddMap"
+					 data-locale_ref="title"
+					 class="localizedElement grid-toolbar-item"
+					 onclick="mMapSettings.openDialogAddMap();">
+					<i class="fa fa-plus fa-2x"></i>
+				</div>
+				
+				<div id="m-maps-update" data-locale_key="Manager_Map_Button_AddMap"
+					 data-locale_ref="title"
+					 class="localizedElement grid-toolbar-item"
+					 onclick="mMapSettings.openDialogUpdateMap();">
+					<i class="fa fa-edit fa-2x"></i>
+				</div>
+			</div>
 			</div>
 			
+			<div id="m-maps-list">
+				<table id="maps-dt"></table>
+			</div>
+		</div>
+
+		</jsp:body>
+
+	</t:generic_admin_page>
+
+
+	<form id="form-addmap-dialog" onSubmit="return false;" style="display:none;">
+		<div id="form-dialog-header" data-locale_key="Manager_Maps_HeaderForm_Add"
+			data-locale_ref="text" class="localizedElement data-grid-form-header"></div>
+		
+			<div class="header">
+			</div>
+			<input type="hidden" id="map-input-id">
+			<div class="form-items-container">
+			<div class="form-items-left">
+			<div class="itemform">
+				<div data-locale_key="Manager_Map_Settings_Label_NameMap" data-locale_ref="text" class="localizedElement form-label-title"></div>
+				<div><input type="text" id="name-input" required></div>
+			</div>
 			<div class="itemform">
 				<div data-locale_key="Manager_Map_Settings_Projection" data-locale_ref="text" class="localizedElement form-label-title"></div>
 				<div><input id="projection-input" name="projection-input" required></div>
@@ -109,22 +148,6 @@
 				<div data-locale_key="Manager_Map_Settings_Units" data-locale_ref="text" class="localizedElement form-label-title"></div>
 				<div><input id="units-input" name="units-input" required></div>
 			</div>
-			
-			<!--  DEFAULT ZOOMLEVEL & CENTER (OLD -->
-<!-- 			<div class="itemform"> -->
-<!-- 				<div data-locale_key="Manager_Map_Settings_Default_ZoomLevel" data-locale_ref="text" class="localizedElement form-label-title"></div> -->
-<!-- 				<div><input id="default-zoomlevel-input" type="number" name="default-zoomlevel-input" required></div> -->
-<!-- 			</div> -->
-			
-<!-- 			<div class="itemform"> -->
-<!-- 				<div data-locale_key="Manager_Map_Settings_Center_X" data-locale_ref="text" class="localizedElement form-label-title"></div> -->
-<!-- 				<div><input id="centerx-input" type="number" name="centerx-input" required></div> -->
-<!-- 			</div> -->
-			
-<!-- 			<div class="itemform"> -->
-<!-- 				<div data-locale_key="Manager_Map_Settings_Center_Y" data-locale_ref="text" class="localizedElement form-label-title"></div> -->
-<!-- 				<div><input id="centery-input" type="number" name="centery-input" required></div> -->
-<!-- 			</div> -->
 			
 			<!--  DEFAULT EXTENT -->
 			<div class="itemform">
@@ -215,22 +238,11 @@
 				<div data-locale_key="Manager_Map_Settings_Show_Overview" data-locale_ref="text" class="localizedElement form-label-title"></div>
 				<div><input type="checkbox" id="show_overview"  name="show_overview"></div>
 			</div>
-				
-<!-- 			<div class="itemform"> -->
-<!-- 				<div data-locale_key="Manager_Map_Settings_Show_Overview" data-locale_ref="text" class="localizedElement form-label-title"></div> -->
-<!-- 				<div><input id="show_overview" type="checkbox" name="show_overview"></div> -->
-<!-- 			</div> -->
 			
-			<button id="submit" data-locale_key="General_Save" data-locale_ref="text" class="localizedElement" onclick="mMapSettings.requests.saveData();"></button>
-			<button id="cancel" data-locale_key="General_Cancel" data-locale_ref="text" class="localizedElement" onclick="mMapSettings.requests.getData();"></button>
-			
-		</form>
-		
-		</jsp:body>
-		
-	</t:generic_admin_page>
-	
-	
-	
+			</div>
+			</div>
+	</form>
+
+
 </body>
 </html>

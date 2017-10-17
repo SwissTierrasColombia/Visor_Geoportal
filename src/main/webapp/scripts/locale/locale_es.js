@@ -17,7 +17,7 @@ var LANG_ES = {
 		Login_Button_Title: "Login",
 		Logout_Button_Title: "Logout",
 		
-		Login_Message_Text: "Log in por favor",
+		Login_Message_Text: "Autentíquese, por favor",
 		Map_Current_Scale_Text: "Escala actual",
 		
 		Loading: "Cargando...",
@@ -26,7 +26,7 @@ var LANG_ES = {
 		
 		General_Save: "Guardar",
 		General_Save_Ok: "Se ha guardado con exito",
-		General_Cancel: "Anular",
+		General_Cancel: "Cancelar",
 		General_Close: "Cerrar",
 		General_Clean: "Borrar",
 		General_Refresh: "Actualizar",
@@ -493,6 +493,7 @@ var LANG_ES = {
 		
 		
 		// - Manager maps
+		Manager_Map_TitlePanelMaps: "Lista de mapas",
 		Manager_Map_TitlePanelGroups: "Lista de grupos",
 		Manager_Map_TitlePanelLayers: "Lista de capas",
 		Manager_Map_Button_AddLayer: "Añadir una capa",
@@ -509,9 +510,12 @@ var LANG_ES = {
 		Manager_Maps_HeaderForm_DelGroupText: "Cada capa del grupo serà eliminada del grupo. Continuar?",
 		
 		// - Manager map settngs
+		Manager_Map_HeaderForm_Add: "Añadir un nuevo mapa",
+		Manager_Map_HeaderForm_Update: "Modificar el mapa",
 		Manager_Map_Settings_Title: "Parametros del mapa",
 		Manager_Map_Settings_Subtitle: "Proyeccion, unidad de medida, ...",
 		Manager_Map_Settings_Projection: "Codigo EPSG de sistema de proyeccion (es: EPSG:4326)",
+		Manager_Map_Settings_Projection_simple: "Codigo EPSG",
 		Manager_Map_Settings_Center_X: "X del centro",
 		Manager_Map_Settings_Center_Y: "Y del centro",
 		Manager_Map_Settings_Enable_CustomScalesResolutions: "Activar escalas / resoluciones personalizadas:",
@@ -521,19 +525,24 @@ var LANG_ES = {
 		Manager_Map_Settings_List_CustomScales: "Escalas personalizadas:",
 		Manager_Map_Settings_Add_CustomScale: "Añadir escala:",
 		Manager_Map_Settings_CustomScale_Integer: "El valor de la escala tiene que ser un intero",
-		Manager_Map_Settings_List_CustomResolutions: "Custom resolutions:",
-		Manager_Map_Settings_Add_CustomResolution: "Add resolution:",
+		Manager_Map_Settings_List_CustomResolutions: "Resolución personalizada:",
+		Manager_Map_Settings_Add_CustomResolution: "Agregar resolución:",
 		Manager_Map_Settings_CustomResolution_Float: "El valor de la resolucion tiene que ser Float",
 		Manager_Map_Settings_Dots_Per_Inch_Override: "Dots per inch override:",
 		Manager_Map_Settings_Show_Overview: "Mostrar overview:",
 		Manager_Map_Settings_Overview_Filename: "Overview Image file:",
 		Manager_Map_Settings_Default_ZoomLevel: "Nivel de zoom predefinido",
 		Manager_Map_Settings_Default_MaxScale: "Escala maxima:",
-		Manager_Map_Settings_Units: "Unidad del mapa (degrees, m, ft, km, mi, inches)",
-		Manager_Map_Settings_Default_Extent_MinX: "X minima",
-		Manager_Map_Settings_Default_Extent_MaxX: "X maxima",
-		Manager_Map_Settings_Default_Extent_MinY: "Y minima",
-		Manager_Map_Settings_Default_Extent_MaxY: "Y maxima",
+		Manager_Map_Settings_Units: "Unidades del mapa (degrees, m, ft, km, mi, inches)",
+		Manager_Map_Settings_Units_simple: "Unidades del mapa",
+		Manager_Map_Settings_Default_Extent_MinX: "X mínima",
+		Manager_Map_Settings_Default_Extent_MaxX: "X máxima",
+		Manager_Map_Settings_Default_Extent_MinY: "Y mínima",
+		Manager_Map_Settings_Default_Extent_MaxY: "Y máxima",
+
+		Manager_Map_Settings_Label_NameMap: "Nombre del mapa",
+		Manager_Map_Settings_Button_AddMap: "Agregar mapa",
+		Manager_Map_Settings_Button_UpdateMap: "Actualizar mapa",
 		
 		// - Manager layer sources
 		

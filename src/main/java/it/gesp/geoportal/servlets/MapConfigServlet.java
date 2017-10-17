@@ -24,6 +24,7 @@ import it.gesp.geoportal.utils.Utils;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -110,18 +111,79 @@ public class MapConfigServlet extends HttpServlet {
 					ServletUtils.writeAndFlush(log, w, jsonRes);
 					return;
 				}
-
-				it.gesp.geoportal.dao.entities.Map map = new MapService().getMapByName("icf_map");
+				
+				String mapIdStr = request.getParameter("idMap");
+				if (Utils.isNullOrEmpty(mapIdStr)) {
+					log.debug("Error parsing idMap parameter");
+					throw new DataInvalidException();
+				}
+				int mapId = Integer.parseInt(mapIdStr);
+				it.gesp.geoportal.dao.entities.Map map = new MapService().getMapById(mapId);
 				MapDTO mapDTO = MapDTO.parseFromMap(map);
 				
 				jsonRes = GeoportalResponse.createSuccessResponse(mapDTO, true);
 				ServletUtils.writeAndFlush(log, w, jsonRes);
 			}
 			
+			/**
+			 * GET MAP LIST
+			 * @aAthor Agencia de Implementacion
+			 * */
+			else if("getMapList".equalsIgnoreCase(oper)){
+				/*
+				 * Check whether the current user has the appropriate permission
+				 */
+				if (!LoginService.hasPermission(currentUser,Permissions.MAP_SETTING_CONFIG_ADMIN)) {
+					// User does not have the permission
+					jsonRes = GeoportalResponse.createErrorResponse(userMessages.getString("USER_DOES_NOT_HAVE_PERMISSION"));
+					ServletUtils.writeAndFlush(log, w, jsonRes);
+					return;
+				}
+								
+				MapService mapService = new MapService();
+				List<it.gesp.geoportal.dao.entities.Map> maps = mapService.getAllMaps();
+				
+				PaginationObject<it.gesp.geoportal.dao.entities.Map> paginationObject = PaginationObject.createFromList(maps);
+				jsonRes = GeoportalResponse.createSuccessResponseWithSerializationOfNulls(paginationObject, true);
+				ServletUtils.writeAndFlush(log, w, jsonRes);
+			}			
+			/**
+			 * CREATE NEW MAP
+			 * @Author Agencia de Implementacion  
+			 **/
+			
+			else if("createNewMap".equalsIgnoreCase(oper)){
+				
+				/*
+				 * Check whether the current user has the appropriate permission
+				 */
+				if (!LoginService.hasPermission(currentUser,Permissions.MAP_SETTING_CONFIG_ADMIN)) {
+					// User does not have the permission
+					jsonRes = GeoportalResponse.createErrorResponse(userMessages.getString("USER_DOES_NOT_HAVE_PERMISSION"));
+					ServletUtils.writeAndFlush(log, w, jsonRes);
+					return;
+				}
+				
+				String settingsJsonNewMap = request.getParameter("settings");
+				if(Utils.isNullOrEmpty(settingsJsonNewMap)){
+					log.debug("Error parsing settings parameter");
+					throw new DataInvalidException();
+				}
+				
+				Gson gson = JsonFactory.getGson();
+				MapDTO mapDTO = gson.fromJson(settingsJsonNewMap, MapDTO.class);
+				
+				MapService mapService = new MapService();
+				mapService.createMap(mapDTO);
+				
+				jsonRes = GeoportalResponse.createSuccessResponse(null, true);
+				ServletUtils.writeAndFlush(log, w, jsonRes);
+			}
 			/*
 			 * SAVE MAP_SETTINGS 
 			 */
 			else if ("saveMapSettings".equalsIgnoreCase(oper)) {
+				
 				
 				/*
 				 * Check whether the current user has the appropriate permission
@@ -138,12 +200,8 @@ public class MapConfigServlet extends HttpServlet {
 					log.debug("Error parsing settings parameter");
 					throw new DataInvalidException();
 				}
-				
 				Gson gson = JsonFactory.getGson();
 				MapDTO mapDTO = gson.fromJson(settingsJson, MapDTO.class);
-				
-				mapDTO.setIdMap(idMap);
-				
 				MapService mapService = new MapService();
 				mapService.updateMap(mapDTO);
 				
@@ -435,6 +493,7 @@ public class MapConfigServlet extends HttpServlet {
 			}
 			/*
 			 * ACTIVATE LAYER BY DEFAULT 
+			 * @Author Agencia de Implementacion
 			 */
 			else if("activateLayerByDefault".equalsIgnoreCase(oper)){
 				/*

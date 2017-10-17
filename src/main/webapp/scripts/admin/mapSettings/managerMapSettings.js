@@ -1,12 +1,204 @@
 var mMapSettings = {
+	pFormAddMap: null,
+	validatorFormAddMap: null,
+	dtPanel: null,
+	dt: null,
+		
+	init: function(){
+		
+		if(this.dtPanel == null) {
+			this.dtPanel = $("#maps-dt");
+			this.initDt();
+		}
+		
+		if(this.pFormAddMap == null){
+			this.pFormAddMap = $("#form-addmap-dialog");
+			
+			this.validatorFormAddMap = new Validate({
+				form: this.pFormAddMap
+			});
+		}
+		
+		
+	},
+	
+	// Init list of Maps (datatable)
+	initDt: function() {
+		if(this.dt == null) {
+			this.dt = this.dtPanel.on('search.dt', function (e) { 
+				Utils.deselectAllVisibleRows(mMapSettings.dt);
+				mMapSettings.toggleButtonsOnSelect();
+			}).dataTable({
+				"dom": '<"toolbar">frtp',
+				"scrollX": true,
+		        "scrollY": "500px",
+		        "processing": true,
+		        "scrollCollapse": true,
+		        "paginationType": "full",
+				"ajax": function (data, callback, settings) {	        		
+	        	    Utils.ajaxCall("./mapConfig?oper=getMapList", "get", "json", data, function(response){
+	        	    	var data = response.result;
+	        	    	callback(data);
+	        	    });
+	        	},
+				"columns": [
+				            { "data": "idMap", "name": "idMap", "title": "ID", "sortable": false, "visible": true},
+				            { "data": "mapName", "name": "mapName", "title":  LocaleManager.getKey("Manager_Map_Settings_Label_NameMap"), "sortable": true, "visible": true },
+				            { "data": "projection", "name": "projection", "title":  LocaleManager.getKey("Manager_Map_Settings_Projection_simple"), "sortable": true, "visible": true },
+				            { "data": "units", "name": "units", "title":  LocaleManager.getKey("Manager_Map_Settings_Units_simple"), "sortable": true, "visible": true }
+	            ],
+		        "language": {
+	                "url": "scripts/locale/datatable/dt_" + LocaleManager.locale + ".lang"
+	            },
+	            "paginate": false
+			});
+			
+			mMapSettings.toggleButtonsOnSelect();
+			this.dt.find("tbody").on('click', 'tr', function(e){
+			
+				if($(this).hasClass('selected')) {
+					$(this).removeClass('selected');
+				}
+				else {
+					Utils.deselectAllVisibleRows(mMapSettings.dt);
+					$(this).addClass('selected');					
+				}
+				mMapSettings.toggleButtonsOnSelect();
+			});
+		}
+	},
+	
+	/**
+	 * Open dialog to insert a new map
+	 * @Author: Agencia de implementacion
+	 * */
+	openDialogAddMap: function(){
+		this.createAddFormPanel();
+		Utils.cleanForm(this.pFormAddMap);
+		
+		// clean scales, resolutions
+		this.populateScales(new Array());
+		this.populateResolutions(new Array());
+		
+		if(this.pFormAddMap != null)
+			if(this.validatorFormAddMap != null){
+				this.validatorFormAddMap.reset();
+			}
+		
+		this.pFormAddMap.dialog("open");
+		
+		return;
+	},
+	openDialogUpdateMap:  function(){
+		this.createUpdateFormPanel();
+		Utils.cleanForm(this.pFormAddMap);
+		if(this.pFormAddMap != null)
+			if(this.validatorFormAddMap != null){
+				this.validatorFormAddMap.reset();
+			}
+		
+		// populate form with existing data
+		var selectedRow = Utils.getSelectedRow(this.dt)[0];
+		
+		mMapSettings.requests.getMapData(selectedRow.idMap);
+		
+		this.pFormAddMap.dialog("open");
+		
+		return;
+	},
+	
+	
+	createUpdateFormPanel: function() {
+		$("#form-dialog-header").data("locale_key", "Manager_Map_HeaderForm_Update");
+		LocaleManager.refreshLocalizedElement($("#form-dialog-header"));
+
+		//Reset validator
+		if(this.validatorFormAddMap) {
+			this.validatorFormAddMap.reset();
+		}
+		
+		var buttons = {};
+		buttons[LocaleManager.getKey('General_Cancel')] = function(){
+			//Utils.closeDialogForm(mMaps.pFormAddMap);
+			$(this).dialog("close");
+		};
+		
+		buttons[LocaleManager.getKey('General_Save')] = function(){
+			//mMaps.submitAddMap();
+			var settings = mMapSettings.getDataFromPage();
+
+			var isValid = mMapSettings.validatorFormAddMap.valid();
+			if(!isValid) {
+				return;
+			}
+			
+			mMapSettings.requests.updateMap(settings);
+			$(this).dialog("close");
+		};
+		
+		DialogUtils.renderDialog(LocaleManager.getKey("General_TitleForm"), buttons, {
+			modal: false,
+			resizable: false,
+			height: 400,
+			width: 700,
+			closeFn: function() {
+				Utils.cleanForm(this.pFormAddMap);
+			}
+		}, this.pFormAddMap);
+		
+		return this.pFormAddMap;
+	},
+	
+	createAddFormPanel: function() {
+		$("#form-dialog-header").data("locale_key", "Manager_Map_HeaderForm_Add");
+		LocaleManager.refreshLocalizedElement($("#form-dialog-header"));
+		
+		//Reset validator
+		if(this.validatorFormAddMap) {
+			this.validatorFormAddMap.reset();
+		}
+		
+		var buttons = {};
+		buttons[LocaleManager.getKey('General_Cancel')] = function(){
+			$(this).dialog("close");
+		};
+		
+		buttons[LocaleManager.getKey('General_Save')] = function(){
+			var isValid = mMapSettings.validatorFormAddMap.valid();
+			if(!isValid) {
+				return;
+			}
+			
+			var settings = mMapSettings.getDataFromPage();
+			
+			delete settings.idMap;
+			
+			mMapSettings.requests.addNewMap(settings);
+			$(this).dialog("close");
+		};
+		
+		DialogUtils.renderDialog(LocaleManager.getKey("General_TitleForm"), buttons, {
+			modal: false,
+			resizable: false,
+			height: 400,
+			width: 700,
+			closeFn: function() {
+				Utils.cleanForm(this.pFormAddMap);
+			}
+		}, this.pFormAddMap);
+		
+		return this.pFormAddMap;
+	},
 	
 	getDataFromPage: function() {
 		var settings = new Object();
 		
+		settings.idMap = $("#map-input-id").val();
+		settings.mapName = $("#name-input").val();
+		
 		settings.projection = $("#projection-input").val();
 		settings.units = $("#units-input").val();
-		
-		
+
 		//Set mapscale if it is a valid value
 		var maxScale = $("#default-maxscale-input").val();
 		if (Utils.isFloat(maxScale)) {
@@ -63,14 +255,13 @@ var mMapSettings = {
 	},
 	
 	populatePage: function(settings) {
+		
+		$("#map-input-id").val(settings.idMap);
+		$("#name-input").val(settings.mapName);
 		$("#projection-input").val(settings.projection);
 		$("#units-input").val(settings.units);
 		
 		$("#default-maxscale-input").val(settings.maxScale);
-		
-//		$("#default-zoomlevel-input").val(settings.zoom);
-//		$("#centerx-input").val(settings.centerx);
-//		$("#centery-input").val(settings.centery);
 		
 		$("#minx-input").val(settings.defaultExtentMinX);
 		$("#miny-input").val(settings.defaultExtentMinY);
@@ -101,7 +292,6 @@ var mMapSettings = {
 		 */
 		var scaleList = settings.customScales;
 		this.populateScales(scaleList);
-		
 		/*
 		 * Populate resolutions
 		 */
@@ -211,29 +401,19 @@ var mMapSettings = {
 	
 	requests: {		
 		
-		getData: function() {
-			
-			//Reset validator
-			if(validator) {
-				validator.reset();
-			}
-			
+		getMapData: function(idMap) {			
 			Utils.ajaxCallSynch("./mapConfig", "POST", "json", {
-				oper: "mapSettings"
-			}, function(response) {				
+				oper: "mapSettings",
+				idMap: idMap
+			}, function(response) {
 				if(response.success) {
 					mMapSettings.populatePage(response.result);
 				}
 			});
 		},
 		
-		saveData: function() {
-			var isValid = validator.valid();
-			if(!isValid) {
-				return;
-			}
+		updateMap: function(settings) {
 			
-			var settings = mMapSettings.getDataFromPage();
 			Utils.ajaxCallSynch("./mapConfig", "POST", "json", {
 				oper: "saveMapSettings",
 				settings: JSON.stringify(settings) 
@@ -241,11 +421,40 @@ var mMapSettings = {
 				if(response.success) {
 					AlertDialog.createOkDefaultDialog(LocaleManager.getKey("Manager_Item_ConfigSystem"), LocaleManager.getKey("Manager_Config_Saved_Ok"), "info", function() {
 						//Reload
-						mMapSettings.requests.getData();
+						mMapSettings.reloadGrid();
+					});
+				}
+			});
+		},
+		
+		addNewMap: function(settings){
+			Utils.ajaxCallSynch("./mapConfig", "POST", "json", {
+				oper: "createNewMap",
+				settings: JSON.stringify(settings) 
+			}, function(response) {				
+				if(response.success) {
+					AlertDialog.createOkDefaultDialog(LocaleManager.getKey("Manager_Item_ConfigSystem"), LocaleManager.getKey("Manager_Config_Saved_Ok"), "info", function() {
+						//Reload
+						mMapSettings.reloadGrid();
 					});
 				}
 			});
 		}
 		
+	},
+	// Enable proper button to enable/disable layerSource
+	toggleButtonsOnSelect: function() {
+		var selectedRow = Utils.getSelectedRow(this.dt)[0];
+		if (!Utils.isNullOrUndefined(selectedRow)) {
+			// $("#layers-delete").show();
+			$("#m-maps-update").show();
+		}
+		else  {
+			// $("#layers-delete").hide();
+			$("#m-maps-update").hide();
+		}
+	},
+	reloadGrid: function(callback, resetPaging) {
+		this.dt.api().ajax.reload(callback, resetPaging);
 	}
 };

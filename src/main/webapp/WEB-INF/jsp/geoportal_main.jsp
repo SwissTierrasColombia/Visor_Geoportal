@@ -398,7 +398,7 @@
 								<!-- Icon -->
 								<div id="gis_testBtn" data-tool="test" data-locale_key="Advanced_Panel_Comments_Enable" data-locale_ref="title" 
 								class="localizedElement icon-container" onclick="AdvancedPanel.toggleAdvancedTools($(this));">
-								<i class="fa fa-file-text-o fa-2x"></i></div>
+								<i class="fa fa-envelope fa-2x"></i></div>
 							</div>
 																			
 							<% } //end XXXXXXX PERMISSION %>
