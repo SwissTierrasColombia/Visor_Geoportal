@@ -29,13 +29,11 @@
 /* Immagini toggle menu */
 #menu_toggle {
 	position: absolute;
-	height: 28px;
-	width: 5px;
+	height: 35px;
+	width: 15px;
 	cursor: pointer;
-	left: -9px;
+	left: -15px;
 	top: 0px;
-	/* right: 0px; */
-	width: 5px;
 	padding: 2px 0 0 2px;
 	background: #FFFFFF;
 	border-top-left-radius: 5px;
@@ -65,7 +63,8 @@
 }
 
 #menu_toggle div {
-	margin-top: 5px;
+	margin-top: 6px;
+    margin-left: 6px;
 }
 /* #menu_tabs { */
 /* 	padding-bottom: 10px; */
