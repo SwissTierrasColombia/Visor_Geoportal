@@ -13,7 +13,12 @@ div.olControlZoom {
 .olControlLoadingPanel {
 	left: 0;
 	right: 0;
-	width: auto;
+	width: 100%;
+	height: 5px;
+	background-image: url("../images/progress2.gif");
+	background-size: 100% 5px;
+	position: absolute !important;
+	top: 0;
 }
 
 div.olControlZoom {

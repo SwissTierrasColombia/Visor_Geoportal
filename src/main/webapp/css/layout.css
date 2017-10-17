@@ -144,6 +144,9 @@ html,body {
 	left: 0px;
 	right: 0px;
 	position: absolute;
+	box-shadow: 6px 10px 12px rgba(0, 0, 0, 0.39);
+	-moz-box-shadow: 6px 10px 12px rgba(0, 0, 0, 0.39);
+	-webkit-box-shadow: 6px 10px 12px rgba(0, 0, 0, 0.39);
 }
 
 #mapContainer {
@@ -405,9 +408,6 @@ html,body {
 	left: 0;
 	background: #F7F7F7;
 	color: #515356;
-	box-shadow: 6px 10px 12px rgba(0, 0, 0, 0.39);
-	-moz-box-shadow: 6px 10px 12px rgba(0, 0, 0, 0.39);
-	-webkit-box-shadow: 6px 10px 12px rgba(0, 0, 0, 0.39);
 	height: 35px;
 }
 #toolbar-tools {
