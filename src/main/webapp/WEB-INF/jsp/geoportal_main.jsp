@@ -20,22 +20,21 @@
 			<div class="main">
 				<div class="header">
 					<div>
-						<div class="logo-banner-left hondurasClass">
-							<img src="images/banner/Honduras_flag.gif" alt="HONDURAS">
-						</div>
 						<div class="logo-banner-left icfClass">
-							<img src="images/banner/icf_logo_white.jpg" alt="ICF">
+							<img src="images/banner/logoproyecto.png" alt="Proyecto SECO">
 						</div>
-						<div class="logo-banner-left mosefClass">
-							<img src="images/banner/UE_logo.jpg" alt="UE_LOGO">
-						</div>
-						<div class="logo-banner-left mosefClass">
-							<img src="images/banner/mosef_scaled.png" alt="MOSEF">
-						</div>
-							
-						<div class="logo-banner-left bannerText">
-							<div data-locale_key="Header_Geoportal_Title" data-locale_ref="text" class="localizedElement"></div>
-						</div>
+<!-- 						<div class="logo-banner-left hondurasClass"> -->
+<!-- 							<img src="images/banner/Honduras_flag.gif" alt="HONDURAS"> -->
+<!-- 						</div> -->
+<!-- 						<div class="logo-banner-left icfClass"> -->
+<!-- 							<img src="images/banner/icf_logo_white.jpg" alt="ICF"> -->
+<!-- 						</div> -->
+<!-- 						<div class="logo-banner-left mosefClass"> -->
+<!-- 							<img src="images/banner/UE_logo.jpg" alt="UE_LOGO"> -->
+<!-- 						</div> -->
+<!-- 						<div class="logo-banner-left mosefClass"> -->
+<!-- 							<img src="images/banner/mosef_scaled.png" alt="MOSEF"> -->
+<!-- 						</div> -->
 						
 					</div>
 					

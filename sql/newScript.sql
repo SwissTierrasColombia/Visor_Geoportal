@@ -8,3 +8,6 @@ alter table geoportal.maps drop column d_center_y;
 
 -- add field for thumbnail in maps
 alter table geoportal.maps add column thumbnail text;
+
+
+ALTER TABLE geoportal.layerconfigs ALTER COLUMN attr_mapping TYPE JSON USING attr_mapping::JSON;
