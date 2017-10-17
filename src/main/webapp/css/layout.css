@@ -189,7 +189,6 @@ html,body {
 	left: 0;
 	right: 0;
 	height: 100%;
-	min-width: 1270px;
 }
 
 .header-switcher {
@@ -409,10 +408,11 @@ html,body {
 	box-shadow: 6px 10px 12px rgba(0, 0, 0, 0.39);
 	-moz-box-shadow: 6px 10px 12px rgba(0, 0, 0, 0.39);
 	-webkit-box-shadow: 6px 10px 12px rgba(0, 0, 0, 0.39);
+	height: 35px;
 }
 #toolbar-tools {
 	float: right;
-	padding-top: 6px;
+	padding-top: 4px;
 	padding-right: 4px;
 	width: 390px;
 	height: 28px;
