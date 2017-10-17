@@ -54,7 +54,7 @@ var themesPlugin = {
                     '               <a href="' + window.location.pathname + '?config=' + this.themes[i].code + '">'+
                     '                   <p id="open-text" data-locale_key="Advanced_Panel_Themes_Label_Open_Theme" data-locale_ref="text" class="localizedElement"></p>' +
                     '                   <div class="tools tools-bottom">' +
-                    '                       <a href="#"><i class="fa fa-share"></i></a>' +
+                    '                       <i class="fa fa-share"></i>' +
                     '                   </div>'+
                     '               </a>' +
                     '            </div>' +
