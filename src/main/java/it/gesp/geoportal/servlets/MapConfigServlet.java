@@ -717,7 +717,18 @@ public class MapConfigServlet extends HttpServlet {
 			 */
 			else if ("exportConfigAsJson".equalsIgnoreCase(oper)) {
 				
-				String res = new MapConfigService().getConfigAsJson(idMap);
+				int mapId = -1;
+				try {
+					String mapIdStr = request.getParameter("mapId");
+					mapId = Integer.parseInt(mapIdStr);
+					if(mapId==-1)
+						mapId = idMap;
+				} catch (Exception x) {
+					log.debug("Error parsing mapId parameter");
+					throw new DataInvalidException();
+				}
+				
+				String res = new MapConfigService().getConfigAsJson(mapId);
 				ServletUtils.writeAndFlush(log, w, res);
 			}
 			

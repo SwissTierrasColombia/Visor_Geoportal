@@ -23,7 +23,8 @@ var userPermissions;
 /**
  * Stores the OpenLayers map.
  */
-var map;
+var map=null;
+var gmapId=8;
 
 var tree;
 var selectedLayerTree;
@@ -106,7 +107,10 @@ function loadAll() {
 		Utils.orderArrayNumber(mapConfig.customScales);
 		mapOptions.scales = mapConfig.customScales.reverse();
 	}
-	
+	console.log("FELIPE 1");
+	if(map !=null){
+		map.destroy();
+	}
 	map = new OpenLayers.Map('map', mapOptions);
 
 	/*
@@ -253,8 +257,12 @@ function loadAll() {
 		});
 
 		// scalebar.update();
-		map.addControl(scaleBar);
-		mapControls["scaleBar"] = scaleBar;
+		try{
+			map.addControl(scaleBar);
+			mapControls["scaleBar"] = scaleBar;
+		}catch(e){
+			console.log(e);
+		}
 	}
 
 	/*
@@ -436,7 +444,7 @@ function zoomToExtent(bounds, closestZoomLevel) {
  * is raised with the description of the error
  * 
  */
-function getConfig(callbackFn) {
+function getConfig(callbackFn, mapId) {
 	try {
 		var customConfig = getUrlParameter('config');
 		var url = customConfig ? customConfig : Services.mapConfig;
@@ -446,7 +454,8 @@ function getConfig(callbackFn) {
 			dataType : "json",
 			cache : false,
 			data : {
-				oper : 'exportConfigAsJson'
+				oper : 'exportConfigAsJson',
+				mapId: mapId
 			}
 		}).done(function(jsonObject) {
 
@@ -583,6 +592,24 @@ function getConfig(callbackFn) {
 $(window).resize(adjustTocHeight);
 
 $(document).ready(function() {
+	onReady();
+});
+
+function onReady(){
+	if (!localStorage.mapId) {
+		localStorage.mapId = -1;
+	}
+	gmapId = localStorage.mapId;
+	catalog = new LayerConfigCatalog();
+	initialLoadingPanel = null;
+	topMenuTabs = null;
+	userPermissions;
+	map=null;
+	tree=null;
+	selectedLayerTree=null;
+	mapControls = {};
+	mapExportCtrl = null;
+	configLoaded = false;
 	
 	adjustTocHeight();
 	
@@ -650,12 +677,17 @@ $(document).ready(function() {
 
 			userPermissions = new UserPermission(jsonObject.result);
 		} 
-		init();
+		init(gmapId);
 	});
 	
-});
+}
 
-function init() {
+function changeMap(id){
+	localStorage.mapId = id;
+	location.reload();
+}
+
+function init(mapId) {
 
 	/*
 	 * Set the OpenLayers Proxy to bypass the Same Origin Policy issue.
@@ -673,7 +705,7 @@ function init() {
 		initialLoadingPanel.addLoading();*/
 		
 		loadingDialog.open("", LocaleManager.getKey("Loading"));
-		getConfig(loadAll);
+		getConfig(loadAll, mapId);
 		
 	} catch (err) {
 		AlertDialog.createOkDefaultDialog(
