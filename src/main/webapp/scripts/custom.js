@@ -56,6 +56,7 @@ function loadAll() {
 
 	var mapConfig = catalog.getMapConfig();
 	var toolsConfig = catalog.getToolConfig();
+	var mapsListConfig = catalog.getMapsList();
 
 	OpenLayers.Control.DragPan.prototype.enableKinetic = false;
 	//var mapDefaultExtent = new OpenLayers.Bounds(mapConfig.maxExtent[0],
@@ -202,6 +203,7 @@ function loadAll() {
 	 */
 	if (toolsConfig.mouseCoordinates.enabled) {
 		var numDigits = toolsConfig.mouseCoordinates.numDigits;
+		var crs = toolsConfig.mouseCoordinates.crs;
 		map.events.register("mousemove", map, function(e) {
 			var position = this.events.getMousePosition(e);
 			position = map.getLonLatFromPixel(e.xy);
@@ -212,11 +214,12 @@ function loadAll() {
 			}
 
 			//Transform coordinates to other coordinate system
-			//position.transform(map.getProjectionObject(), new OpenLayers.Projection("EPSG:4326"));
+			position.transform(map.getProjectionObject(), new OpenLayers.Projection(crs));
 			//position.transform(map.getProjectionObject(), new OpenLayers.Projection("EPSG:32616"));
-			position.transform(map.getProjectionObject(), new OpenLayers.Projection("EPSG:900913"));
+			//position.transform(map.getProjectionObject(), new OpenLayers.Projection("EPSG:900913"));
 			
-			$("#gis_coordinates").text('(Web Mercator) X: ' + position.lon.toFixed(numDigits) + ', Y: '+ position.lat.toFixed(numDigits));
+			//$("#gis_coordinates").text('(Web Mercator) X: ' + position.lon.toFixed(numDigits) + ', Y: '+ position.lat.toFixed(numDigits));
+			$("#gis_coordinates").text('lon: ' + position.lon.toFixed(numDigits) + ', lat: '+ position.lat.toFixed(numDigits) + ' (' + crs + ')');
 			
 			if(
 				controls.redlines.instance != null &&
@@ -397,7 +400,7 @@ function loadAll() {
 	);
 
     //init themes panel
-    themesPlugin.init();
+    themesPlugin.init(mapsListConfig);
 }
 
 function zoomToDefaultMapCenter() {
@@ -442,14 +445,16 @@ function zoomToExtent(bounds, closestZoomLevel) {
 function getConfig(callbackFn) {
 	try {
 		var customConfig = getUrlParameter('config');
-		var url = customConfig ? customConfig : Services.mapConfig;
+		//var url = customConfig ? customConfig : Services.mapConfig;
+		var url = Services.mapConfig;
 		$.ajax({
 			url : url,
 			type : "GET",
 			dataType : "json",
 			cache : false,
 			data : {
-				oper : 'exportConfigAsJson'
+				oper : 'exportConfigAsJson',
+                                mapId: customConfig
 			}
 		}).done(function(jsonObject) {
 

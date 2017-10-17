@@ -61,7 +61,8 @@ public class MapConfigService {
 		java.util.Map<String, Object> mouseCoordinatesMap = new LinkedHashMap<String, Object>();
 		
 		mouseCoordinatesMap.put("enabled", new Boolean(true));
-		mouseCoordinatesMap.put("numDigits", 0);
+		mouseCoordinatesMap.put("numDigits", 6);
+		mouseCoordinatesMap.put("crs", "EPSG:4326");
 		
 		return mouseCoordinatesMap;
 	}

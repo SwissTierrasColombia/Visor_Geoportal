@@ -13,6 +13,7 @@ function LayerConfigCatalog() {
 	var _toolConfig;
 	var _mapConfig;
 	var _groupConfig;
+	var _mapsList;
 
 	this._layersConfig = new Array();
 
@@ -33,8 +34,9 @@ function LayerConfigCatalog() {
 	 */
 	this.loadConfigFromJSON = function(allConfigJSON, capabilitiesList, describeFeatureList) {
 		// _allConfigJSON = allConfigJSON;
-		_toolConfig = allConfigJSON.tools;
+                _toolConfig = allConfigJSON.tools;
 		_mapConfig = allConfigJSON.map;
+		_mapsList = allConfigJSON.maps;
 		_groupConfig = allConfigJSON.layersGroups;
 
 		var tempLayerConfig = allConfigJSON.layers;
@@ -207,6 +209,13 @@ function LayerConfigCatalog() {
 	 */
 	this.getMapConfig = function() {
 		return _mapConfig;
+	};
+
+	/**
+	 * Returns the maps list
+	 */
+	this.getMapsList = function() {
+		return _mapsList;
 	};
 
 	/**
