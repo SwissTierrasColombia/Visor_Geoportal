@@ -278,7 +278,8 @@ public class MapConfigService {
 				hashMap.put("name", eachMap.getMapName());
 				hashMap.put("id", eachMap.getIdMap());
 				hashMap.put("thumbnail", eachMap.getThumbnail());
-				
+				if(eachMap.getIdMap()==idMap)
+					hashMap.put("active", true);
 				mapList.add(hashMap);
 			}
 			m.put("maps",mapList);
