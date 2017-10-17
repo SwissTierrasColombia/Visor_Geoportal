@@ -44,7 +44,7 @@
 		width: 300px;
 		padding-left: 300px;
 		word-wrap: break-word;
-		padding-top: 20px:
+		padding-top: 20px;
 	}
 	
 	#list_alert_types li { margin: 2px; padding: 0.4em; height: 18px; }

@@ -82,6 +82,9 @@
 <script type="text/javascript" src="scripts/locale/locale_en.js"></script>
 <script type="text/javascript" src="scripts/locale/locale_es.js"></script>
 
+<!-- Mustache -->
+<script type="text/javascript" src="lib/mustache/mustache.min.js"></script>
+
 <!-- Login -->
 <script type="text/javascript" src="scripts/login/LoginUtils.js"></script>
 
