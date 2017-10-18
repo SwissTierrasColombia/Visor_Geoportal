@@ -8,6 +8,7 @@
 <head>
 <title>Geoportal</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width">
 
 <%-- 	<%@ include file="geoportal_import_js_min.jspf" %> --%>
 	<%@ include file="geoportal_import_js_no_min.jspf" %>
@@ -15,7 +16,7 @@
 </head>
 <body>
 	<div id="loading-panel"></div>
-	<div id="container">
+        <div class="container" id="container">
 		<div id="topbanner">
 			<div class="main">
 				<div class="header">
@@ -125,8 +126,8 @@
 							<div id="gis_getFeatureInfoBtn" data-locale_key="Base_Panel_FeatureInfo" data-locale_ref="title" class="icon-container ctrlButtons localizedElement"><i class="fa fa-info fa-2x"></i></div>
 							<div id="gis_measureLineBtn" data-locale_key="Base_Panel_MeasureLine" data-locale_ref="title" class="icon-container ctrlButtons localizedElement"><i class="fa fa-arrows-h fa-2x"></i></div>
 							<div id="gis_measureAreaBtn" data-locale_key="Base_Panel_MeasureArea" data-locale_ref="title" class="icon-container ctrlButtons localizedElement"><i class="fa fa-square-o fa-2x"></i></div>
-							<div id="gis_gisOverviewBtn"" data-locale_key="Base_Panel_ShowOverview" data-locale_ref="title" class="icon-container localizedElement custom-hidden" onclick="gisOverview.toggle($(this));"><i class="fa fa-globe fa-2x"></i></div>
-							<div id="gis_gisBaseLayerBtn"" data-locale_key="Base_Panel_SelectBaseMap" data-locale_ref="title" class="icon-container ctrlButtons localizedElement" onclick="baseMapLayerIcon.onclick();"><i class="fa fa-map fa-2x"></i></div>
+							<div id="gis_gisOverviewBtn" data-locale_key="Base_Panel_ShowOverview" data-locale_ref="title" class="icon-container localizedElement custom-hidden" onclick="gisOverview.toggle($(this));"><i class="fa fa-globe fa-2x"></i></div>
+							<div id="gis_gisBaseLayerBtn" data-locale_key="Base_Panel_SelectBaseMap" data-locale_ref="title" class="icon-container ctrlButtons localizedElement" onclick="baseMapLayerIcon.onclick();"><i class="fa fa-map fa-2x"></i></div>
 							<div id="baselayers-select" class="no-display"></div>						
 						</div>
 						
@@ -134,7 +135,32 @@
 						<!-- ADVANCED TOOLS PANEL -->
 						<!-- ******************** -->
 						<div id="advance-tools-panel" class="tools-panel-master horizontal-panel">
-						
+                                                    
+                                                        <!-- BASE MAPS -->
+                                                        <div class="icon-container-all">
+                                                            <!-- Icon -->
+                                                            <div id="gis_themesBtn" data-tool="themes"  data-locale_key="Advanced_Panel_Themes" data-locale_ref="title" class="icon-container localizedElement" onclick="AdvancedPanel.toggleAdvancedTools($(this));" style="height: 40px;">
+                                                                <!-- TODO: change image url -->
+                                                                <img src="https://gis.gastongov.com/GastonMobileGIS/Content/images/basemap.png" style="font-size:2em;width:22px;height:21px;padding:0;margin-top:2px;margin-bottom:-2px">
+                                                            </div>
+
+                                                            <div id="advance-themes-panel" class="tools-panel custom-hidden">
+                                                                <div class="itemform">
+                                                                    <!-- Keyword label-->
+                                                                    <div data-locale_key="Advanced_Panel_Themes_Label_keyword" data-locale_ref="text" class="form-label-title localizedElement"></div>
+                                                                </div>
+                                                                <!-- FILTER KEYWORD -->
+                                                                <div class="container clear-all" style="width: 450px;">
+                                                                    <div class="row" id="advance-themes-panel-list" style="max-height: 380px; overflow: auto;">
+                                                                        <!-- default no data message -->
+                                                                        <div data-locale_key="Advanced_Panel_Themes_Label_No_Data" data-locale_ref="text" class="text-muted text-center localizedElement"></div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+
+                                                        </div>
+                                                        
 							<!-- PRINT TOOL -->
 							<div class="icon-container-all">
 								<!-- Icon -->

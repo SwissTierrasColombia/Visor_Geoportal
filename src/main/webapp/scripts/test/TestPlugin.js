@@ -29,7 +29,7 @@ var TestPlugin = function() {
 	this.init = function() {
 		AlertDialog.createOkDefaultDialog("TEST TITLE", "Hello world!!", "info", function() {
 			//User clicked on message -> control must be disactivated.
-			//self.deactivate();
+			self.deactivate();
 			
 		});
 	};
