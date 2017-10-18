@@ -23,8 +23,7 @@ var userPermissions;
 /**
  * Stores the OpenLayers map.
  */
-var map=null;
-var gmapId=8;
+var map;
 
 var tree;
 var selectedLayerTree;
@@ -107,10 +106,7 @@ function loadAll() {
 		Utils.orderArrayNumber(mapConfig.customScales);
 		mapOptions.scales = mapConfig.customScales.reverse();
 	}
-	console.log("FELIPE 1");
-	if(map !=null){
-		map.destroy();
-	}
+	
 	map = new OpenLayers.Map('map', mapOptions);
 
 	/*
@@ -257,12 +253,8 @@ function loadAll() {
 		});
 
 		// scalebar.update();
-		try{
-			map.addControl(scaleBar);
-			mapControls["scaleBar"] = scaleBar;
-		}catch(e){
-			console.log(e);
-		}
+		map.addControl(scaleBar);
+		mapControls["scaleBar"] = scaleBar;
 	}
 
 	/*
@@ -403,9 +395,6 @@ function loadAll() {
 			searchResultPanel.zoomToFeature(fid);
 		}}
 	);
-
-    //init themes panel
-    themesPlugin.init();
 }
 
 function zoomToDefaultMapCenter() {
@@ -447,7 +436,7 @@ function zoomToExtent(bounds, closestZoomLevel) {
  * is raised with the description of the error
  * 
  */
-function getConfig(callbackFn, mapId) {
+function getConfig(callbackFn) {
 	try {
 		var customConfig = getUrlParameter('config');
 		var url = customConfig ? customConfig : Services.mapConfig;
@@ -457,8 +446,7 @@ function getConfig(callbackFn, mapId) {
 			dataType : "json",
 			cache : false,
 			data : {
-				oper : 'exportConfigAsJson',
-				mapId: mapId
+				oper : 'exportConfigAsJson'
 			}
 		}).done(function(jsonObject) {
 
@@ -595,24 +583,6 @@ function getConfig(callbackFn, mapId) {
 $(window).resize(adjustTocHeight);
 
 $(document).ready(function() {
-	onReady();
-});
-
-function onReady(){
-	if (!localStorage.mapId) {
-		localStorage.mapId = -1;
-	}
-	gmapId = localStorage.mapId;
-	catalog = new LayerConfigCatalog();
-	initialLoadingPanel = null;
-	topMenuTabs = null;
-	userPermissions;
-	map=null;
-	tree=null;
-	selectedLayerTree=null;
-	mapControls = {};
-	mapExportCtrl = null;
-	configLoaded = false;
 	
 	adjustTocHeight();
 	
@@ -680,17 +650,12 @@ function onReady(){
 
 			userPermissions = new UserPermission(jsonObject.result);
 		} 
-		init(gmapId);
+		init();
 	});
 	
-}
+});
 
-function changeMap(id){
-	localStorage.mapId = id;
-	location.reload();
-}
-
-function init(mapId) {
+function init() {
 
 	/*
 	 * Set the OpenLayers Proxy to bypass the Same Origin Policy issue.
@@ -708,7 +673,7 @@ function init(mapId) {
 		initialLoadingPanel.addLoading();*/
 		
 		loadingDialog.open("", LocaleManager.getKey("Loading"));
-		getConfig(loadAll, mapId);
+		getConfig(loadAll);
 		
 	} catch (err) {
 		AlertDialog.createOkDefaultDialog(

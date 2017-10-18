@@ -271,6 +271,18 @@ public class MapConfigService {
 			
 			m.put("layersGroups", groupList);
 			
+			List<java.util.Map> mapList = new ArrayList<java.util.Map>();
+			List<Map> mapsInDB = new MapRepository().getAll(session, Map.class);
+			for(Map eachMap : mapsInDB){
+				java.util.Map<String, Object> hashMap = new LinkedHashMap<String, Object>();
+				hashMap.put("name", eachMap.getMapName());
+				hashMap.put("id", eachMap.getIdMap());
+				hashMap.put("thumbnail", eachMap.getThumbnail());
+				
+				mapList.add(hashMap);
+			}
+			m.put("maps",mapList);
+			
 			Gson gson = JsonFactory.getGson(true, false, true);
 			jsonResult = gson.toJson(m);
 			

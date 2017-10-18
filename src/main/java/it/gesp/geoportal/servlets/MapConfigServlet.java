@@ -720,13 +720,14 @@ public class MapConfigServlet extends HttpServlet {
 				int mapId = -1;
 				try {
 					String mapIdStr = request.getParameter("mapId");
-					mapId = Integer.parseInt(mapIdStr);
-					if(mapId==-1)
-						mapId = idMap;
+					mapId = mapIdStr!=null?Integer.parseInt(mapIdStr):-1;
 				} catch (Exception x) {
 					log.debug("Error parsing mapId parameter");
 					throw new DataInvalidException();
 				}
+
+				if(mapId==-1)
+					mapId = idMap;
 				
 				String res = new MapConfigService().getConfigAsJson(mapId);
 				ServletUtils.writeAndFlush(log, w, res);
