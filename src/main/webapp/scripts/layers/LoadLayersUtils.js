@@ -214,6 +214,7 @@ LoadLayersUtils.loadBaseLayersFromConfig = function(bLayerConfigs) {
  * lo imposta come attivo in mappa
  */
 LoadLayersUtils.enableActiveBaseLayerFromComboBox = function() {
+	var blMenu = $("#baselayers-select");
 	var activeBl = null;
 
 	// Cerca tra gli items del menù a tendina quello impostato come enabled
