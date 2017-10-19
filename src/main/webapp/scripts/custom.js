@@ -195,8 +195,28 @@ function loadAll() {
 	 */
 	map.events.register("zoomend", map, function(e) {
 		var currentScaleDenominator = map.getScale();
-		$("#gis_current_scalebar").text(LocaleManager.getKey("Map_Current_Scale_Text") + " - 1:" + currentScaleDenominator.toFixed(0));
+                $("#gis_current_scalebar").text(LocaleManager.getKey("Map_Current_Scale_Text") + " - 1:" + currentScaleDenominator.toFixed(0));
 	});
+        
+        /*
+         * Update url from current view
+         */
+        map.events.register("moveend", map, function(e) {
+            var lat = map.getCenter().lat;
+            var lon = map.getCenter().lon;
+            var zoom = map.getZoom();
+            var params = [
+                ['lat',lat],
+                ['lon',lon],
+                ['zoom',zoom]
+            ]
+            var search = window.location.search || "?";
+            
+            for(var i = 0 ; i < params.length; i++){
+                search = replaceUrlParam(search,params[i][0],params[i][1]);
+            }
+            window.history.replaceState("", "", search);
+        });
 	
 	/*
 	 * Mouse Position Control
@@ -338,7 +358,9 @@ function loadAll() {
 	/*
 	 * Center map
 	 */
-	zoomToDefaultMapCenter();
+        if(!map.getCenter()){
+            zoomToDefaultMapCenter();
+        }
 	
 	/*
 	 * Overview Control
@@ -421,7 +443,7 @@ function zoomToDefaultMapCenter() {
 
 	 if (!Utils.isNullOrUndefined(mapConfig.defaultExtent)) {
 		 var bounds = new OpenLayers.Bounds(mapConfig.defaultExtent);
-		 bounds = bounds.transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject());
+		 bounds = bounds.transform(new OpenLayers.Projection(mapConfig.projection), map.getProjectionObject());
 		 map.zoomToExtent(bounds);
 
 	}
@@ -1013,3 +1035,13 @@ function getUrlParameter(sParam) {
         }
     }
 };
+
+function replaceUrlParam(url, paramName, paramValue){
+    if(paramValue == null)
+        paramValue = '';
+    var pattern = new RegExp('\\b('+paramName+'=).*?(&|$)')
+    if(url.search(pattern)>=0){
+        return url.replace(pattern,'$1' + paramValue + '$2');
+    }
+    return url + (url.indexOf('?') !== -1 ? '&' : '?') + paramName + '=' + paramValue 
+}

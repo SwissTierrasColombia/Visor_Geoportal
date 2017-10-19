@@ -71,7 +71,10 @@ var themesPlugin = {
 
             var anchor = $(panel).find('#theme_' + this.themes[i].id + '_anchor');
             $(anchor).on('click', function(){
-                window.location = window.location.pathname + '?config=' + $(this).data('theme-id');
+                var lat = map.getCenter().lat;
+                var lon = map.getCenter().lon;
+                var zoom = map.getZoom();
+                window.location = window.location.pathname + '?config=' + $(this).data('theme-id') + '&lat=' + lat+ '&lon=' + lon+ '&zoom=' + zoom;
             });
             
             LocaleManager.refreshLocalizedElement($(panel).find("#open-text"));
