@@ -226,7 +226,7 @@ var featureInfoResults = {
 
         try {
             if (layerConfig.getOpenLayersOptions().attrMapping != null)
-                attrMapping = JSON.parse(layerConfig.getOpenLayersOptions().attrMapping);
+                attrMapping = eval("(" + layerConfig.getOpenLayersOptions().attrMapping + ")");
         } catch (e) {
             console.error(e);
         }
