@@ -8,21 +8,25 @@ var themesPlugin = {
     themes: [
         {
             "name": "Tematica 1",
-            "code": "",
+            "id": "",
             "position": 12
         },
         {
             "name": "Tematica 2",
-            "code": "json_examples/config.json",
+            "id": "json_examples/config.json",
             "position": 12
         },
         {
             "name": "Tematica 3",
-            "code": "json_examples/config2.json",
+            "id": "json_examples/config2.json",
             "position": 12
         }
     ],
-    init: function () {
+    init: function (mapsList) {
+        if (mapsList !== null) {
+            this.themes = mapsList;
+        }
+        
         if (this.panel === null) {
             this.panel = $("#advance-themes-panel");
         }
@@ -51,7 +55,8 @@ var themesPlugin = {
                     '        <div class="image view view-first">' +
                     '            <img style="width: 100%; display: block;" sytle="background-size: 100% 100%;" src="holder.js/100px100p?bg=' + this.chroma[i + 2] + '&text=theme preview" alt="image" />' +
                     '            <div class="mask">' +
-                    '               <a href="' + window.location.pathname + '?config=' + this.themes[i].code + '">'+
+//                    '               <a href="' + window.location.pathname + '?config=' + this.themes[i].id + '">'+
+                    '               <a href="#" data-theme-id="' + this.themes[i].id + '" id="theme_' + this.themes[i].id + '_anchor">'+
                     '                   <p id="open-text" data-locale_key="Advanced_Panel_Themes_Label_Open_Theme" data-locale_ref="text" class="localizedElement"></p>' +
                     '                   <div class="tools tools-bottom">' +
                     '                       <i class="fa fa-share"></i>' +
@@ -63,6 +68,14 @@ var themesPlugin = {
                     '    <hr style="margin:5px 0;">' +
                     '</div>');
             this.themesListPanel.append(panel);
+
+            var anchor = $(panel).find('#theme_' + this.themes[i].id + '_anchor');
+            $(anchor).on('click', function(){
+                var lat = map.getCenter().lat;
+                var lon = map.getCenter().lon;
+                var zoom = map.getZoom();
+                window.location = window.location.pathname + '?config=' + $(this).data('theme-id') + '&lat=' + lat+ '&lon=' + lon+ '&zoom=' + zoom;
+            });
             
             LocaleManager.refreshLocalizedElement($(panel).find("#open-text"));
             

@@ -344,6 +344,7 @@ var LANG_EN = {
 		AlertDialog_Warning_LogIn: "Not logged in",
 		AlertDialog_Error_LogIn: "Error logging in ",
 		AlertDialog_Info_LoggedWelcome: "Welcome ",
+                AlertDialog_Info_LoggedWelcome_No_Login: "Welcome",
 		
 		// Layers
 		AlertDialog_Warning_LayerNoSelected: "No layer selected",

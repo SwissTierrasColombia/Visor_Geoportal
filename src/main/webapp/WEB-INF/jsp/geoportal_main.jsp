@@ -23,24 +23,44 @@
                     <div class="header">
                         <div>
                             <div class="logo-banner-left icfClass">
-                                <img src="images/banner/logoproyecto.png" alt="Proyecto SECO">
+                                <img src="images/banner/LOGO-WEBGEO.png" alt="IDE AT">
                             </div>
-                            <!-- 						<div class="logo-banner-left hondurasClass"> -->
-                            <!-- 							<img src="images/banner/Honduras_flag.gif" alt="HONDURAS"> -->
-                            <!-- 						</div> -->
-                            <!-- 						<div class="logo-banner-left icfClass"> -->
-                            <!-- 							<img src="images/banner/icf_logo_white.jpg" alt="ICF"> -->
-                            <!-- 						</div> -->
-                            <!-- 						<div class="logo-banner-left mosefClass"> -->
-                            <!-- 							<img src="images/banner/UE_logo.jpg" alt="UE_LOGO"> -->
-                            <!-- 						</div> -->
-                            <!-- 						<div class="logo-banner-left mosefClass"> -->
-                            <!-- 							<img src="images/banner/mosef_scaled.png" alt="MOSEF"> -->
-                            <!-- 						</div> -->
-
+                            <div class="logo-banner-left icfClass">
+                                <div class="row" style="width: 340px; font-family: arial, sans-serif;margin-top:5px;">
+                                    <div class="col-md-6" style="font-size: 10px;">
+                                        <div style="text-align: center;margin-bottom:2px; letter-spacing: 0.7px;">Agencia de Implementación</div>
+                                        <div>
+                                            <img src="images/logobsfswiss.png" style="width:100%; height: 20px; margin-top: 0px;">
+                                        </div>
+                                        <div>
+                                            <img src="images/logoincige.png" style="width:100%; height: 20px; margin-top: -4px;">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-1" style="padding-left: 13px;">
+                                        <div style="background-color: #fcc900;height: 26px;width: 3px;"></div>
+                                        <div style="background-color: #17206a;height: 15px;width: 3px;"></div>
+                                        <div style="background-color: #ea0000;height: 15px;width: 3px;"></div>
+                                    </div>
+                                    <div class="col-md-5" style="font-size: 10px; line-height: 14px;">
+                                        <div style="letter-spacing: 0.7px;">Proyecto</div>
+                                        <div style="font-size:9px;font-weight: bold;">Modernización de la<br>Administración de Tierras<br>en Colombia</div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
                         <div class="header-switcher">
+                            <div id="logged-welcome" class="custom-hidden"></div>
+                            <% if (!Boolean.parseBoolean(ConfigUtils.get("login.WSO2").toString())) { %>
+                            <div id="login_username_label" data-locale_key="Username_Text" data-locale_ref="text" class="localizedElement" style="display: inline-block;">Username:</div> <input id="login_username" type="text" name="username"></input>
+                            <div id="login_password_label" data-locale_key="Password_Text" data-locale_ref="text" class="localizedElement" style="display: inline-block;">Password:</div> <input id="login_password" type="password" name="password"></input>
+                            <button id="gis_login" data-locale_key="Login_Button_Title" data-locale_ref="text" class="localizedElement"></button>
+                            <button id="gis_logout" style="display:none;" data-locale_key="Logout_Button_Title" data-locale_ref="text" class="localizedElement"></button>		
+                            <% } else {%>
+                            <a id="gis_login" data-locale_key="Login_Button_Title" data-locale_ref="text" class="localizedElement btn btn-default btn-xs" href="<%= ConfigUtils.get("base.url").toString()%>/simplesaml/auth.php?ReturnTo=geoportal"></a>
+                            <a id="gis_logout" style="display:none;" data-locale_key="Logout_Button_Title" data-locale_ref="text" class="localizedElement btn btn-default btn-xs" href="<%= ConfigUtils.get("base.url").toString()%>/simplesaml/auth.php?action=logout&ReturnTo=geoportal"></a>
+                            <% } %>
+
                             <span>
                                 <a href="#" data-locale_key="Header_ContactUS_Link" data-locale_ref="text" class="localizedElement" style="margin-right: 10px;"></a>
                             </span>
@@ -48,7 +68,6 @@
                                 <option value="es">Español</option>
                                 <option value="en">English</option>
                             </select>
-
                             <% if (LoginService.currentUserHasPermission(session, Permissions.ACCESS_ADMINISTRATION_PANEL)) { %>
                             <div id="open-administration-page"  onclick="openAdminPanelWindow()" data-locale_key="Page_Geoportal_Administration_Button_Title" data-locale_ref="title" class="localizedElement"><i class="fa fa-cog fa-2x"></i></div>
                                 <% } %>
@@ -57,9 +76,6 @@
 
                             <!-- Manual link -->
                             <div id="manual-link" onclick="window.open('html_manual/user/Geoportal_User.html', '_blank ', 'location=no,menubar=no,titlebar=no,toolbar=no,resizable=yes,width=800,height=700')" data-locale_key="Page_Manual_Switch_Button_Title" data-locale_ref="title" class="localizedElement"><i class="fa fa-question fa-2x"></i></div>
-
-
-
                         </div>
                     </div>
                 </div>
@@ -71,20 +87,12 @@
                     <!-- TOOLBAR WEBGIS -->
                     <div id="toolbar">
                         <div id="toolbar-tools">
-                            <div id="logged-welcome" class="custom-hidden"></div>
-                            <% if (!Boolean.parseBoolean(ConfigUtils.get("login.WSO2").toString())) { %>
-                            <div id="login_username_label" data-locale_key="Username_Text" data-locale_ref="text" class="localizedElement" style="display: inline-block;">Username:</div> <input id="login_username" type="text" name="username"></input>
-                            <div id="login_password_label" data-locale_key="Password_Text" data-locale_ref="text" class="localizedElement" style="display: inline-block;">Password:</div> <input id="login_password" type="password" name="password"></input>
-                            <button id="gis_login" data-locale_key="Login_Button_Title" data-locale_ref="text" class="localizedElement"></button>
-                            <button id="gis_logout" style="display:none;" data-locale_key="Logout_Button_Title" data-locale_ref="text" class="localizedElement"></button>		
-                            <% } else { %>
-                            <a id="gis_login" data-locale_key="Login_Button_Title" data-locale_ref="text" class="localizedElement btn btn-default btn-xs" href="<%= ConfigUtils.get("base.url").toString() %>/simplesaml/auth.php?ReturnTo=geoportal"></a>
-                            <a id="gis_logout" style="display:none;" data-locale_key="Logout_Button_Title" data-locale_ref="text" class="localizedElement btn btn-default btn-xs" href="<%= ConfigUtils.get("base.url").toString() %>/simplesaml/module.php/core/authenticate.php?as=wso2-sp&logout"></a>
-                            <% } %>
+
+
                         </div>
 
-
                     </div>
+
 
                     <!-- WEBGIS CONTAINER (map and footer) -->
                     <div id="webgis" style="height: 100%;">
