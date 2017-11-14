@@ -49,6 +49,7 @@
                 box-shadow: 0px 1px 15px 0px rgba(0,0,0,0.75);
                 z-index: 102;
                 position: absolute;
+                height: 58px;
             }
 
             .icon-container{
@@ -101,10 +102,10 @@
                                     <div class="col-md-6" style="font-size: 10px;">
                                         <div class="col-md-12" style="text-align: center;margin-bottom:2px; letter-spacing: 0.7px;">Agencia de Implementación</div>
                                         <div class="col-md-7">
-                                            <img src="images/logobsfswiss.png" style="width:100%; height: 20px; margin-top: 0px;">
+                                            <img src="images/logobsfswiss.png" style="width:100%; margin-top: 0px;">
                                         </div>
                                         <div class="col-md-5">
-                                            <img src="images/logoincige.png" style="width:100%; height: 20px; margin-top: -4px;">
+                                            <img src="images/logoincige.png" style="width:100%; margin-top: -4px;">
                                         </div>
                                     </div>
                                     <div class="col-md-1" style="padding-left: 13px;">
@@ -173,8 +174,8 @@
                                             <i class="fa fa-flag"></i>
                                         </a>
                                         <ul class="dropdown-menu" role="menu">
-                                            <li><a>Español</a></li>
-                                            <li><a>English</a></li>
+                                            <li><a href="javascript:;"><div onclick="changeGlobalLanguage('es')">Español</div></a></li>
+                                            <li><a href="javascript:;"><div onclick="changeGlobalLanguage('en')">English</div></a></li>
                                         </ul>
                                     </li>
                                 </ul>

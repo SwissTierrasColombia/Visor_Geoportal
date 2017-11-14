@@ -942,7 +942,8 @@ $(function () {
 
 
 function changeGlobalLanguage(selectBoxElem) {
-    var selectedValue = selectBoxElem.find(":selected").val();
+    console.log("CAHNGE");
+    var selectedValue = selectBoxElem;//selectBoxElem.find(":selected").val();
 
     //Perform an ajax request to change the language server-side...
     Utils.ajaxCall("./login", "POST", "json",
@@ -962,6 +963,7 @@ function changeGlobalLanguage(selectBoxElem) {
             //$("#geonetwork-container-iframe").attr("src", "http://geo-mosef.gesp.it/geonetwork/srv/eng/main.home");
             loadGeonetworkUrlInIframe(GEONETWORK_URL + "/srv/eng/main.home", false);
         }
+        window.location.reload();
     }, function () {
         //Error, show error dialog.
         AlertDialog.createOkDefaultDialog(
