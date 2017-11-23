@@ -113,9 +113,9 @@
                                         <div style="background-color: #17206a;height: 12px;width: 3px;"></div>
                                         <div style="background-color: #ea0000;height: 12px;width: 3px;"></div>
                                     </div>
-                                    <div class="col-md-5" style="font-size: 10px; line-height: 14px;">
+                                    <div class="col-md-5" style="font-size: 10px; line-height: 12px;">
                                         <div style="letter-spacing: 0.7px;">Proyecto</div>
-                                        <div style="font-size:9px;font-weight: bold;">Modernización de la Administración de Tierras en Colombia</div>
+                                        <div style="font-size:8px;font-weight: bold;">Modernización de la Administración de Tierras en Colombia</div>
                                     </div>
                                 </div>
 
@@ -145,9 +145,9 @@
                                             <li><a href="javascript:;" id="manual-link" onclick="window.open('html_manual/user/Geoportal_User.html', '_blank ', 'location=no,menubar=no,titlebar=no,toolbar=no,resizable=yes,width=800,height=700')" data-locale_key="Page_Manual_Switch_Button_Title" data-locale_ref="title" class="" style="margin-right: 10px;">Ayuda</a></li>
                                                 <% if (!Boolean.parseBoolean(ConfigUtils.get("login.WSO2").toString())) { %>
                                             <li><a href="javascript:;" id="gis_logout" style="display:none;" data-locale_key="Logout_Button_Title" data-locale_ref="text" class="localizedElement"><i class="fa fa-sign-out pull-right"></i></a></li>
-                                                <% } else {%>
+                                                    <% } else {%>
                                             <li><a id="gis_logout" style="display:none;" data-locale_key="Logout_Button_Title" data-locale_ref="text" class="localizedElement btn btn-default btn-xs" href="<%= ConfigUtils.get("base.url").toString()%>/simplesaml/auth.php?action=logout&ReturnTo=geoportal"><i class="fa fa-sign-out pull-right"></i></a></li>
-                                                <% } %>
+                                                    <% } %>
                                         </ul>
                                     </li>
 
@@ -203,8 +203,8 @@
                             <div id="base-tools-panel" class="tools-panel">
 
                                 <div id="gis_maxExtentBtn" data-locale_key="Base_Panel_MaxExtent" data-locale_ref="title" class="icon-container localizedElement"><i class="fa fa-arrows-alt fa-2x"></i></div>
-                                <div id="gis_prevBtn" data-locale_key="Base_Panel_PreviousZoom" data-locale_ref="title" class="icon-container localizedElement"><i class="fa fa-arrow-left fa-2x"></i></div>
-                                <div id="gis_nextBtn" data-locale_key="Base_Panel_NextZoom" data-locale_ref="title" class="icon-container localizedElement"><i class="fa fa-arrow-right fa-2x"></i></div>
+                                <!--<div id="gis_prevBtn" data-locale_key="Base_Panel_PreviousZoom" data-locale_ref="title" class="icon-container localizedElement"><i class="fa fa-arrow-left fa-2x"></i></div>
+                                <div id="gis_nextBtn" data-locale_key="Base_Panel_NextZoom" data-locale_ref="title" class="icon-container localizedElement"><i class="fa fa-arrow-right fa-2x"></i></div>-->
                                 <!-- GO TO COORDS -->
                                 <div class="icon-container-all">
                                     <div id="gis_goToCoordinatesBtn" data-tool="coordinates" data-locale_key="Base_Panel_GoToCoordinates" data-locale_ref="title" class="icon-container localizedElement" onclick="AdvancedPanel.toggleAdvancedTools($(this));"><i class="fa fa-crosshairs fa-2x"></i></div>
@@ -234,9 +234,15 @@
                                 <div id="gis_getFeatureInfoBtn" data-locale_key="Base_Panel_FeatureInfo" data-locale_ref="title" class="icon-container ctrlButtons localizedElement"><i class="fa fa-info fa-2x"></i></div>
 
                                 <!-- Measure Tools -->
-                                <div id="gis_measureLineBtn" data-locale_key="Base_Panel_MeasureLine" data-locale_ref="title" class="icon-container ctrlButtons localizedElement"><i class="fa fa-arrows-h fa-2x"></i></div>
-                                <div id="gis_measureAreaBtn" data-locale_key="Base_Panel_MeasureArea" data-locale_ref="title" class="icon-container ctrlButtons localizedElement"><i class="fa fa-square-o fa-2x"></i></div>
-                                <div id="measure-select" class="no-display"></div>
+                                <div id="gis_gisBaseLayerBtn" style="z-index:2;" data-locale_key="Base_Panel_SelectBaseMap" data-locale_ref="title" class="icon-container ctrlButtons localizedElement" onclick="$('#gis_measureLineBtn').toggleClass('mm_btn_line_show');$('#gis_measureAreaBtn').toggleClass('mm_btn_area_show')""><img style="width:22px;" src="images/rule1.png"></div>
+                                <div id="measure-select" class="">
+                                    <div id="gis_measureLineBtn" data-locale_key="Base_Panel_MeasureLine" data-locale_ref="title" class="icon-container mm_btn_area localizedElement">
+                                        <i class="fa fa-arrows-h fa-2x"></i>
+                                    </div>
+                                    <div id="gis_measureAreaBtn" data-locale_key="Base_Panel_MeasureArea" data-locale_ref="title" class="icon-container mm_btn_line localizedElement">
+                                        <i class="fa fa-square-o fa-2x"></i>
+                                    </div>
+                                </div>
 
                                 <div id="gis_gisOverviewBtn" data-locale_key="Base_Panel_ShowOverview" data-locale_ref="title" class="icon-container localizedElement custom-hidden" onclick="gisOverview.toggle($(this));"><i class="fa fa-globe fa-2x"></i></div>
                                 <div id="gis_gisBaseLayerBtn" data-locale_key="Base_Panel_SelectBaseMap" data-locale_ref="title" class="icon-container ctrlButtons localizedElement" onclick="baseMapLayerIcon.onclick();"><i class="fa fa-map fa-2x"></i></div>

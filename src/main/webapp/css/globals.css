@@ -466,6 +466,43 @@ input[type='checkbox'] {
 }
 
 
+
+/*begin baselayer*/
+
+.menu-select {
+    position: relative;
+    top: -46px;
+    left: 46px;
+}
+
+.menu-select.no-display{
+    display: none;
+}
+
+.menu-select .baselayer-circle {
+    -moz-border-radius: 19px;
+    -webkit-border-radius: 19px;
+    border-radius: 19px;
+    width: 39px;
+    height: 39px;
+    background: #5A738E;
+    color: #FFFFFF;
+    border: solid 6px transparent;
+    text-align: center;
+    cursor: pointer;
+    display: inline-block;
+}
+
+.menu-select .baselayer-circle:hover {
+    background: #23527c;
+}
+
+.menu-select .baselayer-circle.se-selected {
+    background: #DF0101 !important;
+}
+
+
+
 .ui-dialog-titlebar-close:before {
     content: "X";
     color: #424141;
@@ -507,5 +544,72 @@ input[type='checkbox'] {
     font-size: 8px;
 }
 /*end baselayer*/
+
+
+/* Measure menu */
+
+#measure-select{
+    height: 0px;    
+}
+
+.mm_btn_line{
+    position: relative;
+    top: -73px;
+    left: 82px;
+    opacity: 0;
+    display: none;
+}
+
+.mm_btn_area{
+    position: relative;
+    top: -36px;
+    left:0px; 
+    opacity: 0;
+    display: none;
+}
+
+.mm_btn_line_show{
+    -webkit-animation-fill-mode: forwards; /* Safari 4.0 - 8.0 */
+    -webkit-animation-name: showButton1; /* Safari 4.0 - 8.0 */
+    -webkit-animation-duration: 1s; /* Safari 4.0 - 8.0 */
+    animation-fill-mode: forwards;
+    animation-name: showButton1;
+    animation-duration: 1s;
+    display: block;
+}
+
+.mm_btn_area_show{
+    -webkit-animation-fill-mode: forwards; /* Safari 4.0 - 8.0 */
+    -webkit-animation-name: showButton2; /* Safari 4.0 - 8.0 */
+    -webkit-animation-duration: 1s; /* Safari 4.0 - 8.0 */
+    animation-fill-mode: forwards;
+    animation-name: showButton2;
+    animation-duration: 1s;
+    display: block;
+}
+
+/* Safari 4.0 - 8.0 */
+@-webkit-keyframes showButton1 {
+    from   { left:0px; opacity: 0; }
+    to { left:45px; opacity: 1; }
+}
+
+/* Standard syntax */
+@keyframes showButton1 {
+    from   {left:0px; opacity: 0; }
+    to {left:45px; opacity: 1; }
+}
+
+/* Safari 4.0 - 8.0 */
+@-webkit-keyframes showButton2 {
+    from   { left:0px; opacity: 0; }
+    to { left:82px; opacity: 1; }
+}
+
+/* Standard syntax */
+@keyframes showButton2 {
+    from   {left:0px; opacity: 0; }
+    to {left:82px; opacity: 1; }
+}
 
 

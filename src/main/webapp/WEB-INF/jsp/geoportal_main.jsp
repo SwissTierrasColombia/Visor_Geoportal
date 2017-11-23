@@ -41,9 +41,9 @@
                                         <div style="background-color: #17206a;height: 15px;width: 3px;"></div>
                                         <div style="background-color: #ea0000;height: 15px;width: 3px;"></div>
                                     </div>
-                                    <div class="col-md-5" style="font-size: 10px; line-height: 14px;">
+                                    <div class="col-md-5" style="font-size: 10px; line-height: 12px;">
                                         <div style="letter-spacing: 0.7px;">Proyecto</div>
-                                        <div style="font-size:9px;font-weight: bold;">Modernización de la<br>Administración de Tierras<br>en Colombia</div>
+                                        <div style="font-size:8px;font-weight: bold;">Modernización de la<br>Administración de Tierras<br>en Colombia</div>
                                     </div>
                                 </div>
                             </div>
@@ -109,8 +109,8 @@
                             <div id="base-tools-panel" class="tools-panel">
 
                                 <div id="gis_maxExtentBtn" data-locale_key="Base_Panel_MaxExtent" data-locale_ref="title" class="icon-container localizedElement"><i class="fa fa-arrows-alt fa-2x"></i></div>
-                                <div id="gis_prevBtn" data-locale_key="Base_Panel_PreviousZoom" data-locale_ref="title" class="icon-container localizedElement"><i class="fa fa-arrow-left fa-2x"></i></div>
-                                <div id="gis_nextBtn" data-locale_key="Base_Panel_NextZoom" data-locale_ref="title" class="icon-container localizedElement"><i class="fa fa-arrow-right fa-2x"></i></div>
+                                <!--<div id="gis_prevBtn" data-locale_key="Base_Panel_PreviousZoom" data-locale_ref="title" class="icon-container localizedElement"><i class="fa fa-arrow-left fa-2x"></i></div>
+                                <div id="gis_nextBtn" data-locale_key="Base_Panel_NextZoom" data-locale_ref="title" class="icon-container localizedElement"><i class="fa fa-arrow-right fa-2x"></i></div>-->
                                 <!-- GO TO COORDS -->
                                 <div class="icon-container-all">
                                     <div id="gis_goToCoordinatesBtn" data-tool="coordinates" data-locale_key="Base_Panel_GoToCoordinates" data-locale_ref="title" class="icon-container localizedElement" onclick="AdvancedPanel.toggleAdvancedTools($(this));"><i class="fa fa-crosshairs fa-2x"></i></div>
