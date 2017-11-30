@@ -80,7 +80,13 @@
                 background-color: #373738;
                 background-size: 34px 34px;
             }
-
+            .ologoagencia{
+                height: 50px;
+                margin-top: -11px;
+                position: fixed;
+                bottom: 26px;
+                left: 2px;
+            }
         </style>
     </head>
     <body class="nav-justified footer_fixed">
@@ -104,28 +110,6 @@
                             <div class="col-md-8">
                                 <div class="col-md-3">
                                     <img class="p_logo" src="images/LOGO-WEBGEO.png" alt="IDE AT">
-                                </div>
-
-
-                                <div class="col-md-6" style="padding-top: 8px;">
-                                    <div class="col-md-6" style="font-size: 10px;">
-                                        <div class="col-md-12" style="text-align: center;margin-bottom:2px; letter-spacing: 0.7px;">Agencia de Implementación</div>
-                                        <div class="col-md-7">
-                                            <img src="images/logobsfswiss.png" style="width:100%; margin-top: 0px;">
-                                        </div>
-                                        <div class="col-md-5">
-                                            <img src="images/logoincige.png" style="width:100%; margin-top: -4px;">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-1" style="padding-left: 13px;">
-                                        <div style="background-color: #fcc900;height: 15px;width: 3px;"></div>
-                                        <div style="background-color: #17206a;height: 12px;width: 3px;"></div>
-                                        <div style="background-color: #ea0000;height: 12px;width: 3px;"></div>
-                                    </div>
-                                    <div class="col-md-5" style="font-size: 10px; line-height: 12px;">
-                                        <div style="letter-spacing: 0.7px;">Proyecto</div>
-                                        <div style="font-size:8px;font-weight: bold;">Modernización de la Administración de Tierras en Colombia</div>
-                                    </div>
                                 </div>
 
                             </div>
@@ -555,7 +539,7 @@
 
                                 <% } //end XXXXXXX PERMISSION %>
 
-
+                                <img class="ologoagencia" src="images/Agencia-implemLogo.svg" />
 
 
                             </div>
