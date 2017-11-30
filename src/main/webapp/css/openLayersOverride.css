@@ -60,9 +60,9 @@ div.olControlZoom a:hover {
 
 /* SCALEBAR */
 .olControlScaleBar {
- 	left: 5px;
+ 	left: 44%;
 /* 	right: 0px; */
-	bottom: 25px !important;
+	bottom: 39px !important;
 }
 
 .ui-widget-content{

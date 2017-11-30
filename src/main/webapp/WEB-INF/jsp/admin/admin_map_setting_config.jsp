@@ -70,7 +70,8 @@
 #list_scales li, #list_resolutions li {
 	margin: 2px;
 	padding: 0.4em;
-	height: 18px;
+	/*height: 18px;*/
+        width: 180px;
 }
 
 #radio_container {
