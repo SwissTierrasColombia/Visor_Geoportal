@@ -84,7 +84,16 @@
         </style>
     </head>
     <body class="nav-justified footer_fixed">
-        <div class="container body">
+        <div id="loadingc" style="width: 100%">
+            <div class="spinner" style="float:left;">
+                <div class="rect1"></div>
+                <div class="rect2"></div>
+                <div class="rect3"></div>
+                <div class="rect4"></div>
+                <div class="rect5"></div>
+            </div>
+        </div>
+        <div id="mainContainer" class="container body" style="display:none;">
             <div class="main_container">
 
                 <!-- top navigation -->
@@ -1172,5 +1181,11 @@
                 <!-- /footer content -->
             </div>
         </div>
+        <script>
+            $(document).ready(function () {
+                $("#mainContainer").show();
+                $("#loadingc").hide();
+            });
+        </script>
     </body>
 </html>
