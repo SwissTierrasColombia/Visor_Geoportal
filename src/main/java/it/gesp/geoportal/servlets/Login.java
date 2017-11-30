@@ -97,6 +97,7 @@ public class Login extends HttpServlet {
                 scookies += c.getName() + "=" + c.getValue() + "; ";
             }
             con.setRequestProperty("Cookie", scookies);
+            System.out.println("COOKIES:[" + scookies + "]");
             //con.setRequestProperty("Cookie", "JSESSIONID=B1206D0F6A74698A2AE3EF51416D5593; PHPSESSID=dac3qtdt4q9hg40fimfsqh0vh8; SESS8936a60e2094e7527ec6dd0de2b53e86=E6QIAph14unVLKUQMJdwRHLIUwYkXHUobovwXWRKl80; SimpleSAMLSessionID=642f6ef5d18d3fa089160dbeca065de8; SimpleSAMLAuthToken=_77ed29d064b208470fa0f83e5fbb603985532a34ca; has_js=1");
 
             //add request header
