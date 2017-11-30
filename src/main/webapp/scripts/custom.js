@@ -840,7 +840,7 @@ $(function () {
     /*
      * DOWNLOAD BUTTON
      */
-    $("#gis_downloadBtn").click(MenuButtons.downloadButtonClicked);
+   // $("#gis_downloadBtn").click(MenuButtons.downloadButtonClicked);
 
     /*
      * MEASURE BUTTONS

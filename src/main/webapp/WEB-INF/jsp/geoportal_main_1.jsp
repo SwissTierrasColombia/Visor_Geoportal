@@ -14,6 +14,9 @@
         <%-- 	<%@ include file="geoportal_import_js_min.jspf" %> --%>
         <%@ include file="geoportal_import.jspf" %>
         <style>
+        	.no-display{
+        		display: none;
+        	}
 
             @media (min-width: 768px){
                 .navbar-nav.navbar-right:last-child {
@@ -459,7 +462,14 @@
                                 <div class="icon-container-all">
 
                                     <!-- Icon and button-->
-                                    <div id="gis_downloadBtn" data-locale_key="Base_Panel_Download" data-locale_ref="title" class="icon-container localizedElement"><i class="fa fa-download fa-2x"></i></div>
+                                    <div id="gis_downloadBtn" data-locale_key="Base_Panel_Download" onclick="gisDownloadIcon.onclick()" data-locale_ref="title" class="icon-container localizedElement"><i class="fa fa-download fa-2x"></i></div>
+                                    
+                                    <div id="gis_download-select" class="no-display">
+                                    	<div class="gis_option icon-container localizedElement" style="position: fixed;" data-locale_key="Base_Panel_Download_Layer" data-locale_ref="title" onclick="MenuButtons.downloadButtonClicked()" ><i class="fa fa-download fa-2x"></i></div>
+                                    	<div class="gis_option icon-container localizedElement" style="position: fixed;" data-locale_key="Base_Panel_Download_xtf" data-locale_ref="title"><i class="fa fa-code fa-2x"></i></div>
+                                    </div>
+                                    
+                                    
                                 </div>
                                 <!-- END DOWNLOAD SHAPE -->
 
