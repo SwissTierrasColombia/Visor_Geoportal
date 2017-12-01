@@ -99,6 +99,7 @@ var LANG_ES = {
 		Base_Panel_Download: "Descargar...",
 		Base_Panel_Download_Layer: "Descargar capa seleccionada",
 		Base_Panel_Download_xtf: "Descargar XTF",
+		Base_Panel_Dataset: "Dataset",
 		Base_Panel_Download_Confirm: "Descargar la capa",
 		
 		Download_Layer_Not_Available: "La capa seleccionada no es disponible para la descarga",

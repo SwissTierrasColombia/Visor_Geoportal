@@ -1,4 +1,3 @@
-<%-- <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%> --%>
 <%@page import="it.gesp.geoportal.utils.ConfigUtils"%>
 <%@page import="it.gesp.geoportal.dao.dto.SystemSettingDTO"%>
 <%@page import="it.gesp.geoportal.services.SystemSettingService"%>
@@ -465,7 +464,22 @@
                                     
                                     <div id="gis_download-select" class="no-display">
                                     	<div class="gis_option icon-container localizedElement" style="position: fixed;" data-locale_key="Base_Panel_Download_Layer" data-locale_ref="title" onclick="MenuButtons.downloadButtonClicked()" ><i class="fa fa-download fa-2x"></i></div>
-                                    	<div class="gis_option icon-container localizedElement" style="position: fixed;" data-locale_key="Base_Panel_Download_xtf" data-locale_ref="title"><i class="fa fa-code fa-2x"></i></div>
+                                    	<div class="gis_option" style="position: fixed;">
+	                                    	<div id="xtfdownload-btn" data-tool="xtfdownload" onclick="AdvancedPanel.toggleAdvancedTools($(this));" class="icon-container localizedElement" style="position: fixed;" data-locale_key="Base_Panel_Download_xtf" data-locale_ref="title"><i class="fa fa-code fa-2x"></i></div>
+	                                   	
+	                                    	<div id="xtfdownload-panel" class="tools-panel-right custom-hidden">
+		                                        <div data-locale_key="Base_Panel_Download_xtf" data-locale_ref="text" class="data-grid-form-header localizedElement"></div>
+		                                        <div class="itemform no-border">
+		                                            <div data-locale_key="Base_Panel_Dataset" data-locale_ref="text" class="form-label-title localizedElement"></div>
+		                                            <select id="xtfdownload-dataset">
+		                                            </select>
+		                                        </div>
+		                                        
+		                                        <div class="form-footer">
+		                                            <button data-locale_key="General_Download" data-locale_ref="text" class="localizedElement" id="xtfdownload-download_Btn" onclick="xtfDownload.downloadXtf();"></button>
+		                                        </div>
+	                                    	</div>
+                                    	</div>
                                     </div>
                                     
                                     

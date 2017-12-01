@@ -308,6 +308,9 @@
 <!-- Data Downloader --> 
 <script type="text/javascript" src="scripts/dataDownloader/DataDownloader.js"></script>
 
+<!-- xtf download -->
+<script type="text/javascript" src="scripts/xtfDownload/xtfDownload.js"></script>
+
 <!-- Gentelella -->
 <link rel="stylesheet" href="lib/bootstrap/bootstrap-3.2.0/css/bootstrap.min.css" />
 <link rel="stylesheet" href="lib/gentelella/css/custom.css" >
