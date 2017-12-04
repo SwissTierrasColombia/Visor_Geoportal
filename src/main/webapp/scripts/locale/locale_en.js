@@ -94,7 +94,9 @@ var LANG_EN = {
 		Base_Panel_ShowOverview: "Show overview",
 		Base_Panel_SelectBaseMap: "Select basemap",
 		Base_Panel_AddWMS: "Add WMS",
-		Base_Panel_Download: "Download layer",
+		Base_Panel_Download: "Download...",
+		Base_Panel_Download_Layer: "Download layer",
+		Base_Panel_Download_xtf: "Download XTF",
 		Base_Panel_Download_Confirm: "Download the layer",
 		
 		Download_Layer_Not_Available: "The selected layer is not available for download",
@@ -344,6 +346,7 @@ var LANG_EN = {
 		AlertDialog_Warning_LogIn: "Not logged in",
 		AlertDialog_Error_LogIn: "Error logging in ",
 		AlertDialog_Info_LoggedWelcome: "Welcome ",
+                AlertDialog_Info_LoggedWelcome_No_Login: "Welcome",
 		
 		// Layers
 		AlertDialog_Warning_LayerNoSelected: "No layer selected",

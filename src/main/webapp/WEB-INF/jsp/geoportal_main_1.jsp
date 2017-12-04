@@ -1,4 +1,3 @@
-<%-- <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%> --%>
 <%@page import="it.gesp.geoportal.utils.ConfigUtils"%>
 <%@page import="it.gesp.geoportal.dao.dto.SystemSettingDTO"%>
 <%@page import="it.gesp.geoportal.services.SystemSettingService"%>
@@ -12,90 +11,180 @@
         <meta name="viewport" content="width=device-width">
 
         <%-- 	<%@ include file="geoportal_import_js_min.jspf" %> --%>
-        <%@ include file="geoportal_import_js_no_min.jspf" %>
+        <%@ include file="geoportal_import.jspf" %>
+        <style>
+        	.no-display{
+        		display: none;
+        	}
 
+            @media (min-width: 768px){
+                .navbar-nav.navbar-right:last-child {
+                    margin-right: 0px;
+                }
+            }
+
+            .nav-justified .main_container .top_nav {
+                margin-left: 0px;
+            }
+
+            .container, .main_container, .p_main_content {
+                height: 100%;
+            }
+
+            .p_logo{
+                width: 190px;
+                padding: 6px 20px;
+            }
+
+            .top_nav .navbar-right{
+                width: initial;
+            }
+
+            footer{
+                padding: 4px;
+            }
+
+            .nav_menu {
+                background: #ffffff;
+                -webkit-box-shadow: 0px 1px 15px 0px rgba(0,0,0,0.75);
+                -moz-box-shadow: 0px 1px 15px 0px rgba(0,0,0,0.75);
+                box-shadow: 0px 1px 15px 0px rgba(0,0,0,0.75);
+                z-index: 102;
+                position: absolute;
+                height: 58px;
+            }
+
+            .icon-container{
+                font-size: 10px;
+                width: 34px;
+                height: 34px;
+                background: #373738;
+            }
+
+            #base-tools-panel{
+                left: 10px;
+                top: 110px;
+            }
+
+            #rightPanel{
+                top: 40px;
+                z-index:101;
+            }
+
+            #menu-switcher{
+                font-size: 13px;
+                background-color: #373738;
+            }
+
+            div.olControlZoom a {
+                height: 34px;
+                width: 34px;
+                background-color: #373738;
+                background-size: 34px 34px;
+            }
+            .ologoagencia{
+                height: 50px;
+                margin-top: -11px;
+                position: fixed;
+                bottom: 26px;
+                left: 2px;
+            }
+        </style>
     </head>
-    <body>
-        <div id="loading-panel"></div>
-        <div class="container" id="container">
-            <div id="topbanner">
-                <div class="main">
-                    <div class="header">
-                        <div>
-                            <div class="logo-banner-left icfClass">
-                                <img src="images/banner/LOGO-WEBGEO.png" alt="IDE AT">
-                            </div>
-                            <div class="logo-banner-left icfClass">
-                                <div class="row" style="width: 340px; font-family: arial, sans-serif;margin-top:5px;">
-                                    <div class="col-md-6" style="font-size: 10px;">
-                                        <div style="text-align: center;margin-bottom:2px; letter-spacing: 0.7px;">Agencia de Implementación</div>
-                                        <div>
-                                            <img src="images/logobsfswiss.png" style="width:100%; height: 20px; margin-top: 0px;">
-                                        </div>
-                                        <div>
-                                            <img src="images/logoincige.png" style="width:100%; height: 20px; margin-top: -4px;">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-1" style="padding-left: 13px;">
-                                        <div style="background-color: #fcc900;height: 26px;width: 3px;"></div>
-                                        <div style="background-color: #17206a;height: 15px;width: 3px;"></div>
-                                        <div style="background-color: #ea0000;height: 15px;width: 3px;"></div>
-                                    </div>
-                                    <div class="col-md-5" style="font-size: 10px; line-height: 12px;">
-                                        <div style="letter-spacing: 0.7px;">Proyecto</div>
-                                        <div style="font-size:8px;font-weight: bold;">Modernización de la<br>Administración de Tierras<br>en Colombia</div>
-                                    </div>
+    <body class="nav-justified footer_fixed">
+        <div id="loadingc" style="width: 100%">
+            <div class="spinner" style="float:left;">
+                <div class="rect1"></div>
+                <div class="rect2"></div>
+                <div class="rect3"></div>
+                <div class="rect4"></div>
+                <div class="rect5"></div>
+            </div>
+        </div>
+        <div id="mainContainer" class="container body" style="display:none;">
+            <div class="main_container">
+
+                <!-- top navigation -->
+                <div class="top_nav">
+                    <div class="nav_menu">
+                        <nav>
+
+                            <div class="col-md-8">
+                                <div class="col-md-3">
+                                    <img class="p_logo" src="images/LOGO-WEBGEO.png" alt="IDE AT">
                                 </div>
+
                             </div>
-                        </div>
+                            <div class="scol-md-4">
+                                <ul class="nav navbar-nav navbar-right">
+                                    <li class="">
+                                        <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                            <!--img src="images/img.jpg" alt=""--><span id="logged-welcome" class="custom-hidden">Bienvenido</span>
+                                            <span class=" fa fa-angle-down"></span>
+                                        </a>
+                                        <ul class="dropdown-menu dropdown-header pull-right">
+                                            <li onclick="clickLoginForm(event)">
+                                                <div id="login_content" style="padding:10px 20px;">
+                                                    <% if (!Boolean.parseBoolean(ConfigUtils.get("login.WSO2").toString())) { %>
+                                                    <label id="login_username_label" data-locale_key="Username_Text" data-locale_ref="text" class="localizedElement control-label" for="first-name">User:</label><input id="login_username" type="text" name="username" class="form-control" />
+                                                    <br>
+                                                    <label id="login_password_label" data-locale_key="Password_Text" data-locale_ref="text" class="localizedElement control-label" style="display: inline-block;">Password:</label> <input id="login_password" type="password" name="password" class="form-control" />
+                                                    <br>
+                                                    <button id="gis_login" data-locale_key="Login_Button_Title" data-locale_ref="text" class="localizedElement"></button>
+                                                    <% } else {%>
+                                                    <a id="gis_login" data-locale_key="Login_Button_Title" data-locale_ref="text" class="localizedElement btn btn-default btn-xs" href="<%= ConfigUtils.get("base.url").toString()%>/simplesaml/auth.php?ReturnTo=geoportal"></a>
+                                                    <% } %>
+                                                </div>
+                                            </li>
+                                            <li><a href="javascript:;" data-locale_key="Header_ContactUS_Link" data-locale_ref="text" class="localizedElement" style="margin-right: 10px;"></a></li>
+                                            <li><a href="javascript:;" id="manual-link" onclick="window.open('html_manual/user/Geoportal_User.html', '_blank ', 'location=no,menubar=no,titlebar=no,toolbar=no,resizable=yes,width=800,height=700')" data-locale_key="Page_Manual_Switch_Button_Title" data-locale_ref="title" class="" style="margin-right: 10px;">Ayuda</a></li>
+                                                <% if (!Boolean.parseBoolean(ConfigUtils.get("login.WSO2").toString())) { %>
+                                            <li><a href="javascript:;" id="gis_logout" style="display:none;" data-locale_key="Logout_Button_Title" data-locale_ref="text" class="localizedElement"><i class="fa fa-sign-out pull-right"></i></a></li>
+                                                    <% } else {%>
+                                            <li><a id="gis_logout" style="display:none;" data-locale_key="Logout_Button_Title" data-locale_ref="text" class="localizedElement btn btn-default btn-xs" href="<%= ConfigUtils.get("base.url").toString()%>/simplesaml/auth.php?action=logout&ReturnTo=geoportal"><i class="fa fa-sign-out pull-right"></i></a></li>
+                                                    <% } %>
+                                        </ul>
+                                    </li>
 
-                        <div class="header-switcher">
-                            <div id="logged-welcome" class="custom-hidden"></div>
-                            <% if (!Boolean.parseBoolean(ConfigUtils.get("login.WSO2").toString())) { %>
-                            <div id="login_username_label" data-locale_key="Username_Text" data-locale_ref="text" class="localizedElement" style="display: inline-block;">Username:</div> <input id="login_username" type="text" name="username"></input>
-                            <div id="login_password_label" data-locale_key="Password_Text" data-locale_ref="text" class="localizedElement" style="display: inline-block;">Password:</div> <input id="login_password" type="password" name="password"></input>
-                            <button id="gis_login" data-locale_key="Login_Button_Title" data-locale_ref="text" class="localizedElement"></button>
-                            <button id="gis_logout" style="display:none;" data-locale_key="Logout_Button_Title" data-locale_ref="text" class="localizedElement"></button>		
-                            <% } else {%>
-                            <a id="gis_login" data-locale_key="Login_Button_Title" data-locale_ref="text" class="localizedElement btn btn-default btn-xs" href="<%= ConfigUtils.get("base.url").toString()%>/simplesaml/auth.php?ReturnTo=geoportal"></a>
-                            <a id="gis_logout" style="display:none;" data-locale_key="Logout_Button_Title" data-locale_ref="text" class="localizedElement btn btn-default btn-xs" href="<%= ConfigUtils.get("base.url").toString()%>/simplesaml/auth.php?action=logout&ReturnTo=geoportal"></a>
-                            <% } %>
+                                    <% if (LoginService.currentUserHasPermission(session, Permissions.ACCESS_ADMINISTRATION_PANEL)) { %>
+                                    <li role="presentation" class="dropdown">
+                                        <a href="javascript:;" id="open-administration-page"  onclick="openAdminPanelWindow()" data-locale_key="Page_Geoportal_Administration_Button_Title" data-locale_ref="title" class="fa fa-gears fa-2x localizedElement" style="margin-right: 10px;"></a>
+                                    </li>
+                                    <% } %>
 
-                            <span>
-                                <a href="#" data-locale_key="Header_ContactUS_Link" data-locale_ref="text" class="localizedElement" style="margin-right: 10px;"></a>
-                            </span>
-                            <select id="language-selector" class="ui-select" onchange="changeGlobalLanguage($(this));">
-                                <option value="es">Español</option>
-                                <option value="en">English</option>
-                            </select>
-                            <% if (LoginService.currentUserHasPermission(session, Permissions.ACCESS_ADMINISTRATION_PANEL)) { %>
-                            <div id="open-administration-page"  onclick="openAdminPanelWindow()" data-locale_key="Page_Geoportal_Administration_Button_Title" data-locale_ref="title" class="localizedElement"><i class="fa fa-cog fa-2x"></i></div>
-                                <% } %>
-                            <div id="tabs-gn-switcher" data-page="tabs-gn" onclick="switchPage($(this))" data-locale_key="Page_Geonetwork_Switch_Button_Title" data-locale_ref="title" class="localizedElement"><i class="fa fa-spin fa-spinner fa-2x"></i></div>
-                            <div id="tabs-webgis-switcher" data-page="tabs-webgis" onclick="switchPage($(this))" data-locale_key="Page_Geoportal_Switch_Button_Title" data-locale_ref="title" class="localizedElement"><i class="fa fa-globe fa-2x"></i></div>
+                                    <li role="presentation" class="">
+                                        <a href="javascript:;">
+                                            <div id="tabs-gn-switcher" data-page="tabs-gn" onclick="switchPage($(this))" data-locale_key="Page_Geonetwork_Switch_Button_Title" data-locale_ref="title" class="localizedElement"><i class="fa fa-spin fa-spinner fa-2x"></i></div>
+                                        </a>
+                                    </li>
 
-                            <!-- Manual link -->
-                            <div id="manual-link" onclick="window.open('html_manual/user/Geoportal_User.html', '_blank ', 'location=no,menubar=no,titlebar=no,toolbar=no,resizable=yes,width=800,height=700')" data-locale_key="Page_Manual_Switch_Button_Title" data-locale_ref="title" class="localizedElement"><i class="fa fa-question fa-2x"></i></div>
-                        </div>
+                                    <li role="presentation" class="">
+                                        <a href="javascript:;">
+                                            <div id="tabs-webgis-switcher" data-page="tabs-webgis" onclick="switchPage($(this))" data-locale_key="Page_Geoportal_Switch_Button_Title" data-locale_ref="title" class="localizedElement"><i class="fa fa-globe fa-2x"></i></div>
+                                        </a>
+                                    </li>
+
+                                    <li role="presentation" class="dropdown">
+                                        <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
+                                            <i class="fa fa-flag"></i>
+                                        </a>
+                                        <ul class="dropdown-menu" role="menu">
+                                            <li><a href="javascript:;"><div onclick="changeGlobalLanguage('es')">Español</div></a></li>
+                                            <li><a href="javascript:;"><div onclick="changeGlobalLanguage('en')">English</div></a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                        </nav>
                     </div>
                 </div>
-            </div>
+                <!-- /top navigation -->
 
-            <div id="tabsWebgisGN">
-                <div id="tabs-webgis" class="tabMain heightFull webgisGNTabs">
-
-                    <!-- TOOLBAR WEBGIS -->
-                    <div id="toolbar">
-                        <div id="toolbar-tools">
-
-
-                        </div>
-
-                    </div>
-
+                <!-- page content -->
+                <div class="right_col p_main_content" role="main">
 
                     <!-- WEBGIS CONTAINER (map and footer) -->
-                    <div id="webgis" style="height: 100%;">
+                    <div id="webgis" >
                         <!-- <div id="toolbar" class="ui-widget-header ui-corner-all"> -->
                         <div id="mapContainer">
 
@@ -140,9 +229,15 @@
                                 <div id="gis_getFeatureInfoBtn" data-locale_key="Base_Panel_FeatureInfo" data-locale_ref="title" class="icon-container ctrlButtons localizedElement"><i class="fa fa-info fa-2x"></i></div>
 
                                 <!-- Measure Tools -->
-                                <div id="gis_measureLineBtn" data-locale_key="Base_Panel_MeasureLine" data-locale_ref="title" class="icon-container ctrlButtons localizedElement"><i class="fa fa-arrows-h fa-2x"></i></div>
-                                <div id="gis_measureAreaBtn" data-locale_key="Base_Panel_MeasureArea" data-locale_ref="title" class="icon-container ctrlButtons localizedElement"><i class="fa fa-square-o fa-2x"></i></div>
-                                <div id="measure-select" class="no-display"></div>
+                                <div id="gis_gisBaseLayerBtn" style="z-index:2;" data-locale_key="Base_Panel_SelectBaseMap" data-locale_ref="title" class="icon-container ctrlButtons localizedElement" onclick="$('#gis_measureLineBtn').toggleClass('mm_btn_line_show');$('#gis_measureAreaBtn').toggleClass('mm_btn_area_show')""><img style="width:22px;" src="images/rule1.png"></div>
+                                <div id="measure-select" class="">
+                                    <div id="gis_measureLineBtn" data-locale_key="Base_Panel_MeasureLine" data-locale_ref="title" class="icon-container mm_btn_area localizedElement">
+                                        <i class="fa fa-arrows-h fa-2x"></i>
+                                    </div>
+                                    <div id="gis_measureAreaBtn" data-locale_key="Base_Panel_MeasureArea" data-locale_ref="title" class="icon-container mm_btn_line localizedElement">
+                                        <i class="fa fa-square-o fa-2x"></i>
+                                    </div>
+                                </div>
 
                                 <div id="gis_gisOverviewBtn" data-locale_key="Base_Panel_ShowOverview" data-locale_ref="title" class="icon-container localizedElement custom-hidden" onclick="gisOverview.toggle($(this));"><i class="fa fa-globe fa-2x"></i></div>
                                 <div id="gis_gisBaseLayerBtn" data-locale_key="Base_Panel_SelectBaseMap" data-locale_ref="title" class="icon-container ctrlButtons localizedElement" onclick="baseMapLayerIcon.onclick();"><i class="fa fa-map fa-2x"></i></div>
@@ -157,9 +252,9 @@
                                 <!-- BASE MAPS -->
                                 <div class="icon-container-all">
                                     <!-- Icon -->
-                                    <div id="gis_themesBtn" data-tool="themes"  data-locale_key="Advanced_Panel_Themes" data-locale_ref="title" class="icon-container localizedElement" onclick="AdvancedPanel.toggleAdvancedTools($(this));" style="height: 40px;">
+                                    <div id="gis_themesBtn" data-tool="themes"  data-locale_key="Advanced_Panel_Themes" data-locale_ref="title" class="icon-container localizedElement" onclick="AdvancedPanel.toggleAdvancedTools($(this));" style="height: 34px;">
                                         <!-- TODO: change image url -->
-                                        <img src="https://gis.gastongov.com/GastonMobileGIS/Content/images/basemap.png" style="font-size:2em;width:22px;height:21px;padding:0;margin-top:2px;margin-bottom:-2px">
+                                        <img src="https://gis.gastongov.com/GastonMobileGIS/Content/images/basemap.png" style="font-size:2em;width:17px;height:17px;padding:0;margin-top:2px;margin-bottom:-2px">
                                     </div>
 
                                     <div id="advance-themes-panel" class="tools-panel custom-hidden">
@@ -365,7 +460,29 @@
                                 <div class="icon-container-all">
 
                                     <!-- Icon and button-->
-                                    <div id="gis_downloadBtn" data-locale_key="Base_Panel_Download" data-locale_ref="title" class="icon-container localizedElement"><i class="fa fa-download fa-2x"></i></div>
+                                    <div id="gis_downloadBtn" data-locale_key="Base_Panel_Download" onclick="gisDownloadIcon.onclick()" data-locale_ref="title" class="icon-container localizedElement"><i class="fa fa-download fa-2x"></i></div>
+                                    
+                                    <div id="gis_download-select" class="no-display">
+                                    	<div class="gis_option icon-container localizedElement" style="position: fixed;" data-locale_key="Base_Panel_Download_Layer" data-locale_ref="title" onclick="MenuButtons.downloadButtonClicked()" ><i class="fa fa-download fa-2x"></i></div>
+                                    	<div class="gis_option" style="position: fixed;">
+	                                    	<div id="xtfdownload-btn" data-tool="xtfdownload" onclick="AdvancedPanel.toggleAdvancedTools($(this));" class="icon-container localizedElement" style="position: fixed;" data-locale_key="Base_Panel_Download_xtf" data-locale_ref="title"><i class="fa fa-code fa-2x"></i></div>
+	                                   	
+	                                    	<div id="xtfdownload-panel" class="tools-panel-right custom-hidden">
+		                                        <div data-locale_key="Base_Panel_Download_xtf" data-locale_ref="text" class="data-grid-form-header localizedElement"></div>
+		                                        <div class="itemform no-border">
+		                                            <div data-locale_key="Base_Panel_Dataset" data-locale_ref="text" class="form-label-title localizedElement"></div>
+		                                            <select id="xtfdownload-dataset">
+		                                            </select>
+		                                        </div>
+		                                        
+		                                        <div class="form-footer">
+		                                            <button data-locale_key="General_Download" data-locale_ref="text" class="localizedElement" id="xtfdownload-download_Btn" onclick="xtfDownload.downloadXtf();"></button>
+		                                        </div>
+	                                    	</div>
+                                    	</div>
+                                    </div>
+                                    
+                                    
                                 </div>
                                 <!-- END DOWNLOAD SHAPE -->
 
@@ -446,7 +563,7 @@
 
                                 <% } //end XXXXXXX PERMISSION %>
 
-
+                                <img class="ologoagencia" src="images/Agencia-implemLogo.svg" />
 
 
                             </div>
@@ -460,7 +577,7 @@
                             Right Panel 
                             Pannello contenente i layer caricati in mappa	 
                             -->
-                            <div id="rightPanel">												
+                            <div id="rightPanel" class="slideOutRight">												
                                 <!-- <div id="menu_header" data-locale_key="Page_Menu_Header" data-locale_ref="text" class="localizedElement m-header">Geocatalogo-TEST</div> -->
 
                                 <!-- <div id="menu-catalog-service">
@@ -1059,17 +1176,24 @@
                             <div id="gis_current_scalebar"></div>
                         </div>
                     </div>
-                </div>
 
-                <div id="tabs-gn" class="webgisGNTabs">
-                    <!-- 				<iframe id="geonetwork-container-iframe" src="http://geo-mosef.gesp.it/geonetwork/srv/spa/main.home" width="100%" height="100%" class="iframetab"></iframe> -->
-                    <!-- 				<iframe id="geonetwork-container-iframe" src="http://localhost:8080/geonetwork/srv/spa/main.home" width="100%" height="100%" onload="javascript:removeGeonetworkTitle();" class="iframetab"></iframe>	 -->
-                    <iframe id="geonetwork-container-iframe" src="<%=new SystemSettingService().getGeonetworkUrl()%>/srv/spa/main.home" width="100%" height="100%" onload="javascript:geonetworkLoaded();" class="iframetab"></iframe>
                 </div>
+                <!-- /page content -->
+
+                <!-- footer content 
+                <footer>
+
+
+                    <div class="clearfix"></div>
+                </footer>-->
+                <!-- /footer content -->
             </div>
         </div>
         <script>
-
+            $(document).ready(function () {
+                $("#mainContainer").show();
+                $("#loadingc").hide();
+            });
         </script>
     </body>
 </html>

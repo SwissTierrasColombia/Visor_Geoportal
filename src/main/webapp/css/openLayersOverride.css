@@ -39,9 +39,9 @@ div.olControlZoom a {
 }
 div.olControlZoom a:hover {
 	background: #23527c;
-	height: 39px;/*needed to rewrite ol classes*/
-	width: 39px;/*needed to rewrite ol classes*/
-	background-size: 39px 39px; /*needed to rewrite ol classes*/
+	height: 34px;/*needed to rewrite ol classes*/
+	width: 34px;/*needed to rewrite ol classes*/
+	background-size: 34px 34px; /*needed to rewrite ol classes*/
 }
 
 .olControlOverviewMapElement {
@@ -60,9 +60,9 @@ div.olControlZoom a:hover {
 
 /* SCALEBAR */
 .olControlScaleBar {
- 	left: 5px;
+ 	left: 44%;
 /* 	right: 0px; */
-	bottom: 25px !important;
+	bottom: 39px !important;
 }
 
 .ui-widget-content{

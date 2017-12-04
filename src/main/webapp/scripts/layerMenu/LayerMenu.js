@@ -189,7 +189,7 @@ LayerMenu._addToSelectedLayerPanel = function(menuItem) {
 
 
 /**
- * Called when a "simple" WMS layer is checked. It sets the OpenLayers' layer
+ * Called when a "simple" WMS layer is checked. It sets the OpenLayers' layeraddToBaseLayersMenu
  * visibility, as well as the layer menu visibility.
  * 
  * The function references a "$(this)" object, that is the reference to the DOM
@@ -880,4 +880,45 @@ BaseMapLayerIcon = function (){
 	
 }
 
+GisDownloadIcon = function(){
+	this.state = false;
+	
+	this.initialMarginTop = '0px';
+	
+	this.finalMarginTop = 44;
+	
+	this.hide = function (){
+		$("#gis_download-select .gis_option").css('marginTop', this.finalMarginTop + 'px');
+		$("#gis_download-select .gis_option").animate({marginTop: this.initialMarginTop}, function (){
+			$("#gis_download-select").addClass("no-display");
+		});
+	};
+	
+	this.show = function (){
+		var initialMarginTop = '0px'
+		var finalMarginTop = 44;
+		$("#gis_download-select").removeClass("no-display");
+		var elements = $("#gis_download-select .gis_option");
+		//console.log(elements);
+		elements.each(function(id, element) {
+			console.log(element);
+			$(element).css('marginTop', initialMarginTop);
+			$(element).animate({marginTop: finalMarginTop + 'px'});
+			finalMarginTop += 44;
+		});
+	};
+	
+	this.onclick = function () {
+		this.state = !this.state;
+		if(this.state){
+			this.show();
+		} else {
+			this.hide();
+		}
+	};
+	
+}
+
+
 window.baseMapLayerIcon = new BaseMapLayerIcon();
+window.gisDownloadIcon = new GisDownloadIcon();

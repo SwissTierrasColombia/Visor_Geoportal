@@ -40,6 +40,10 @@
   
   <!-- Servlets -->
   <servlet>
+    <servlet-name>init</servlet-name>
+    <servlet-class>it.gesp.geoportal.servlets.Main</servlet-class>
+  </servlet>
+  <servlet>
     <servlet-name>main</servlet-name>
     <servlet-class>it.gesp.geoportal.servlets.Main</servlet-class>
   </servlet>

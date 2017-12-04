@@ -14,13 +14,13 @@ import org.apache.log4j.Logger;
 /**
  * Servlet implementation class Main
  */
-@WebServlet(description = "Main desc", urlPatterns = { "/Main" })
-public class Main extends HttpServlet {
+@WebServlet(description = "Init desc", urlPatterns = { "/Init" })
+public class Init extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
-	private static final Logger log = Logger.getLogger(Main.class);
+	private static final Logger log = Logger.getLogger(Init.class);
 
-	public Main() {
+	public Init() {
 		super();
 	}
 
@@ -37,7 +37,7 @@ public class Main extends HttpServlet {
 	private void doWork(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/geoportal_main_1.jsp");
+		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/geoportal_init.jsp");
 		rd.forward(request, response);
 	}
 }

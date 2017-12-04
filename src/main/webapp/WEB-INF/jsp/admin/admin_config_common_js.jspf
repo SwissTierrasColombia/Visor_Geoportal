@@ -1,6 +1,9 @@
 <%-- <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%> --%>
 <%@ page import="it.gesp.geoportal.locale.LocaleUtils, it.gesp.geoportal.services.LoginService, it.gesp.geoportal.constants.Permissions, it.gesp.geoportal.dao.entities.User, it.gesp.geoportal.services.SystemSettingService" %>
 
+<!-- Favicon -->
+<link rel="shortcut icon" type="image/png" href="images/marker.png"/>
+
 <!-- JQuery -->
 <script type="text/javascript" src="lib/jquery/jquery-1.11.1.min.js"></script>
 
@@ -76,3 +79,20 @@ LocaleManager.setLocale("<%=languageCode%>");
 var AJAX_TIMEOUT = GLOBAL_SETTINGS.ajaxTimeout;
 
 </script>
+
+<!-- Gentelella 
+-->
+<link rel="stylesheet" href="lib/bootstrap/bootstrap-3.2.0/css/bootstrap.min.css" />
+<link href="lib/gentelella/css/custom.css" rel="stylesheet">
+
+<script type="text/javascript" src="lib/bootstrap/bootstrap-3.2.0/js/bootstrap.min.js"></script>
+<!--
+<script type="text/javascript" src="lib/gentelella/js/custom.min.js"></script>
+-->
+
+<!-- Mustache -->
+<script type="text/javascript" src="lib/mustache/mustache.min.js"></script>
+<!-- JS Beautifier -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.7.4/beautify.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.7.4/beautify-css.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.7.4/beautify-html.min.js"></script>
