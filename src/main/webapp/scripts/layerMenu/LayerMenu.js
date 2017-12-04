@@ -901,7 +901,6 @@ GisDownloadIcon = function(){
 		var elements = $("#gis_download-select .gis_option");
 		//console.log(elements);
 		elements.each(function(id, element) {
-			console.log(element);
 			$(element).css('marginTop', initialMarginTop);
 			$(element).animate({marginTop: finalMarginTop + 'px'});
 			finalMarginTop += 44;
