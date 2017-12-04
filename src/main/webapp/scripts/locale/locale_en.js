@@ -97,6 +97,7 @@ var LANG_EN = {
 		Base_Panel_Download: "Download...",
 		Base_Panel_Download_Layer: "Download layer",
 		Base_Panel_Download_xtf: "Download XTF",
+		Base_Panel_Dataset: "Dataset",
 		Base_Panel_Download_Confirm: "Download the layer",
 		
 		Download_Layer_Not_Available: "The selected layer is not available for download",

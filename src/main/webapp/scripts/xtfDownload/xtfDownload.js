@@ -9,7 +9,8 @@ var xtfDownload = {
 				
 				
 				$.ajax({
-					url: "http://validador.proadmintierra.info:8083/ilivalidator/v1/export_catalogue",
+					//url: "http://validador.proadmintierra.info:8083/ilivalidator/v1/export_catalogue",
+					url: "https://ide.proadmintierra.info/http_proxy/proxy?url=http%3A%2F%2Fvalidador.proadmintierra.info%3A8083%2Filivalidator%2Fv1%2Fexport_catalogue",
 					method: "GET",
 					dataType: "json"
 				}).done(function(data){
@@ -57,7 +58,6 @@ var xtfDownload = {
 		 *  ***************************/
 		openPanel: function() {
 			this.panel.show();
-			console.log(this.panel);
 		},
 		
 		/** *****************************
