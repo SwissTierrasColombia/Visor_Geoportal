@@ -162,6 +162,7 @@ public class LayerConfig {
 	}
 	
 	@Column(name="attr_mapping", nullable = true)
+	@Type(type = "StringJsonObject")
 	public String getAttrMapping() {
 		return attrMapping;
 	}
