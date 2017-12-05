@@ -273,7 +273,7 @@ var featureInfoResults = {
             var attributes = feature.attributes;
             if (attrMapping.hasOwnProperty("attributes"))
                 $.extend(attributes, attrMapping.attributes);
-            $.extend(attributes, {fid: this.getGidFromFid(feature.fid)});            
+            attributes["fid"]= this.getGidFromFid(feature.fid);           
             if (attrMapping.hasOwnProperty("log") && attrMapping.log == true) {
                 console.log("attrMapping:", attrMapping);
                 console.log("feature.attributes:", attributes);
