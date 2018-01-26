@@ -273,11 +273,12 @@ var featureInfoResults = {
             var attributes = feature.attributes;
             if (attrMapping.hasOwnProperty("attributes"))
                 $.extend(attributes, attrMapping.attributes);
+            attributes["fid"]= this.getGidFromFid(feature.fid);           
             if (attrMapping.hasOwnProperty("log") && attrMapping.log == true) {
                 console.log("attrMapping:", attrMapping);
                 console.log("feature.attributes:", attributes);
             }
-            var output = Mustache.render(attrMapping.template, feature.attributes);
+            var output = Mustache.render(attrMapping.template, attributes);
             featBody.html(output);
         } else {
 

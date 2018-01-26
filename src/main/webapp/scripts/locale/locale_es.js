@@ -238,6 +238,7 @@ var LANG_ES = {
 		TOC_Layers_Show_Layer_Info_Panel: "Mostrar informaciones de la capa",
 		
 		TOC_Layers_User_Added_WMS_Title: "Capas WMS",
+                TOC_Layers_Download_From_Selected_Panel: "Descargar capa",
 		
 		// GETFEATUREINFO
 		GetFeature_Info_Dialog_Title: "Resultados",

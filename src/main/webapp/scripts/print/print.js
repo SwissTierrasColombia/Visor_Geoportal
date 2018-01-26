@@ -82,7 +82,7 @@ var print = {
 		if(this.panel == null) {
 			
 			console.log("First time in Print Panel... initializing");
-			Print_Configuration.loadConfigFromMapfish(function(config){
+            Print_Configuration.loadConfigFromMapfish(function(config){
 				
 				// Init value settings print
 				//Utils.populateCombo($("#print-layout"), config.layouts, "value", "name");
@@ -458,6 +458,7 @@ var print = {
 		}
 		
 		// Extent of polygon in inches and centered in map center
+                console.log(centerInch, A4Inch);
 		var extent = {
 			xMin: (centerInch.x - (A4Inch.w / 2)),
 			yMin: (centerInch.y - (A4Inch.h / 2)),

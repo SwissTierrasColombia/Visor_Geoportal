@@ -237,6 +237,7 @@ var LANG_EN = {
 		TOC_Layers_Show_Layer_Info_Panel: "Show layer info",
 		
 		TOC_Layers_User_Added_WMS_Title: "WMS Layers",
+                TOC_Layers_Download_From_Selected_Panel: "Download layer",
 		
 		// GETFEATUREINFO
 		GetFeature_Info_Dialog_Title: "Results",

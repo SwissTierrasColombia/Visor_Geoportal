@@ -2,34 +2,34 @@
  * Print_Configuration class
  */
 function Print_Configuration() {
-};
+}
 
-Print_Configuration.loadConfigFromMapfish = function(okFn, failFn) {
-	$.ajax({
-		//url: "../print-servlet-mod2/pdf/info.json",
-		url: PRINT_SERVLET_URL + "/pdf/info.json",
-		type: "GET",
-		cache: false,
-		useProxy: true,
-		timeout: AJAX_TIMEOUT,
-		dataType: "json"
-	}).done(function(request, textStatus, jqXHR) {
-		var printConfigJSON = jqXHR.responseJSON;
-		okFn(printConfigJSON);
-	}).fail(function(jqXHR, textStatus, error) {
-		var url ='xxx';
-		OpenLayers.Console.error("Error " + url);
-		// If the error callback function has been specified, let's
-		// call it.
-		// Otherwhise we show a standard Log
-		if (!Utils.isNullOrUndefined(failFn)) {
-			failFn();
-		} else {
-			var title = LocaleManager.getKey("GetCapabilities_Server_Connection_Error_Dialog_Title");
-			var text = LocaleManager.getKey("GetCapabilities_Server_Connection_Error_Dialog_Text");
-			AlertDialog.createOkDefaultDialog(title, text);
-		}
-	});
+Print_Configuration.loadConfigFromMapfish = function (okFn, failFn) {
+    $.ajax({
+        //url: "../print-servlet-mod2/pdf/info.json",
+        url: PRINT_SERVLET_URL + "/pdf/info.json",
+        type: "GET",
+        cache: false,
+        useProxy: true,
+        timeout: AJAX_TIMEOUT,
+        dataType: "json"
+    }).done(function (request, textStatus, jqXHR) {
+        var printConfigJSON = jqXHR.responseJSON;
+        okFn(printConfigJSON);
+    }).fail(function (jqXHR, textStatus, error) {
+        var url = 'xxx';
+        OpenLayers.Console.error("Error " + url);
+        // If the error callback function has been specified, let's
+        // call it.
+        // Otherwhise we show a standard Log
+        if (!Utils.isNullOrUndefined(failFn)) {
+            failFn();
+        } else {
+            var title = LocaleManager.getKey("GetCapabilities_Server_Connection_Error_Dialog_Title");
+            var text = LocaleManager.getKey("GetCapabilities_Server_Connection_Error_Dialog_Text");
+            AlertDialog.createOkDefaultDialog(title, text);
+        }
+    });
 };
 
 /*
@@ -78,13 +78,21 @@ Print_Configuration.layoutsOverride = [
  * PrintServlet (MapFish Print)
  */
 Print_Configuration.dpiOverride = [
-   //{"value": 254, "text": "254"},
-   {"value": 190, "text": "190"},
-   {"value": 127, "text": "127"},
-   {"value": 56, "text": "56"}
+    //{"value": 254, "text": "254"},
+    {"value": 190, "text": "190"},
+    {"value": 127, "text": "127"},
+    {"value": 56, "text": "56"}
 ];
 
 Print_Configuration.outputFormatOverride = [
-   {"value": "pdf", "text": "Pdf"},
-   {"value": "png", "text": "Png"}
+    {"value": "pdf", "text": "Pdf"},
+    {"value": "png", "text": "Png"}
 ];
+
+Print_Configuration.printerHealthCheck = function () {
+        this.loadConfigFromMapfish(function (d) {}, 
+        function () {
+            console.log("Error printer server down");
+            $("#gis-print").hide();
+        });
+};

@@ -13,9 +13,9 @@
         <%-- 	<%@ include file="geoportal_import_js_min.jspf" %> --%>
         <%@ include file="geoportal_import.jspf" %>
         <style>
-            .no-display{
-                display: none;
-            }
+        	.no-display{
+        		display: none;
+        	}
 
             @media (min-width: 768px){
                 .navbar-nav.navbar-right:last-child {
@@ -67,7 +67,7 @@
             }
 
             #rightPanel{
-                top: 60px;
+                top: 40px;
                 z-index:101;
             }
 
@@ -92,9 +92,93 @@
         </style>
     </head>
     <body class="nav-justified footer_fixed">
-        <div id="mainContainer" class="container body">
+        <div id="loadingc" style="width: 100%">
+            <div class="spinner" style="float:left;">
+                <div class="rect1"></div>
+                <div class="rect2"></div>
+                <div class="rect3"></div>
+                <div class="rect4"></div>
+                <div class="rect5"></div>
+            </div>
+        </div>
+        <div id="mainContainer" class="container body" style="display:none;">
             <div class="main_container">
-                <%@ include file="menu.jspf" %>
+
+                <!-- top navigation -->
+                <div class="top_nav">
+                    <div class="nav_menu">
+                        <nav>
+
+                            <div class="col-md-8">
+                                <div class="col-md-3">
+                                    <img class="p_logo" src="images/LOGO-WEBGEO.png" alt="IDE AT">PEPE
+                                </div>
+
+                            </div>
+                            <div class="scol-md-4">
+                                <ul class="nav navbar-nav navbar-right">
+                                    <li class="">
+                                        <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                            <!--img src="images/img.jpg" alt=""--><span id="logged-welcome" class="custom-hidden">Bienvenido</span>
+                                            <span class=" fa fa-angle-down"></span>
+                                        </a>
+                                        <ul class="dropdown-menu dropdown-header pull-right">
+                                            <li onclick="clickLoginForm(event)">
+                                                <div id="login_content" style="padding:10px 20px;">
+                                                    <% if (!Boolean.parseBoolean(ConfigUtils.get("login.WSO2").toString())) { %>
+                                                    <label id="login_username_label" data-locale_key="Username_Text" data-locale_ref="text" class="localizedElement control-label" for="first-name">User:</label><input id="login_username" type="text" name="username" class="form-control" />
+                                                    <br>
+                                                    <label id="login_password_label" data-locale_key="Password_Text" data-locale_ref="text" class="localizedElement control-label" style="display: inline-block;">Password:</label> <input id="login_password" type="password" name="password" class="form-control" />
+                                                    <br>
+                                                    <button id="gis_login" data-locale_key="Login_Button_Title" data-locale_ref="text" class="localizedElement"></button>
+                                                    <% } else {%>
+                                                    <a id="gis_login" data-locale_key="Login_Button_Title" data-locale_ref="text" class="localizedElement btn btn-default btn-xs" href="<%= ConfigUtils.get("base.url").toString()%>/simplesaml/auth.php?ReturnTo=geoportal"></a>
+                                                    <% } %>
+                                                </div>
+                                            </li>
+                                            <li><a href="javascript:;" data-locale_key="Header_ContactUS_Link" data-locale_ref="text" class="localizedElement" style="margin-right: 10px;"></a></li>
+                                            <li><a href="javascript:;" id="manual-link" onclick="window.open('html_manual/user/Geoportal_User.html', '_blank ', 'location=no,menubar=no,titlebar=no,toolbar=no,resizable=yes,width=800,height=700')" data-locale_key="Page_Manual_Switch_Button_Title" data-locale_ref="title" class="" style="margin-right: 10px;">Ayuda</a></li>
+                                                <% if (!Boolean.parseBoolean(ConfigUtils.get("login.WSO2").toString())) { %>
+                                            <li><a href="javascript:;" id="gis_logout" style="display:none;" data-locale_key="Logout_Button_Title" data-locale_ref="text" class="localizedElement"><i class="fa fa-sign-out pull-right"></i></a></li>
+                                                    <% } else {%>
+                                            <li><a id="gis_logout" style="display:none;" data-locale_key="Logout_Button_Title" data-locale_ref="text" class="localizedElement btn btn-default btn-xs" href="<%= ConfigUtils.get("base.url").toString()%>/simplesaml/auth.php?action=logout&ReturnTo=geoportal"><i class="fa fa-sign-out pull-right"></i></a></li>
+                                                    <% } %>
+                                        </ul>
+                                    </li>
+
+                                    <% if (LoginService.currentUserHasPermission(session, Permissions.ACCESS_ADMINISTRATION_PANEL)) { %>
+                                    <li role="presentation" class="dropdown">
+                                        <a href="javascript:;" id="open-administration-page"  onclick="openAdminPanelWindow()" data-locale_key="Page_Geoportal_Administration_Button_Title" data-locale_ref="title" class="fa fa-gears fa-2x localizedElement" style="margin-right: 10px;"></a>
+                                    </li>
+                                    <% } %>
+
+                                    <li role="presentation" class="">
+                                        <a href="javascript:;">
+                                            <div id="tabs-gn-switcher" data-page="tabs-gn" onclick="switchPage($(this))" data-locale_key="Page_Geonetwork_Switch_Button_Title" data-locale_ref="title" class="localizedElement"><i class="fa fa-spin fa-spinner fa-2x"></i></div>
+                                        </a>
+                                    </li>
+
+                                    <li role="presentation" class="">
+                                        <a href="javascript:;">
+                                            <div id="tabs-webgis-switcher" data-page="tabs-webgis" onclick="switchPage($(this))" data-locale_key="Page_Geoportal_Switch_Button_Title" data-locale_ref="title" class="localizedElement"><i class="fa fa-globe fa-2x"></i></div>
+                                        </a>
+                                    </li>
+
+                                    <li role="presentation" class="dropdown">
+                                        <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
+                                            <i class="fa fa-flag"></i>
+                                        </a>
+                                        <ul class="dropdown-menu" role="menu">
+                                            <li><a href="javascript:;"><div onclick="changeGlobalLanguage('es')">Español</div></a></li>
+                                            <li><a href="javascript:;"><div onclick="changeGlobalLanguage('en')">English</div></a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                        </nav>
+                    </div>
+                </div>
+                <!-- /top navigation -->
 
                 <!-- page content -->
                 <div class="right_col p_main_content" role="main">
@@ -113,11 +197,11 @@
                             <!-- BASE TOOLS PANEL -->
                             <div id="base-tools-panel" class="tools-panel">
 
-                                <!--<div id="gis_maxExtentBtn" data-locale_key="Base_Panel_MaxExtent" data-locale_ref="title" class="icon-container localizedElement"><i class="fa fa-arrows-alt fa-2x"></i></div>-->
+                                <div id="gis_maxExtentBtn" data-locale_key="Base_Panel_MaxExtent" data-locale_ref="title" class="icon-container localizedElement"><i class="fa fa-arrows-alt fa-2x"></i></div>
                                 <!--<div id="gis_prevBtn" data-locale_key="Base_Panel_PreviousZoom" data-locale_ref="title" class="icon-container localizedElement"><i class="fa fa-arrow-left fa-2x"></i></div>
                                 <div id="gis_nextBtn" data-locale_key="Base_Panel_NextZoom" data-locale_ref="title" class="icon-container localizedElement"><i class="fa fa-arrow-right fa-2x"></i></div>-->
                                 <!-- GO TO COORDS -->
-                                <!--<div class="icon-container-all">
+                                <div class="icon-container-all">
                                     <div id="gis_goToCoordinatesBtn" data-tool="coordinates" data-locale_key="Base_Panel_GoToCoordinates" data-locale_ref="title" class="icon-container localizedElement" onclick="AdvancedPanel.toggleAdvancedTools($(this));"><i class="fa fa-crosshairs fa-2x"></i></div>
                                     <div id="advance-goto-panel" class="tools-panel-right custom-hidden">
                                         <div data-locale_key="Base_Panel_GoToCoordinates" data-locale_ref="text" class="data-grid-form-header localizedElement"></div>
@@ -143,7 +227,7 @@
                                     </div>
                                 </div>
                                 <div id="gis_getFeatureInfoBtn" data-locale_key="Base_Panel_FeatureInfo" data-locale_ref="title" class="icon-container ctrlButtons localizedElement"><i class="fa fa-info fa-2x"></i></div>
-                                -->
+
                                 <!-- Measure Tools -->
                                 <div id="gis_gisBaseLayerBtn" style="z-index:2;" data-locale_key="Base_Panel_SelectBaseMap" data-locale_ref="title" class="icon-container ctrlButtons localizedElement" onclick="$('#gis_measureLineBtn').toggleClass('mm_btn_line_show');$('#gis_measureAreaBtn').toggleClass('mm_btn_area_show')""><img style="width:22px;" src="images/rule1.png"></div>
                                 <div id="measure-select" class="">
@@ -377,30 +461,67 @@
 
                                     <!-- Icon and button-->
                                     <div id="gis_downloadBtn" data-locale_key="Base_Panel_Download" onclick="gisDownloadIcon.onclick()" data-locale_ref="title" class="icon-container localizedElement"><i class="fa fa-download fa-2x"></i></div>
-
+                                    
                                     <div id="gis_download-select" class="no-display">
-                                        <div class="gis_option icon-container localizedElement" style="position: fixed;margin-left: 0px;" data-locale_key="Base_Panel_Download_Layer" data-locale_ref="title" onclick="MenuButtons.downloadButtonClicked()" ><i class="fa fa-download fa-2x"></i></div>
-                                        <div class="gis_option" style="position: fixed;margin-left: -3px;">
-                                            <div id="xtfdownload-btn" data-tool="xtfdownload" onclick="AdvancedPanel.toggleAdvancedTools($(this));" class="icon-container localizedElement" style="position: fixed;" data-locale_key="Base_Panel_Download_xtf" data-locale_ref="title"><i class="fa fa-code fa-2x"></i></div>
-
-                                            <div id="xtfdownload-panel" class="tools-panel-right custom-hidden">
-                                                <div data-locale_key="Base_Panel_Download_xtf" data-locale_ref="text" class="data-grid-form-header localizedElement"></div>
-                                                <div class="itemform no-border">
-                                                    <div data-locale_key="Base_Panel_Dataset" data-locale_ref="text" class="form-label-title localizedElement"></div>
-                                                    <select id="xtfdownload-dataset">
-                                                    </select>
-                                                </div>
-
-                                                <div class="form-footer">
-                                                    <button data-locale_key="General_Download" data-locale_ref="text" class="localizedElement" id="xtfdownload-download_Btn" onclick="xtfDownload.downloadXtf();"></button>
-                                                </div>
-                                            </div>
-                                        </div>
+                                    	<div class="gis_option icon-container localizedElement" style="position: fixed;" data-locale_key="Base_Panel_Download_Layer" data-locale_ref="title" onclick="MenuButtons.downloadButtonClicked()" ><i class="fa fa-download fa-2x"></i></div>
+                                    	<div class="gis_option" style="position: fixed;">
+	                                    	<div id="xtfdownload-btn" data-tool="xtfdownload" onclick="AdvancedPanel.toggleAdvancedTools($(this));" class="icon-container localizedElement" style="position: fixed;" data-locale_key="Base_Panel_Download_xtf" data-locale_ref="title"><i class="fa fa-code fa-2x"></i></div>
+	                                   	
+	                                    	<div id="xtfdownload-panel" class="tools-panel-right custom-hidden">
+		                                        <div data-locale_key="Base_Panel_Download_xtf" data-locale_ref="text" class="data-grid-form-header localizedElement"></div>
+		                                        <div class="itemform no-border">
+		                                            <div data-locale_key="Base_Panel_Dataset" data-locale_ref="text" class="form-label-title localizedElement"></div>
+		                                            <select id="xtfdownload-dataset">
+		                                            </select>
+		                                        </div>
+		                                        
+		                                        <div class="form-footer">
+		                                            <button data-locale_key="General_Download" data-locale_ref="text" class="localizedElement" id="xtfdownload-download_Btn" onclick="xtfDownload.downloadXtf();"></button>
+		                                        </div>
+	                                    	</div>
+                                    	</div>
                                     </div>
-
-
+                                    
+                                    
                                 </div>
                                 <!-- END DOWNLOAD SHAPE -->
+
+                                <!-- REDLINES -->
+                                <div class="icon-container-all">
+                                    <!-- Icon -->
+                                    <div id="gis_redlinesBtn" data-tool="redlines" data-locale_key="Advanced_Panel_Redline_Enable" data-locale_ref="title" class="localizedElement icon-container" onclick="AdvancedPanel.toggleAdvancedTools($(this));"><i class="fa fa-pencil-square-o fa-2x"></i></div>
+
+                                    <!-- Advanced tools panel -->
+                                    <div id="advance-redlines-panel" class="tools-panel horizontal-panel custom-hidden">
+                                        <div class="section-panel">
+                                            <div id="redline-zoom" data-locale_key="General_ZoomToLayer_Button_Title" data-locale_ref="title" class="localizedElement redline-ctrl icon-container ctrlButtons"  onclick="redlines.zoomToLayer();"><i class="fa fa-arrows-alt fa-2x"></i></div>
+                                            <div id="redline-reload" data-locale_key="General_Reload_Button_Title" data-locale_ref="title" class="localizedElement redline-ctrl icon-container ctrlButtons"  onclick="redlines.reloadData(true);"><i class="fa fa-refresh fa-2x"></i></div>
+                                        </div>
+                                        <div id="redline-typegeoms" class="section-panel">
+                                            <div id="redline-point" data-locale_key="Redline_Add_Point_Button_Title" data-locale_ref="title" data-action="pointDraw" class="localizedElement redline-ctrl icon-container ctrlButtons"  onclick="redlines.selectGeomType($(this));"><i class="fa fa-circle fa-2x"></i></div>
+                                            <div id="redline-line" data-locale_key="Redline_Add_Line_Button_Title" data-locale_ref="title" data-action="lineDraw" class="localizedElement redline-ctrl icon-container ctrlButtons" onclick="redlines.selectGeomType($(this))"><i class="fa fa-share-alt fa-2x"></i></div>
+                                            <div id="redline-polygon" data-locale_key="Redline_Add_Polygon_Button_Title" data-locale_ref="title" data-action="polygonDraw" class="localizedElement redline-ctrl icon-container ctrlButtons" onclick="redlines.selectGeomType($(this))"><i class="fa fa-square fa-2x"></i></div>								
+                                        </div>
+                                        <div id="redline-ctrl-edit" class="section-panel">
+                                            <div id="redline-ctrl-select" data-locale_key="Redline_Select_Button_Title" data-locale_ref="title" data-action="select" class="localizedElement redline-ctrl icon-container ctrlButtons"  onclick="redlines.selectFeature($(this));"><i class="fa fa-hand-o-up fa-2x"></i></div>
+                                            <div id="redline-ctrl-delete" data-locale_key="Redline_Delete_Button_Title" data-locale_ref="title" data-action="delete" class="localizedElement redline-ctrl icon-container ctrlButtons btn-disable" onclick="redlines.deleteFeature($(this));"><i class="fa fa-trash-o fa-2x"></i></div>
+                                            <div id="redline-ctrl-modify" data-locale_key="Redline_Modify_Polygon_Button_Title" data-locale_ref="title" data-action="modify" class="localizedElement redline-ctrl icon-container ctrlButtons" onclick="redlines.modifyFeature($(this));"><i class="fa fa-pencil fa-2x"></i></div>
+                                            <div id="redline-ctrl-label" data-locale_key="Redline_Label_Button_Title" data-locale_ref="title" data-action="addlabel" class="localizedElement redline-ctrl icon-container ctrlButtons btn-disable" onclick="redlines.addLabel($(this));"><i class="fa fa-file-text fa-2x"></i></div>							
+                                        </div>
+
+                                        <div class="section-panel">
+                                            <div id="redline-download" data-locale_key="Redline_Download_Button_Title" data-locale_ref="title" class="localizedElement icon-container" onclick="redlines.downloadGeoms();"><i class="fa fa-download fa-2x"></i></div>
+
+                                            <% // REDLINE SAVE PERMISSION
+                                                if (LoginService.currentUserHasPermission(session, Permissions.REDLINE_INSERT)) { %>
+                                            <div id="redline-save" data-locale_key="Redline_Save_Button_Title" data-locale_ref="title" class="localizedElement icon-container" onclick="redlines.saveGeoms();"><i class="fa fa-save fa-2x"></i></div>
+                                                <% } //end REDLINE SAVE PERMISSION %>
+                                        </div>
+
+                                    </div>											
+                                </div>
+                                <!-- END REDLINES -->
+
 
                                 <!--  COMMENTS -->
                                 <% // COMMENTS READ PERMISSION
@@ -450,7 +571,7 @@
                             <!-- ************* -->
                             <!-- Map Container -->
                             <!-- ************* -->
-                            <div id="map" class="context-menu-one"></div>
+                            <div id="map"></div>
 
                             <!-- 
                             Right Panel 
@@ -1070,8 +1191,8 @@
         </div>
         <script>
             $(document).ready(function () {
-                Print_Configuration.printerHealthCheck();
-                
+                $("#mainContainer").show();
+                $("#loadingc").hide();
             });
         </script>
     </body>

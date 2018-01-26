@@ -23,6 +23,7 @@ var redlines = {
 			//map.addLayer(this.vLayer);
 			//this.reloadData(false);
 		}
+                console.log(this.panel, this.vLayer);
 	},
 	
 	/** ****************************************
@@ -231,6 +232,7 @@ var redlines = {
 		 * If layer is not null & it contains at least 1 feature, zoom.
 		 * Otherwise, dont do anything.
 		 */
+                console.log(this.vLayer);
 		if(this.vLayer != null &&
 				!Utils.isNullOrUndefined(this.vLayer.features) && this.vLayer.features.length > 0) {
 			map.zoomToExtent(this.vLayer.getDataExtent());
