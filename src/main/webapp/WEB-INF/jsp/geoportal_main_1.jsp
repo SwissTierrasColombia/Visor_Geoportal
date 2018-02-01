@@ -9,92 +9,18 @@
         <title>Geoportal</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta name="viewport" content="width=device-width">
-
         <%-- 	<%@ include file="geoportal_import_js_min.jspf" %> --%>
         <%@ include file="geoportal_import.jspf" %>
-        <style>
-            .no-display{
-                display: none;
-            }
-
-            @media (min-width: 768px){
-                .navbar-nav.navbar-right:last-child {
-                    margin-right: 0px;
-                }
-            }
-
-            .nav-justified .main_container .top_nav {
-                margin-left: 0px;
-            }
-
-            .container, .main_container, .p_main_content {
-                height: 100%;
-            }
-
-            .p_logo{
-                width: 190px;
-                padding: 6px 20px;
-            }
-
-            .top_nav .navbar-right{
-                width: initial;
-            }
-
-            footer{
-                padding: 4px;
-            }
-
-            .nav_menu {
-                background: #ffffff;
-                -webkit-box-shadow: 0px 1px 15px 0px rgba(0,0,0,0.75);
-                -moz-box-shadow: 0px 1px 15px 0px rgba(0,0,0,0.75);
-                box-shadow: 0px 1px 15px 0px rgba(0,0,0,0.75);
-                z-index: 102;
-                position: absolute;
-                height: 58px;
-            }
-
-            .icon-container{
-                font-size: 10px;
-                width: 34px;
-                height: 34px;
-                background: #373738;
-            }
-
-            #base-tools-panel{
-                left: 10px;
-                top: 110px;
-            }
-
-            #rightPanel{
-                top: 60px;
-                z-index:101;
-            }
-
-            #menu-switcher{
-                font-size: 13px;
-                background-color: #373738;
-            }
-
-            div.olControlZoom a {
-                height: 34px;
-                width: 34px;
-                background-color: #373738;
-                background-size: 34px 34px;
-            }
-            .ologoagencia{
-                height: 50px;
-                margin-top: -11px;
-                position: fixed;
-                bottom: 26px;
-                left: 2px;
-            }
-        </style>
     </head>
     <body class="nav-justified footer_fixed">
         <div id="mainContainer" class="container body">
             <div class="main_container">
-                <%@ include file="menu.jspf" %>
+
+                <!-- MENU -->
+                <%@ include file="components/menu.jspf" %>
+                <!-- END MENU -->
+
+                <%@ include file="components/search.jspf" %>
 
                 <!-- page content -->
                 <div class="right_col p_main_content" role="main">
@@ -142,9 +68,9 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div id="gis_getFeatureInfoBtn" data-locale_key="Base_Panel_FeatureInfo" data-locale_ref="title" class="icon-container ctrlButtons localizedElement"><i class="fa fa-info fa-2x"></i></div>
                                 -->
-                                <!-- Measure Tools -->
+                                <div id="gis_getFeatureInfoBtn" data-locale_key="Base_Panel_FeatureInfo" data-locale_ref="title" class="icon-container ctrlButtons localizedElement"><i class="fa fa-info fa-2x"></i></div>
+                                <!-- Measure Tools 
                                 <div id="gis_gisBaseLayerBtn" style="z-index:2;" data-locale_key="Base_Panel_SelectBaseMap" data-locale_ref="title" class="icon-container ctrlButtons localizedElement" onclick="$('#gis_measureLineBtn').toggleClass('mm_btn_line_show');$('#gis_measureAreaBtn').toggleClass('mm_btn_area_show')""><img style="width:22px;" src="images/rule1.png"></div>
                                 <div id="measure-select" class="">
                                     <div id="gis_measureLineBtn" data-locale_key="Base_Panel_MeasureLine" data-locale_ref="title" class="icon-container mm_btn_area localizedElement">
@@ -153,9 +79,9 @@
                                     <div id="gis_measureAreaBtn" data-locale_key="Base_Panel_MeasureArea" data-locale_ref="title" class="icon-container mm_btn_line localizedElement">
                                         <i class="fa fa-square-o fa-2x"></i>
                                     </div>
-                                </div>
+                                </div>-->
 
-                                <div id="gis_gisOverviewBtn" data-locale_key="Base_Panel_ShowOverview" data-locale_ref="title" class="icon-container localizedElement custom-hidden" onclick="gisOverview.toggle($(this));"><i class="fa fa-globe fa-2x"></i></div>
+                                <!--div id="gis_gisOverviewBtn" data-locale_key="Base_Panel_ShowOverview" data-locale_ref="title" class="icon-container localizedElement custom-hidden" onclick="gisOverview.toggle($(this));"><i class="fa fa-globe fa-2x"></i></div-->
                                 <div id="gis_gisBaseLayerBtn" data-locale_key="Base_Panel_SelectBaseMap" data-locale_ref="title" class="icon-container ctrlButtons localizedElement" onclick="baseMapLayerIcon.onclick();"><i class="fa fa-map fa-2x"></i></div>
                                 <div id="baselayers-select" class="no-display"></div>						
                             </div>
@@ -253,60 +179,7 @@
                                 </div>	
 
                                 <!-- SEARCH WFS -->
-                                <div class="icon-container-all">
-                                    <!-- Icon -->
-                                    <div id="gis_FEAT" data-tool="searchwfs" data-locale_key="Advanced_Panel_Search_Enable" data-locale_ref="title" class="localizedElement icon-container" onclick="AdvancedPanel.toggleAdvancedTools($(this));"><i class="fa fa-search fa-2x"></i></div>
-
-                                    <!-- Advanced tools panel -->
-                                    <div id="advance-searchwfs-panel" class="tools-panel custom-hidden">
-
-                                        <!-- FILTER KEYWORD -->
-                                        <div class="itemform">
-                                            <!-- Keyword label-->
-                                            <div data-locale_key="Advanced_Panel_Search_Label_keyword" data-locale_ref="text" class="form-label-title localizedElement"></div>
-                                            <div>								
-                                                <input id="gis_FEAT_KEYWORD" type="text" name="gis_FEAT_KEYWORD">										
-                                            </div>
-                                            <div>
-                                                <!-- Search type (Exact or like) -->
-                                                <input id="search_exact" type="checkbox">
-                                                <div data-locale_key="Advanced_Panel_Search_Label_SearchType" data-locale_ref="text" class="localizedElement"></div>							
-                                            </div>	
-                                            <div style="padding: 3px 5px 0 0;">
-                                                <!-- Search all layers and not only visible ones -->
-                                                <input id="search_all_layers" type="checkbox">
-                                                <div data-locale_key="Advanced_Panel_Search_Label_SearchAllLayers" data-locale_ref="text" class="localizedElement"></div>							
-                                            </div>
-                                        </div>
-
-                                        <!-- FILTER BBOX -->
-                                        <div class="itemform">
-                                            <div data-locale_key="Advanced_Panel_Search_Label_SearchBbox" data-locale_ref="text" class="form-label-title localizedElement"></div>
-                                            <div class="items-radio float">
-                                                <input id="search-bbox-deactive" type="radio" value="bbox-deactive" name="search-bbox" checked="checked">
-                                                <div data-locale_key="Advanced_Panel_Search_Label_SearchBboxDeactive" data-locale_ref="text" class="localizedElement"></div>
-
-                                                <input id="search-bbox-active" type="radio" value="bbox-active" name="search-bbox">
-                                                <div style="padding: 3px 5px 0 0;" data-locale_key="Advanced_Panel_Search_Label_SearchBboxActive" data-locale_ref="text" class="localizedElement"></div>
-                                            </div>
-
-                                            <!-- BBOX manager panel -->
-                                            <div id="search-bbox-panel" class="custom-hidden">
-                                                <div id="search-bbox-selected-buttons">
-                                                    <div id="search-bbox-select-button" data-locale_key="Advanced_Panel_Search_SearchBboxSelectButton" data-locale_ref="title" class="localizedElement" onclick="controls.search.activate();"><i class="fa fa-pencil-square-o fa-2x"></i></div>
-                                                    <div id="search-bbox-toggle-button" data-locale_key="Advanced_Panel_Search_SearchBboxHideButton" data-locale_ref="title" class="localizedElement custom-hidden" onclick="searchP.toggleVisibilityBbox();"><i class="fa fa-eye fa-2x"></i></div>
-                                                </div>
-                                                <div id="search-bbox-selected-text"></div>
-                                            </div>				
-                                        </div>
-
-                                        <!-- Footer (Confirm button) -->
-                                        <div class="advance-searchwfs-footerform">
-                                            <button id="advance-searchwfs-clean" data-locale_key="General_Clean" data-locale_ref="text" class="localizedElement" style="float:left;"></button>
-                                            <button id="advance-searchwfs-confirm" data-locale_key="Advanced_Panel_Search_Confirm" data-locale_ref="text" class="localizedElement"></button>
-                                        </div>
-                                    </div>
-                                </div>
+                                <%@ include file="components/searchwfs.jspf" %>
                                 <!-- END SEARCH WFS -->
 
                                 <!--  CSW -->
@@ -316,134 +189,15 @@
                                 </div>
                                 <!-- END CSW -->
 
-                                <!-- ADD WMS -->
-                                <div class="icon-container-all">
-                                    <div id="gis_WMSDialog" data-locale_key="Base_Panel_AddWMS" data-locale_ref="title" class="icon-container localizedElement" onclick="addWmsDialog.toggle($(this));"><i class="fa fa-external-link fa-2x"></i></div>
-                                </div>
-                                <!-- ADD WMS END-->
+                                <!-- DOWNLOAD XTF -->
+                                <%@ include file="components/xtfdownload.jspf" %>
+                                <!-- END DOWNLOAD XTF -->
 
-                                <!-- UPLOAD KML TOOL -->
-                                <div class="icon-container-all">
-
-                                    <!-- Icon and button-->
-                                    <div id="gis-uploadkml" data-tool="uploadkml"  data-locale_key="Advanced_Panel_KMLUpload" data-locale_ref="title" class="icon-container localizedElement" onclick="AdvancedPanel.toggleAdvancedTools($(this));"><i class="fa fa-upload fa-2x"></i></div>
-
-                                    <!-- Upload KML panel -->
-                                    <div id="advance-uploadkml-panel" class="tools-panel custom-hidden">									
-
-                                        <!-- Choose File-->
-                                        <div class="itemform">
-                                            <div data-locale_key="KMLUpload_Label_ChooseFile" data-locale_ref="text" class="form-label-title localizedElement"></div>
-                                            <!-- 										<input id="uploadkml-input-file"type="file"> -->
-                                            <input id="uploadkml-input-file-text" type="text" readonly>
-                                            <div id="uploadkml-choose-file" data-locale_key="KMLUpload_Label_ChooseFileUpload" data-locale_ref="title" class="localizedElement grid-toolbar-item" style="margin:0px;" onclick="kmlupload.chooseFile();"><i class="fa fa-paperclip fa-2x"></i></div>
-                                        </div>
-
-                                        <!--Set projection -->
-                                        <div class="itemform no-border">
-                                            <div data-locale_key=KMLUpload_Label_SelectProjection data-locale_ref="text" class="form-label-title localizedElement"></div>
-                                            <select id="uploadkml-select-proj">
-                                                <option value="EPSG:900913">EPSG:900913</option>
-                                                <option value="EPSG:4326">EPSG:4326</option>
-                                            </select>
-                                        </div>
-
-                                        <div class="itemform">
-                                            <div class="float" style="width:100%;">
-                                                <!-- Extract styles -->
-                                                <input id="uploadkml-extractstyles" type="checkbox">
-                                                <div data-locale_key="KMLUpload_Label_ExtractStyles" data-locale_ref="text" class="localizedElement" style="padding-top:4px;"></div>							
-                                            </div>
-                                        </div>
-
-                                        <div class="itemform">
-                                            <div class="float" style="width:100%;">
-                                                <!-- Extract attributes -->
-                                                <input id="uploadkml-extractattributes" type="checkbox">
-                                                <div data-locale_key="KMLUpload_Label_ExtractAttributes" data-locale_ref="text" class="localizedElement" style="padding-top:4px;"></div>							
-                                            </div>
-                                        </div>
-
-                                        <!-- Footer action buttons form -->
-                                        <div class="form-footer">
-                                            <button id="uploadkml-submit" data-locale_key="KMLUpload_LabelSubmit" data-locale_ref="text" class="localizedElement" onclick="kmlupload.uploadKml();"></button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- END KML TOOL -->
-
-                                <!-- DOWNLOAD SHAPE -->
-                                <div class="icon-container-all">
-
-                                    <!-- Icon and button-->
-                                    <div id="gis_downloadBtn" data-locale_key="Base_Panel_Download" onclick="gisDownloadIcon.onclick()" data-locale_ref="title" class="icon-container localizedElement"><i class="fa fa-download fa-2x"></i></div>
-
-                                    <div id="gis_download-select" class="no-display">
-                                        <div class="gis_option icon-container localizedElement" style="position: fixed;margin-left: 0px;" data-locale_key="Base_Panel_Download_Layer" data-locale_ref="title" onclick="MenuButtons.downloadButtonClicked()" ><i class="fa fa-download fa-2x"></i></div>
-                                        <div class="gis_option" style="position: fixed;margin-left: -3px;">
-                                            <div id="xtfdownload-btn" data-tool="xtfdownload" onclick="AdvancedPanel.toggleAdvancedTools($(this));" class="icon-container localizedElement" style="position: fixed;" data-locale_key="Base_Panel_Download_xtf" data-locale_ref="title"><i class="fa fa-code fa-2x"></i></div>
-
-                                            <div id="xtfdownload-panel" class="tools-panel-right custom-hidden">
-                                                <div data-locale_key="Base_Panel_Download_xtf" data-locale_ref="text" class="data-grid-form-header localizedElement"></div>
-                                                <div class="itemform no-border">
-                                                    <div data-locale_key="Base_Panel_Dataset" data-locale_ref="text" class="form-label-title localizedElement"></div>
-                                                    <select id="xtfdownload-dataset">
-                                                    </select>
-                                                </div>
-
-                                                <div class="form-footer">
-                                                    <button data-locale_key="General_Download" data-locale_ref="text" class="localizedElement" id="xtfdownload-download_Btn" onclick="xtfDownload.downloadXtf();"></button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-
-                                </div>
-                                <!-- END DOWNLOAD SHAPE -->
-
-                                <!--  COMMENTS -->
-                                <% // COMMENTS READ PERMISSION
-                                    if (LoginService.currentUserHasPermission(session, Permissions.COMMENTS_READ)) { %>
-                                <div class="icon-container-all">
-                                    <!-- Icon -->
-                                    <div id="gis_commentsBtn" data-tool="comments" data-locale_key="Advanced_Panel_Comments_Enable" data-locale_ref="title" class="localizedElement icon-container" onclick="AdvancedPanel.toggleAdvancedTools($(this));"><i class="fa fa-file-text-o fa-2x"></i></div>
-                                    <div id="advance-comments-panel" class="tools-panel custom-hidden">									
-
-                                        <div id="comments-form">							
-                                            <!-- Simple search -->
-                                            <div data-locale_key="Advanced_Panel_Comments" data-locale_ref="text" class="localizedElement label-form"></div>
-                                            <div id="comments-input-container">
-                                                <textarea id="comments-input" rows="6"></textarea>
-                                            </div>
-                                        </div>
-                                        <!-- Footer action buttons form -->
-                                        <div class="form-footer">
-                                            <button id="comments-text-submit" data-locale_key="General_Save" data-locale_ref="text" class="localizedElement" onclick="comments.saveData();"></button>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <% } //end COMMENTS READ PERMISSION %>
+                                <!-- COMMENTS -->
+                                <%--@ include file="components/comments.jspf" --%>
                                 <!-- END COMMENTS -->
 
-
-                                <!--  XXXXXXX -->
-                                <% 
-                                    // XXXXXXX PERMISSION
-                                    if (LoginService.currentUserHasPermission(session, Permissions.TEST_PLUGIN)) {
-                                %>
-                                <div class="icon-container-all">
-                                    <!-- Icon -->
-                                    <div id="gis_testBtn" data-tool="test" data-locale_key="Advanced_Panel_Comments_Enable" data-locale_ref="title" 
-                                         class="localizedElement icon-container" onclick="AdvancedPanel.toggleAdvancedTools($(this));">
-                                        <i class="fa fa-envelope fa-2x"></i></div>
-                                </div>
-
-                                <% } //end XXXXXXX PERMISSION %>
-
                                 <img class="ologoagencia" src="images/Agencia-implemLogo.svg" />
-
 
                             </div>
 
@@ -473,6 +227,12 @@
                                         <div id="menu-switcher-toc" class="menu-tab-switcher-item menu-tab-active" data-tab="tab_toc" onclick="LayerMenu.switchTabMenu($(this));">
                                             <div class="menu-switcher-icon"><i class="fa fa-reorder fa-2x"></i></div>
                                             <div id="link_tab_layer" data-locale_key="Page_Menu_Tab_Layer" data-locale_ref="text" class="localizedElement"></div>										
+                                        </div>
+                                        <div id="menu-switcher-toc" class="menu-tab-switcher-item menu-tab-active" data-tab="tab_toc" style="float: right;">
+                                            <div id="gis-uploadkml" data-tool="uploadkml"  data-locale_key="Advanced_Panel_KMLUpload" data-locale_ref="title" class="menu-switcher-icon localizedElement" onclick="AdvancedPanel.toggleAdvancedTools($(this));"><i class="fa fa-upload fa-2x"></i></div>
+                                        </div>
+                                        <div id="menu-switcher-toc" class="menu-tab-switcher-item menu-tab-active" data-tab="tab_toc" style="float: right;">
+                                            <div id="gis_WMSDialog" data-locale_key="Base_Panel_AddWMS" data-locale_ref="title" class="menu-switcher-icon localizedElement" onclick="addWmsDialog.toggle($(this));"><i class="fa fa-external-link fa-2x"></i></div>
                                         </div>
                                         <div id="menu-switcher-search" class="menu-tab-switcher-item custom-hidden" data-tab="tab_search" onclick="LayerMenu.switchTabMenu($(this));">
                                             <div class="menu-switcher-icon"><i class="fa fa-search fa-2x"></i></div>
@@ -537,11 +297,12 @@
                             </div>
                             <!-- END RIGHT PANEL -->
 
+                            <%@ include file="components/kmlupload.jspf" %>
 
                             <!-- ************************ -->
                             <!-- PANEL ALERTS DIALOG 	  -->
                             <!-- ************************ -->
-                            <% 
+                            <%
                                 // ALERTS READ PERMISSION
                                 /*
                              * Simple Alert Panel is available to all user that are not Alerts Admin, 
@@ -1071,7 +832,7 @@
         <script>
             $(document).ready(function () {
                 Print_Configuration.printerHealthCheck();
-                
+
             });
         </script>
     </body>

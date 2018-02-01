@@ -105,10 +105,3 @@
                 <% }%>
     </ul>
 </div>
-
-
-<div id="wrap">
-    <form action="" autocomplete="on">
-        <input id="search" name="search" type="text" class="serarchinput" placeholder="What're we looking for ?"><input id="search_submit" class="serarchinput" value="Rechercher" type="submit">
-    </form>
-</div>

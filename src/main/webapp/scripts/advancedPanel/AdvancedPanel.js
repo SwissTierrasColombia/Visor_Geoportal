@@ -79,12 +79,12 @@ AdvancedPanel.toggleAdvancedTools = function (toolRefButton) {
     if (tool !== "test") {
         testPlugin.deactivate();
     }
-    
-    if(tool !== "xtfdownload"){
-    	xtfDownload.deactivate();
+
+    if (tool !== "xtfdownload") {
+        xtfDownload.deactivate();
     }
-    
-    
+
+
 
     switch (tool) {
         case "redlines":
@@ -126,13 +126,12 @@ AdvancedPanel.toggleAdvancedTools = function (toolRefButton) {
         case "themes":
             themesPlugin.toggle(toolRefButton);
             break;
-
         case "test":
             testPlugin.toggle(toolRefButton);
             break;
         case "xtfdownload":
-        	xtfDownload.toggle(toolRefButton);
-        	break;
+            xtfDownload.toggle(toolRefButton);
+            break;
     }
 
 };

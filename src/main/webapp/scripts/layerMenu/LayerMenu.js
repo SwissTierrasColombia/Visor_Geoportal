@@ -20,7 +20,6 @@ LayerMenu.addToBaseLayersMenu = function (bLayerConfig, layerOL) {
     //		"layerOl" : layerOL,
     //		"enabled" : bLayerConfig.isEnabled()
     //	}));
-    console.log("Felipe - CLICK1");
     var combo = $("#baselayers-select");
 
     var option = $('<div class="baselayer-circle" title="' + bLayerConfig.getTitle() + '"><img src="images/basemaps/' + bLayerConfig.getTitle() + '.jpg" class="se-circle" alt="' + bLayerConfig.getTitle() + '"></div>').data({
@@ -551,6 +550,7 @@ LayerMenu.addToSelectedLayerMenu = function (config) {
             e.stopPropagation();
             var item = btn.closest("li");
             LayerMenu._singleLayerClicked(item);
+            console.log("FLAG 1");
         },
         showInfoBtn: showInfoBtn,
         infoBtnClickedFn: LayerMenu.showLayerInfoClickFn

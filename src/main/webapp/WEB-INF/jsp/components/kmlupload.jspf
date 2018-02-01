@@ -1,0 +1,51 @@
+<%@page import="it.gesp.geoportal.utils.ConfigUtils"%>
+<%@page import="it.gesp.geoportal.locale.LocaleUtils, it.gesp.geoportal.services.LoginService,it.gesp.geoportal.constants.Permissions, it.gesp.geoportal.dao.entities.User, it.gesp.geoportal.services.SystemSettingService" %>
+<!-- UPLOAD KML TOOL -->
+<div class="icon-container-all">
+
+    <!-- Icon and button-->
+    
+
+    <!-- Upload KML panel -->
+    <div id="advance-uploadkml-panel" class="tools-panel custom-hidden">									
+
+        <!-- Choose File-->
+        <div class="itemform">
+            <div data-locale_key="KMLUpload_Label_ChooseFile" data-locale_ref="text" class="form-label-title localizedElement"></div>
+            <!-- 										<input id="uploadkml-input-file"type="file"> -->
+            <input id="uploadkml-input-file-text" type="text" readonly>
+            <div id="uploadkml-choose-file" data-locale_key="KMLUpload_Label_ChooseFileUpload" data-locale_ref="title" class="localizedElement grid-toolbar-item" style="margin:0px;" onclick="kmlupload.chooseFile();"><i class="fa fa-paperclip fa-2x"></i></div>
+        </div>
+
+        <!--Set projection -->
+        <div class="itemform no-border">
+            <div data-locale_key=KMLUpload_Label_SelectProjection data-locale_ref="text" class="form-label-title localizedElement"></div>
+            <select id="uploadkml-select-proj">
+                <option value="EPSG:900913">EPSG:900913</option>
+                <option value="EPSG:4326">EPSG:4326</option>
+            </select>
+        </div>
+
+        <div class="itemform">
+            <div class="float" style="width:100%;">
+                <!-- Extract styles -->
+                <input id="uploadkml-extractstyles" type="checkbox">
+                <div data-locale_key="KMLUpload_Label_ExtractStyles" data-locale_ref="text" class="localizedElement" style="padding-top:4px;"></div>							
+            </div>
+        </div>
+
+        <div class="itemform">
+            <div class="float" style="width:100%;">
+                <!-- Extract attributes -->
+                <input id="uploadkml-extractattributes" type="checkbox">
+                <div data-locale_key="KMLUpload_Label_ExtractAttributes" data-locale_ref="text" class="localizedElement" style="padding-top:4px;"></div>							
+            </div>
+        </div>
+
+        <!-- Footer action buttons form -->
+        <div class="form-footer">
+            <button id="uploadkml-submit" data-locale_key="KMLUpload_LabelSubmit" data-locale_ref="text" class="localizedElement" onclick="kmlupload.uploadKml();"></button>
+        </div>
+    </div>
+</div>
+<!-- END KML TOOL -->
