@@ -27,7 +27,6 @@
 
                     <!-- WEBGIS CONTAINER (map and footer) -->
                     <div id="webgis" >
-                        <!-- <div id="toolbar" class="ui-widget-header ui-corner-all"> -->
                         <div id="mapContainer">
 
                             <div id="input-label-panel" data-locale_key="Save_Label_Panel" data-locale_ref="title" class="localizedElement custom-hidden">
@@ -38,50 +37,7 @@
 
                             <!-- BASE TOOLS PANEL -->
                             <div id="base-tools-panel" class="tools-panel">
-
-                                <!--<div id="gis_maxExtentBtn" data-locale_key="Base_Panel_MaxExtent" data-locale_ref="title" class="icon-container localizedElement"><i class="fa fa-arrows-alt fa-2x"></i></div>-->
-                                <!--<div id="gis_prevBtn" data-locale_key="Base_Panel_PreviousZoom" data-locale_ref="title" class="icon-container localizedElement"><i class="fa fa-arrow-left fa-2x"></i></div>
-                                <div id="gis_nextBtn" data-locale_key="Base_Panel_NextZoom" data-locale_ref="title" class="icon-container localizedElement"><i class="fa fa-arrow-right fa-2x"></i></div>-->
-                                <!-- GO TO COORDS -->
-                                <!--<div class="icon-container-all">
-                                    <div id="gis_goToCoordinatesBtn" data-tool="coordinates" data-locale_key="Base_Panel_GoToCoordinates" data-locale_ref="title" class="icon-container localizedElement" onclick="AdvancedPanel.toggleAdvancedTools($(this));"><i class="fa fa-crosshairs fa-2x"></i></div>
-                                    <div id="advance-goto-panel" class="tools-panel-right custom-hidden">
-                                        <div data-locale_key="Base_Panel_GoToCoordinates" data-locale_ref="text" class="data-grid-form-header localizedElement"></div>
-                                        <div class="itemform no-border">
-                                            <div data-locale_key="GoTo_Coords_Epsg" data-locale_ref="text" class="form-label-title localizedElement"></div>
-                                            <select id="coords-epsg">
-                                                <option value="EPSG:32616">WGS84/Utm 16N (X - Y)</option>
-                                                <option value="EPSG:32617">WGS84/Utm 17N (X - Y)</option>
-                                                <option value="EPSG:4326">WGS84 (Lon - Lat)</option>
-                                            </select>
-                                        </div>
-                                        <div class="itemform no-border">
-                                            <div id="coords-lon-label" data-locale_key="GoTo_Coords_X" data-locale_ref="text" class="form-label-title localizedElement"></div>
-                                            <input id="coords-lon">
-                                        </div>
-                                        <div class="itemform no-border">
-                                            <div id="coords-lat-label" data-locale_key="GoTo_Coords_Y" data-locale_ref="text" class="form-label-title localizedElement"></div>
-                                            <input id="coords-lat">										
-                                        </div>
-                                        <div class="form-footer">
-                                            <button data-locale_key="GoTo_Coords_Btn" data-locale_ref="text" class="localizedElement" id="goto-coordinates-btn" onclick="coordinates.goToCoordinates();"></button>
-                                        </div>
-                                    </div>
-                                </div>
-                                -->
                                 <div id="gis_getFeatureInfoBtn" data-locale_key="Base_Panel_FeatureInfo" data-locale_ref="title" class="icon-container ctrlButtons localizedElement"><i class="fa fa-info fa-2x"></i></div>
-                                <!-- Measure Tools 
-                                <div id="gis_gisBaseLayerBtn" style="z-index:2;" data-locale_key="Base_Panel_SelectBaseMap" data-locale_ref="title" class="icon-container ctrlButtons localizedElement" onclick="$('#gis_measureLineBtn').toggleClass('mm_btn_line_show');$('#gis_measureAreaBtn').toggleClass('mm_btn_area_show')""><img style="width:22px;" src="images/rule1.png"></div>
-                                <div id="measure-select" class="">
-                                    <div id="gis_measureLineBtn" data-locale_key="Base_Panel_MeasureLine" data-locale_ref="title" class="icon-container mm_btn_area localizedElement">
-                                        <i class="fa fa-arrows-h fa-2x"></i>
-                                    </div>
-                                    <div id="gis_measureAreaBtn" data-locale_key="Base_Panel_MeasureArea" data-locale_ref="title" class="icon-container mm_btn_line localizedElement">
-                                        <i class="fa fa-square-o fa-2x"></i>
-                                    </div>
-                                </div>-->
-
-                                <!--div id="gis_gisOverviewBtn" data-locale_key="Base_Panel_ShowOverview" data-locale_ref="title" class="icon-container localizedElement custom-hidden" onclick="gisOverview.toggle($(this));"><i class="fa fa-globe fa-2x"></i></div-->
                                 <div id="gis_gisBaseLayerBtn" data-locale_key="Base_Panel_SelectBaseMap" data-locale_ref="title" class="icon-container ctrlButtons localizedElement" onclick="baseMapLayerIcon.onclick();"><i class="fa fa-map fa-2x"></i></div>
                                 <div id="baselayers-select" class="no-display"></div>						
                             </div>
@@ -128,12 +84,6 @@
                                             <div data-locale_key="Print_Label_TitleMap" data-locale_ref="text" class="form-label-title localizedElement"></div>
                                             <input id="print-title">
                                         </div>
-
-                                        <!-- 									Comment Map -->
-                                        <!-- 									<div class="itemform"> -->
-                                        <!-- 										<div data-locale_key="Print_Label_CommentMap" data-locale_ref="text" class="form-label-title localizedElement"></div> -->
-                                        <!-- 										<textarea rows="3" id="print-comment"></textarea> -->
-                                        <!-- 									</div> -->
 
                                         <!-- Print layout -->
                                         <div class="itemform no-border">
@@ -211,11 +161,6 @@
                             Pannello contenente i layer caricati in mappa	 
                             -->
                             <div id="rightPanel" class="slideOutRight">												
-                                <!-- <div id="menu_header" data-locale_key="Page_Menu_Header" data-locale_ref="text" class="localizedElement m-header">Geocatalogo-TEST</div> -->
-
-                                <!-- <div id="menu-catalog-service">
-                                        <div id="menu-catalog-header"></div>
-                                </div> -->
 
                                 <div id="menu_toggle" data-locale_key="General_Collapse" data-locale_ref="title" class="localizedElement expanded" onclick="LayerMenu.toggleMenu($(this))">
                                     <div><i class="fa fa-caret-right"></i></div>
@@ -311,11 +256,6 @@
                                 if (LoginService.currentUserHasPermission(session, Permissions.ALERTS_READ)) {
                             %>
                             <div id="full-advance-alerts-panel" class="custom-hidden">
-                                <div id="full-advance-alerts-panel-header">
-                                    <!-- 								<div data-locale_key="Advanced_Panel_Alerts" data-locale_ref="text" class="localizedElement custom-float-left" ></div> -->
-                                    <!-- 								<div data-locale_key="General_ClosePanel" data-locale_ref="title" class="localizedElement custom-float-right fa-custom-size" onclick="alerts.closeFullPanel();"><i class="close-collapse-button fa fa-times"></i></div> -->
-                                    <!-- 								<div data-locale_key="General_Expand_Collapse" data-locale_ref="title" class="localizedElement" onclick="alerts.toggleShowHideFullPanel();"><i class="close-collapse-button fa fa-chevron-down"></i></div> -->
-                                </div>
 
                                 <div class="data-grid-container">
                                     <div class="data-grid-actions">
@@ -327,8 +267,7 @@
                                              data-username="<%=LoginService.getAlertsDownloadGeoserverUsername(session)%>"
                                              data-password="<%=LoginService.getAlertsDownloadGeoserverPassword(session)%>"
                                              data-locale_key="Advanced_Alerts_Download_Alerts" data-locale_ref="title" data-action="download" class="localizedElement grid-toolbar-item" onclick="alerts.toggleActions($(this))"><i class="fa fa-download fa-2x"></i></div>
-
-                                        <% } %>
+                                            <% } %>
 
                                         <!-- Button update status alert -->
                                         <div id="alerts-modify-status" data-locale_key=Advanced_Alerts_Modify_Alert_Status data-locale_ref="title" data-action="status" class="localizedElement grid-toolbar-item" onclick="alerts.toggleStatusForm($(this))"><i class="fa fa-flag-o fa-2x"></i></div>
@@ -368,12 +307,6 @@
                                             <div id="alerts-status-check" class="localizedElement status-actions" data-status="C" onclick="alerts.status.change($(this));"><i class="fa fa-check fa-2x"></i></div>
                                             <div data-locale_key="Advanced_Alerts_StatusCheck" data-locale_ref="text" class="localizedElement status-action-label"></div>
                                         </div>
-
-                                        <!-- 											Archive status -->
-                                        <!-- 											<div class="itemform-status"> -->
-                                        <!-- 												<div id="alerts-status-archive" class="localizedElement status-actions" data-status="C" onclick="alerts.status.change($(this));"><i class="fa fa-archive fa-2x"></i></div> -->
-                                        <!-- 												<div data-locale_key="Advanced_Alerts_StatusArchive" data-locale_ref="text" class="localizedElement status-action-label"></div> -->
-                                        <!-- 											</div> -->
                                     </div>										
                                 </div>
 
@@ -435,27 +368,7 @@
                                         <div id="alerts-insert-typegeoms" class="form-horizontal-panel">
                                             <div id="alerts-point-insert" data-locale_key="Redline_Add_Point_Button_Title" data-locale_ref="title" data-action="pointDraw" class="localizedElement ctrlButtons" onclick="alerts.selectGeomType($(this));"><i class="fa fa-circle fa-lg"></i></div>
                                         </div>
-                                        <!-- 									<button data-locale_key="Redline_Add_Geometry_From_KML_Button_Title" data-locale_ref="text" class="localizedElement" onclick="alerts.loadGeomFromKMLToggled();"></button> -->
                                     </div>
-
-                                    <!-- 								<div id="insert-alerts-uploadkml-div"> -->
-                                    <!-- 								Choose File -->
-                                    <!-- 									<div class="itemform"> -->
-                                    <!-- 										<div data-locale_key="KMLUpload_Label_ChooseFile" data-locale_ref="text" class="form-label-title localizedElement"></div> -->
-                                    <!-- 										<input id="insert-alerts-uploadkml-input-file-text" type="text" readonly> -->
-                                    <!-- 										<div id="insert-alerts-uploadkml-choose-file" data-locale_key="KMLUpload_Label_ChooseFileUpload" data-locale_ref="title" class="localizedElement grid-toolbar-item" style="margin:0px;" onclick="alerts.chooseKMLFile();"><i class="fa fa-paperclip fa-2x"></i></div> -->
-                                    <!-- 									</div> -->
-
-                                    <!-- 									Set projection -->
-                                    <!-- 									<div class="itemform no-border"> -->
-                                    <!-- 										<div data-locale_key=KMLUpload_Label_SelectProjection data-locale_ref="text" class="form-label-title localizedElement"></div> -->
-                                    <!-- 										<select id="insert-alerts-uploadkml-select-proj"> -->
-                                    <!-- 											<option value="EPSG:900913">EPSG:900913</option> -->
-                                    <!-- 											<option value="EPSG:4326" selected >EPSG:4326</option> -->
-                                    <!-- 										</select> -->
-                                    <!-- 									</div> -->
-                                    <!-- 									<button data-locale_key="KMLUpload_LabelSubmit" data-locale_ref="text" class="localizedElement" onclick="alerts.uploadKMLFile();"></button> -->
-                                    <!-- 								</div> -->
 
                                     <!-- Footer action buttons form -->
                                     <div class="data-grid-form-footer">
@@ -547,12 +460,6 @@
                                     <div class="itemform">
                                         <div data-locale_key="Advanced_Alerts_Label_MovePoint" data-locale_ref="text" class="localizedElement form-label-title"></div>
                                         <div id="alerts-update-modgeom" data-locale_key="Advanced_Alerts_Update_Geom" data-locale_ref="title" data-action="modify" class="localizedElement" onclick="alerts.toggleEditModifyGeom($(this));"><i class="fa fa-arrows"></i></div>
-                                        <!-- 									<div class="itemform-inline custom-hidden"> -->
-                                        <!-- 										<div data-locale_key="Advanced_Alerts_Label_Form_AddPoint" data-locale_ref="text" class="localizedElement form-label-title"></div> -->
-                                        <!-- 										<div id="alerts-update-typegeoms" class="form-horizontal-panel"> -->
-                                        <!-- 											<div id="alerts-point-update" data-locale_key="Redline_Add_Point_Button_Title" data-locale_ref="title" data-action="pointDraw" class="localizedElement icon-container-form ctrlButtons"  onclick="alerts.selectGeomType($(this));"><i class="fa fa-circle fa-lg"></i></div> -->
-                                        <!-- 										</div> -->
-                                        <!-- 									</div> -->
                                     </div>
 
                                     <!-- Footer action buttons form -->
@@ -586,7 +493,6 @@
                                             <div class="float">
                                                 <input id="csw-search-bbox-deactive" type="radio" value="csw-bbox-deactive" name="csw-search-bbox" checked="checked">
                                                 <div data-locale_key="Advanced_Panel_Search_Label_SearchBboxDeactive" data-locale_ref="text" class="localizedElement"></div>
-
                                                 <input id="csw-search-bbox-active" type="radio" value="csw-bbox-active" name="csw-search-bbox">
                                                 <div style="padding: 3px 5px 0 0;" data-locale_key="Advanced_Panel_Search_Label_SearchBboxActive" data-locale_ref="text" class="localizedElement"></div>
                                             </div>
@@ -619,11 +525,6 @@
                             <!-- ********************* -->
                             <div id="feature-grid-panel" style="display:none">
 
-                                <!--  							<div id="feature-grid-panel-header"> -->
-                                <!--  								<div id="feature-grid-panel-header-text" data-locale_key="FeatureGridPanel_Search_Header" data-locale_ref="text" class="localizedElement"></div> -->
-                                <!-- 								<div id="feature-grid-panel-toolbar-close" data-locale_key="General_Close" data-locale_ref="title" class="localizedElement" onclick="featureGridPanel.closePanel();"><i class="close-collapse-button fa fa-times"></i></div> -->
-                                <!-- 								<div id="feature-grid-panel-header-collapseBtn"data-locale_key="General_Expand_Collapse" data-locale_ref="title" class="localizedElement" onclick="featureGridPanel.toggleShowHide();"><i class="close-collapse-button fa fa-chevron-down"></i></div> -->
-                                <!-- 							</div> -->
                                 <div id="feature-grid-panel-container">
                                     <div id="feature-grid-panel-toolbar">
                                         <button id="feature-grid-panel-toolbar-zoomto" data-locale_key="General_ZoomToFeature" data-locale_ref="text" class="localizedElement" style="display:none;" disabled onclick="featureGridPanel.zoomToSelected();"></button>
@@ -645,10 +546,6 @@
                             %>
                             <!-- FORM INSERT ALERTS FOR SIMPLEPANEL -->
                             <form id="alert-simple-panel-insert" class="custom-hidden alerts-form" onSubmit="return false;">
-                                <!-- 							<div id="alert-simple-panel-insert-header"> -->
-                                <!-- 								<div data-locale_key="Advanced_Alerts_FormHeader_Insert" data-locale_ref="text" class="localizedElement custom-float-left" ></div> -->
-                                <!-- 								<div data-locale_key="General_ClosePanel" data-locale_ref="title" class="localizedElement custom-float-right fa-custom-size" onclick="alerts.closeNewAlertSimple();"><i class="fa fa-times fa-2x"></i></div> -->
-                                <!-- 							</div> -->
 
                                 <!-- Name -->
                                 <div class="itemform">
@@ -673,12 +570,6 @@
                                     <div data-locale_key="Advanced_Alerts_Label_Form_Department" data-locale_ref="text" class="localizedElement form-label-title mandatoryFormat"></div>
                                     <div><select id="simple-insert-alerts-department"></select></div>
                                 </div>
-
-                                <!-- 							Title -->
-                                <!-- 							<div class="itemform"> -->
-                                <!-- 								<div data-locale_key="Advanced_Alerts_Label_Form_Title" data-locale_ref="text" class="localizedElement form-label-title"></div> -->
-                                <!-- 								<div><input type="text" id="simple-insert-alerts-title" name="simple-insert-alerts-title" required></div> -->
-                                <!-- 							</div> -->
 
                                 <!-- Description -->
                                 <div class="itemform">
@@ -819,20 +710,11 @@
 
                 </div>
                 <!-- /page content -->
-
-                <!-- footer content 
-                <footer>
-
-
-                    <div class="clearfix"></div>
-                </footer>-->
-                <!-- /footer content -->
             </div>
         </div>
         <script>
             $(document).ready(function () {
                 Print_Configuration.printerHealthCheck();
-
             });
         </script>
     </body>

@@ -68,8 +68,6 @@ CreateLayer.createMapQuestLayer = function (layerConfig) {
         "http://otile3.mqcdn.com/tiles/1.0.0/map/${z}/${x}/${y}.jpg",
         "http://otile4.mqcdn.com/tiles/1.0.0/map/${z}/${x}/${y}.jpg"];
 
-    //var arrayMapQuestOSM = ["https://tiles.wmflabs.org/bw-mapnik/${z}/${x}/${y}.png"];
-
     var arrayMapQuestAerial = ["http://otile1.mqcdn.com/tiles/1.0.0/sat/${z}/${x}/${y}.jpg",
         "http://otile2.mqcdn.com/tiles/1.0.0/sat/${z}/${x}/${y}.jpg",
         "http://otile3.mqcdn.com/tiles/1.0.0/sat/${z}/${x}/${y}.jpg",
