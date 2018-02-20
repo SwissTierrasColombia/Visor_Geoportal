@@ -271,8 +271,30 @@ var featureInfoResults = {
 
         if (attrMapping !== null && attrMapping.hasOwnProperty("template")) {
             var attributes = feature.attributes;
-            if (attrMapping.hasOwnProperty("attributes"))
-                $.extend(attributes, attrMapping.attributes);
+            var bounds = null;
+            
+            if(feature.geometry && !feature.geometry.boudns){
+                feature.geometry.calculateBounds();
+            }
+            
+            bounds = feature.geometry.bounds.toGeometry();
+            //double call.... don't kwow why, first time should be done
+            bounds.transform(new OpenLayers.Projection(feature.forcedEpsg), new OpenLayers.Projection(map.getProjection()));
+            bounds = bounds.transform(new OpenLayers.Projection(feature.forcedEpsg), new OpenLayers.Projection(map.getProjection()));
+            if(!bounds.boudns){
+                bounds.calculateBounds();
+            }
+            
+            if (attrMapping.hasOwnProperty("attributes")) {
+                $.extend(attributes, attrMapping.attributes, {
+                    geom: {
+                        width: bounds.bounds.getWidth(),
+                        height: bounds.bounds.getHeight(),
+                        lat: bounds.bounds.getCenterLonLat().lat,
+                        lon: bounds.bounds.getCenterLonLat().lon
+                    }
+                });
+            }
             attributes["fid"]= this.getGidFromFid(feature.fid);           
             if (attrMapping.hasOwnProperty("log") && attrMapping.log == true) {
                 console.log("attrMapping:", attrMapping);
@@ -344,7 +366,8 @@ var featureInfoResults = {
             //Clone the feature
             var clonedFeature = feature.clone();
             clonedFeature.forcedEpsg = feature.forcedEpsg;
-
+            
+            this.vLayer.removeAllFeatures();
             this.vLayer.addFeatures(clonedFeature);
 
             //Zoom to feature
