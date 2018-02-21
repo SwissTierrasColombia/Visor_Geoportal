@@ -37,7 +37,7 @@ public class Main extends HttpServlet {
 	private void doWork(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/geoportal_main_1.jsp");
+		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/geoportal_main.jsp");
 		rd.forward(request, response);
 	}
 }
