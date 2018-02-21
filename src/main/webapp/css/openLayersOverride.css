@@ -68,3 +68,7 @@ div.olControlZoom a:hover {
 .ui-widget-content{
 	color: #777;
 }
+
+.olControlZoom{
+    display: none;
+}

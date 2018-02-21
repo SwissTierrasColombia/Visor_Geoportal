@@ -19,9 +19,11 @@
                 <!-- MENU -->
                 <%@ include file="components/menu.jspf" %>
                 <!-- END MENU -->
-
-                <%@ include file="components/search.jspf" %>
-
+                
+                <!-- SEARCH -->
+                <%--@ include file="components/search.jspf" --%>
+                <!-- END SEARCH -->
+                
                 <!-- page content -->
                 <div class="right_col p_main_content" role="main">
 
@@ -37,9 +39,26 @@
 
                             <!-- BASE TOOLS PANEL -->
                             <div id="base-tools-panel" class="tools-panel">
-                                <div id="gis_getFeatureInfoBtn" data-locale_key="Base_Panel_FeatureInfo" data-locale_ref="title" class="icon-container ctrlButtons localizedElement"><i class="fa fa-info fa-2x"></i></div>
-                                <div id="gis_gisBaseLayerBtn" data-locale_key="Base_Panel_SelectBaseMap" data-locale_ref="title" class="icon-container ctrlButtons localizedElement" onclick="baseMapLayerIcon.onclick();"><i class="fa fa-map fa-2x"></i></div>
-                                <div id="baselayers-select" class="no-display"></div>						
+
+                                <!-- BASE MAPS -->
+                                <%@ include file="components/topics.jspf" %>
+                                <!-- BASE MAPS -->
+
+                                <div id="gis_getFeatureInfoBtn" data-locale_key="Base_Panel_FeatureInfo" data-locale_ref="title" class="icon-menu icon-container icon-info ctrlButtons shadow1 localizedElement"></div>
+
+                                <!-- PRINT TOOL -->
+                                <%@ include file="components/printer.jspf" %>
+                                <!-- PRINT TOOL -->
+
+                                <!-- DOWNLOAD XTF -->
+                                <%@ include file="components/xtfdownload.jspf" %>
+                                <!-- END DOWNLOAD XTF -->
+
+
+                                <div class="icon-container-all" style="margin-top: 59px">
+                                    <div id="gis_gisBaseLayerBtn" data-locale_key="Base_Panel_SelectBaseMap" data-locale_ref="title" class="icon-menu icon-container icon-map ctrlButtons shadow1 localizedElement" onclick="baseMapLayerIcon.onclick();"></div>
+                                    <div id="baselayers-select" class="no-display"></div>
+                                </div>
                             </div>
 
                             <!-- ******************** -->
@@ -47,107 +66,25 @@
                             <!-- ******************** -->
                             <div id="advance-tools-panel" class="tools-panel-master horizontal-panel">
 
-                                <!-- BASE MAPS -->
-                                <div class="icon-container-all">
-                                    <!-- Icon -->
-                                    <div id="gis_themesBtn" data-tool="themes"  data-locale_key="Advanced_Panel_Themes" data-locale_ref="title" class="icon-container localizedElement" onclick="AdvancedPanel.toggleAdvancedTools($(this));" style="height: 34px;">
-                                        <!-- TODO: change image url -->
-                                        <img src="https://gis.gastongov.com/GastonMobileGIS/Content/images/basemap.png" style="font-size:2em;width:17px;height:17px;padding:0;margin-top:2px;margin-bottom:-2px">
-                                    </div>
-
-                                    <div id="advance-themes-panel" class="tools-panel custom-hidden">
-                                        <div class="itemform">
-                                            <!-- Keyword label-->
-                                            <div data-locale_key="Advanced_Panel_Themes_Label_keyword" data-locale_ref="text" class="form-label-title localizedElement"></div>
-                                        </div>
-                                        <!-- FILTER KEYWORD -->
-                                        <div class="container clear-all" style="width: 450px;">
-                                            <div class="row" id="advance-themes-panel-list" style="max-height: 380px; overflow: auto;">
-                                                <!-- default no data message -->
-                                                <div data-locale_key="Advanced_Panel_Themes_Label_No_Data" data-locale_ref="text" class="text-muted text-center localizedElement"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-
-                                </div>
-
-                                <!-- PRINT TOOL -->
-                                <div class="icon-container-all">
-                                    <!-- Icon -->
-                                    <div id="gis-print" data-tool="print"  data-locale_key="Advanced_Panel_Print" data-locale_ref="title" class="icon-container localizedElement" onclick="AdvancedPanel.toggleAdvancedTools($(this));"><i class="fa fa-print fa-2x"></i></div>
-
-                                    <!-- Print panel -->
-                                    <div id="advance-print-panel" class="tools-panel custom-hidden">									
-                                        <!-- Title Map -->
-                                        <div class="itemform">
-                                            <div data-locale_key="Print_Label_TitleMap" data-locale_ref="text" class="form-label-title localizedElement"></div>
-                                            <input id="print-title">
-                                        </div>
-
-                                        <!-- Print layout -->
-                                        <div class="itemform no-border">
-                                            <div data-locale_key="Print_Label_Layout" data-locale_ref="text" class="form-label-title localizedElement"></div>
-                                            <select id="print-layout"></select>
-                                        </div>
-
-                                        <!-- Print format (PNG, PDF, ...) -->
-                                        <div class="itemform no-border">
-                                            <div data-locale_key="Print_Label_Format" data-locale_ref="text" class="form-label-title localizedElement"></div>
-                                            <select id="print-format"></select>
-                                        </div>
-
-                                        <!-- Print Scale -->
-                                        <div class="itemform no-border">
-                                            <div data-locale_key="Print_Label_Scale" data-locale_ref="text" class="form-label-title localizedElement"></div>
-                                            <select id="print-scale"></select>
-                                        </div>
-
-                                        <!-- Print DPI -->
-                                        <div class="itemform">
-                                            <div data-locale_key="Print_Label_Dpi" data-locale_ref="text" class="form-label-title localizedElement"></div>
-                                            <select id="print-dpi"></select>
-                                        </div>
-
-                                        <!-- Print Rotation (counterclockwise -->
-                                        <div class="itemform">
-                                            <div data-locale_key="Print_Label_Rotation" data-locale_ref="text" class="form-label-title localizedElement"></div>
-                                            <input id="print-rotation_angle" type="number">
-                                        </div>
-
-                                        <!-- Include legend -->
-                                        <div class="itemform">
-                                            <div data-locale_key="Print_Label_Include_Legend" data-locale_ref="text" class="form-label-title localizedElement"></div>
-                                            <input id="print-include_legend" type="checkbox">
-                                        </div>
-
-                                        <!-- Footer action buttons form -->
-                                        <div class="form-footer">
-                                            <button id="print-submit" data-locale_key="Print_Submit" data-locale_ref="text" class="localizedElement" onclick="print.requests.submit();"></button>
-                                        </div>
-                                    </div>
-                                </div>	
-
                                 <!-- SEARCH WFS -->
-                                <%@ include file="components/searchwfs.jspf" %>
+                                <%--@ include file="components/searchwfs.jspf" %-->
                                 <!-- END SEARCH WFS -->
 
                                 <!--  CSW -->
-                                <div class="icon-container-all">
+                                <!--div class="icon-container-all"-->
                                     <!-- Icon -->
-                                    <div id="gis_cswClientBtn" data-tool="catalogcsw"  data-locale_key="Metadata_Panel_Csw_Search" data-locale_ref="title" class="localizedElement icon-container" onclick="AdvancedPanel.toggleAdvancedTools($(this));"><i class="fa fa-binoculars fa-2x"></i></div>										
-                                </div>
+                                    <!--div id="gis_cswClientBtn" data-tool="catalogcsw"  data-locale_key="Metadata_Panel_Csw_Search" data-locale_ref="title" class="localizedElement icon-container" onclick="AdvancedPanel.toggleAdvancedTools($(this));"><i class="fa fa-binoculars fa-2x"></i></div-->
+                                <!--/div-->
                                 <!-- END CSW -->
 
-                                <!-- DOWNLOAD XTF -->
-                                <%@ include file="components/xtfdownload.jspf" %>
-                                <!-- END DOWNLOAD XTF -->
+                                
 
                                 <!-- COMMENTS -->
                                 <%--@ include file="components/comments.jspf" --%>
                                 <!-- END COMMENTS -->
-
-                                <img class="ologoagencia" src="images/Agencia-implemLogo.svg" />
+                                <div class="ologoagencia">
+                                    <div class="icon-visor icon-menu" style="color:white; font-size: 50px; text-shadow: 1px 1px 3px rgb(0, 0, 0); font-weight: bold;"></div>
+                                </div>
 
                             </div>
 
@@ -156,93 +93,13 @@
                             <!-- ************* -->
                             <div id="map" class="context-menu-one"></div>
 
-                            <!-- 
-                            Right Panel 
-                            Pannello contenente i layer caricati in mappa	 
-                            -->
-                            <div id="rightPanel" class="slideOutRight">												
+                            <!-- Right Panel -->
+                            <%@ include file="components/layers.jspf" %>
+                            <!-- END Right Panel -->
 
-                                <div id="menu_toggle" data-locale_key="General_Collapse" data-locale_ref="title" class="localizedElement expanded" onclick="LayerMenu.toggleMenu($(this))">
-                                    <div><i class="fa fa-caret-right"></i></div>
-                                </div>
-
-                                <!-- TABS MENU -->
-                                <div id="menu_tabs">
-                                    <div id="menu-switcher">							
-                                        <div id="menu-switcher-toc" class="menu-tab-switcher-item menu-tab-active" data-tab="tab_toc" onclick="LayerMenu.switchTabMenu($(this));">
-                                            <div class="menu-switcher-icon"><i class="fa fa-reorder fa-2x"></i></div>
-                                            <div id="link_tab_layer" data-locale_key="Page_Menu_Tab_Layer" data-locale_ref="text" class="localizedElement"></div>										
-                                        </div>
-                                        <div id="menu-switcher-toc" class="menu-tab-switcher-item menu-tab-active" data-tab="tab_toc" style="float: right;">
-                                            <div id="gis-uploadkml" data-tool="uploadkml"  data-locale_key="Advanced_Panel_KMLUpload" data-locale_ref="title" class="menu-switcher-icon localizedElement" onclick="AdvancedPanel.toggleAdvancedTools($(this));"><i class="fa fa-upload fa-2x"></i></div>
-                                        </div>
-                                        <div id="menu-switcher-toc" class="menu-tab-switcher-item menu-tab-active" data-tab="tab_toc" style="float: right;">
-                                            <div id="gis_WMSDialog" data-locale_key="Base_Panel_AddWMS" data-locale_ref="title" class="menu-switcher-icon localizedElement" onclick="addWmsDialog.toggle($(this));"><i class="fa fa-external-link fa-2x"></i></div>
-                                        </div>
-                                        <div id="menu-switcher-search" class="menu-tab-switcher-item custom-hidden" data-tab="tab_search" onclick="LayerMenu.switchTabMenu($(this));">
-                                            <div class="menu-switcher-icon"><i class="fa fa-search fa-2x"></i></div>
-                                            <div id="link_tab_search" data-locale_key="Page_Menu_Tab_Search" data-locale_ref="text" class="localizedElement"></div>									
-                                        </div>
-                                    </div>
-
-                                    <div id="tab_toc" class="tab-item">
-
-                                        <!-- Class menu_tree_parent is to identify the parent Menu. No CSS -->
-                                        <div id="tab_layers_active" class="legend_layer_tabs menu_tree_parent">
-
-
-                                            <div id="menu_layers_active" class="root_item" data-grp_code="grp_layer_active">
-                                                <div class="menu_title">
-                                                    <div id="miniLegend">
-                                                        <div data-locale_key="Page_Menu_Layer_Official" data-locale_ref="text" class="localizedElement"></div>
-                                                        <div data-locale_key="Page_Menu_Layer_Not_Official" data-locale_ref="text" class="localizedElement"></div>
-                                                    </div>
-                                                    <div data-locale_key="TOC_Layers_Selected_Panel" data-locale_ref="text" class="localizedElement root_text"></div>
-                                                </div>
-                                                <div class="menu_item_content">
-                                                    <ul class="menu_item_content_list"></ul>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <!-- Class menu_tree_parent is to identify the parent Menu. No CSS -->
-                                        <div id="tab_layers" class="legend_layer_tabs menu_tree_parent">
-                                            <div class="menu_title catalogLayerTitle">
-                                                <div data-locale_key="TOC_Layers_List_Panel" data-locale_ref="text" class="localizedElement root_text"></div>
-                                            </div>
-                                            <div class="tab_content">	
-                                                <div id="menu_layers" class="root_item custom-hidden" data-grp_code="wms">
-                                                    <div class="menu_title"
-                                                         onclick="tree.toggleMenuItemContent($(this).parents('.root_item'))">
-                                                        <div class="root_icon root_icon_collapsed"></div>
-                                                        <div data-locale_key="TOC_Layers_User_Added_WMS_Title" data-locale_ref="text" class="localizedElement root_text">WMS Layers</div>
-                                                    </div>
-                                                    <div class="menu_item_content custom-hidden">
-                                                        <ul class="menu_item_content_list"></ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div id="tab_search" class="legend_layer_tabs tab-item custom-hidden">
-                                        <div id="search-header">
-                                            <div id="search_result_panel_clear_all_cont" class="custom-hidden btn-icon-text-cont" onclick="javascript:searchResultPanel.clearSearchResultPanel();">										
-                                                <span class="fa-stack">
-                                                    <i class="fa fa-search fa-stack-1x"></i>
-                                                    <i class="fa fa-ban fa-stack-2x text-danger"></i>
-                                                </span>
-                                                <span data-locale_key="Advanced_Panel_Search_ClearAll" data-locale_ref="text" class="localizedElement btn-icon-text"></span>												
-                                            </div>
-                                        </div>
-
-                                        <div id="searchResultPanel"></div>
-                                    </div>								
-                                </div>
-                            </div>
-                            <!-- END RIGHT PANEL -->
-
+                            <!-- UPLOAD KML TOOL -->
                             <%@ include file="components/kmlupload.jspf" %>
+                            <!-- END UPLOAD KML TOOL -->
 
                             <!-- ************************ -->
                             <!-- PANEL ALERTS DIALOG 	  -->

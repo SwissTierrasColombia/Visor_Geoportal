@@ -47,7 +47,7 @@ var ContextMenuController = {
 };
 
 $(document).ready(function () {
-    ContextMenuController.init();
+    //ContextMenuController.init();
 });
 
 /*

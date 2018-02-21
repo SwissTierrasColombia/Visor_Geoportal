@@ -22,7 +22,7 @@ LayerMenu.addToBaseLayersMenu = function (bLayerConfig, layerOL) {
     //	}));
     var combo = $("#baselayers-select");
 
-    var option = $('<div class="baselayer-circle" title="' + bLayerConfig.getTitle() + '"><img src="images/basemaps/' + bLayerConfig.getTitle() + '.jpg" class="se-circle" alt="' + bLayerConfig.getTitle() + '"></div>').data({
+    var option = $('<div class="baselayer-circle shadow1" title="' + bLayerConfig.getTitle() + '"><img src="images/basemaps/' + bLayerConfig.getTitle() + '.jpg" class="se-circle" alt="' + bLayerConfig.getTitle() + '"></div>').data({
         "text": bLayerConfig.getTitle(),
         "value": bLayerConfig.getId(),
         "layerOl": layerOL,
@@ -550,7 +550,6 @@ LayerMenu.addToSelectedLayerMenu = function (config) {
             e.stopPropagation();
             var item = btn.closest("li");
             LayerMenu._singleLayerClicked(item);
-            console.log("FLAG 1");
         },
         showInfoBtn: showInfoBtn,
         infoBtnClickedFn: LayerMenu.showLayerInfoClickFn

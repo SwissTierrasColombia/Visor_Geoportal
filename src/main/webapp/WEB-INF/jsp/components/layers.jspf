@@ -1,0 +1,114 @@
+<!-- 
+    Right Panel 
+    Pannello contenente i layer caricati in mappa	 
+-->
+<style>
+    .layers-btn{
+        position: absolute;
+        right: 10px;
+        top: 63px;
+    }
+</style>
+<script>
+    function layesBtnClick(btn) {
+        $('#rightPanel').toggle();
+        if ($('#rightPanel').is(':visible'))
+            $(btn).addClass("btn-active");
+        else
+            $(btn).removeClass("btn-active");
+    }
+    $(function () {
+        if ($('#rightPanel').is(':visible'))
+            $(".layers-btn").addClass("btn-active");
+        else
+            $(".layers-btn").removeClass("btn-active");
+    });
+</script>
+<div class="layers-btn icon-layers icon-menu icon-container icon-menu-user shadow1" onclick="layesBtnClick(this)">
+</div>
+
+<div id="rightPanel" class="slideOutRight">												
+
+    <!--div id="menu_toggle" data-locale_key="General_Collapse" data-locale_ref="title" class="localizedElement expanded" onclick="LayerMenu.toggleMenu($(this))">
+        <div><i class="fa fa-caret-right"></i></div>
+    </div-->
+
+    <!-- TABS MENU -->
+    <div id="menu_tabs">
+        <div id="menu-switcher" class="shadow1">							
+            <div id="menu-switcher-toc" class="menu-tab-switcher-item menu-tab-active" data-tab="tab_toc" onclick="LayerMenu.switchTabMenu($(this));">
+                <div id="link_tab_layer" data-locale_key="Page_Menu_Tab_Layer" data-locale_ref="text" class="localizedElement"></div>										
+            </div>
+            <div id="menu-switcher-toc" onclick="LayerMenu.toggleMenu($(this))" class="menu-tab-switcher-item menu-tab-active" data-tab="tab_toc" style="float: right;">
+                <div id="" class="menu-switcher-icon localizedElement" onclick="">
+                    <i class="fa fa-angle-right fa-2x"></i>
+                </div>
+            </div>
+            <div id="menu-switcher-toc" class="menu-tab-switcher-item menu-tab-active" data-tab="tab_toc" style="float: right;">
+                <div id="gis-uploadkml" data-tool="uploadkml"  data-locale_key="Advanced_Panel_KMLUpload" data-locale_ref="title" style="font-size: 19pt;" class="icon-kml-file icon-menu menu-switcher-icon localizedElement" onclick="AdvancedPanel.toggleAdvancedTools($(this));"></div>
+            </div>
+            <div id="menu-switcher-toc" class="menu-tab-switcher-item menu-tab-active" data-tab="tab_toc" style="float: right;">
+                <div id="gis_WMSDialog" data-locale_key="Base_Panel_AddWMS" data-locale_ref="title" class="icon-add-wms icon-menu menu-switcher-icon localizedElement" onclick="addWmsDialog.toggle($(this));"></div>
+            </div>
+            <div id="menu-switcher-search" class="menu-tab-switcher-item custom-hidden" data-tab="tab_search" onclick="LayerMenu.switchTabMenu($(this));">
+                <div class="menu-switcher-icon"><i class="fa fa-search fa-2x"></i></div>
+                <div id="link_tab_search" data-locale_key="Page_Menu_Tab_Search" data-locale_ref="text" class="localizedElement"></div>									
+            </div>
+        </div>
+
+        <div id="tab_toc" class="tab-item shadow1">
+
+            <!-- Class menu_tree_parent is to identify the parent Menu. No CSS -->
+            <div id="tab_layers_active" class="legend_layer_tabs menu_tree_parent">
+
+
+                <div id="menu_layers_active" class="root_item" data-grp_code="grp_layer_active">
+                    <div class="menu_title">
+                        <div id="miniLegend">
+                            <div data-locale_key="Page_Menu_Layer_Official" data-locale_ref="text" class="localizedElement"></div>
+                            <div data-locale_key="Page_Menu_Layer_Not_Official" data-locale_ref="text" class="localizedElement"></div>
+                        </div>
+                        <div data-locale_key="TOC_Layers_Selected_Panel" data-locale_ref="text" class="localizedElement root_text"></div>
+                    </div>
+                    <div class="menu_item_content">
+                        <ul class="menu_item_content_list"></ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Class menu_tree_parent is to identify the parent Menu. No CSS -->
+            <div id="tab_layers" class="legend_layer_tabs menu_tree_parent">
+                <div class="menu_title catalogLayerTitle">
+                    <div data-locale_key="TOC_Layers_List_Panel" data-locale_ref="text" class="localizedElement root_text"></div>
+                </div>
+                <div class="tab_content">	
+                    <div id="menu_layers" class="root_item custom-hidden" data-grp_code="wms">
+                        <div class="menu_title"
+                             onclick="tree.toggleMenuItemContent($(this).parents('.root_item'))">
+                            <div class="root_icon root_icon_collapsed"></div>
+                            <div data-locale_key="TOC_Layers_User_Added_WMS_Title" data-locale_ref="text" class="localizedElement root_text">WMS Layers</div>
+                        </div>
+                        <div class="menu_item_content custom-hidden">
+                            <ul class="menu_item_content_list"></ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="tab_search" class="legend_layer_tabs tab-item custom-hidden">
+            <div id="search-header">
+                <div id="search_result_panel_clear_all_cont" class="custom-hidden btn-icon-text-cont" onclick="javascript:searchResultPanel.clearSearchResultPanel();">										
+                    <span class="fa-stack">
+                        <i class="fa fa-search fa-stack-1x"></i>
+                        <i class="fa fa-ban fa-stack-2x text-danger"></i>
+                    </span>
+                    <span data-locale_key="Advanced_Panel_Search_ClearAll" data-locale_ref="text" class="localizedElement btn-icon-text"></span>												
+                </div>
+            </div>
+
+            <div id="searchResultPanel"></div>
+        </div>								
+    </div>
+</div>
+<!-- END RIGHT PANEL -->

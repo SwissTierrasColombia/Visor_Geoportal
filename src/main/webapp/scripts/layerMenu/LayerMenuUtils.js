@@ -81,10 +81,7 @@ LayerMenuUtils.buildLayerMenuItemForDownload = function (clickFn) {
     var downloadButton = $("<span>").data({
         locale_ref: "title",
         locale_key: "TOC_Layers_Download_From_Selected_Panel"
-    }).attr("class", "localizedElement").append(
-            $("<i>").attr({"class": "fa fa-download"})
-            ).click(function (e) {
-        console.log("pepe", clickFn);
+    }).attr("class", "localizedElement").append($("<i>").attr({"class": "fa icon-download"})).click(function (e) {
         if (!Utils.isNullOrUndefined(clickFn)) {
             clickFn($(this), e);
         }
@@ -199,7 +196,7 @@ LayerMenuUtils.buildShowInfoLayerButton = function (clickFn) {
         locale_ref: "title",
         locale_key: "TOC_Layers_Show_Layer_Info_Panel"
     }).attr("class", "localizedElement").append(
-            $("<i>").attr({"class": "fa fa-info-circle"})
+            $("<i>").attr({"class": "fa icon-info"})
             ).click(function (e) {
         if (!Utils.isNullOrUndefined(clickFn)) {
             clickFn($(this), e);
@@ -217,7 +214,7 @@ LayerMenuUtils.buildDeleteLayerButton = function (clickFn) {
         locale_ref: "title",
         locale_key: "TOC_Layers_Remove_From_Selected_Panel"
     }).attr("class", "localizedElement").append(
-            $("<i>").attr({"class": "fa fa-trash-o"})
+            $("<i>").attr({"class": "fa icon-delete"})
             ).click(function (e) {
         if (!Utils.isNullOrUndefined(clickFn)) {
             clickFn($(this), e);
@@ -236,7 +233,7 @@ LayerMenuUtils.buildZoomToLayerButton = function (clickFn) {
         locale_key: "General_ZoomToLayer_Button_Title"
     }).attr("class", "localizedElement")
             .append(
-                    $("<i>").attr({"class": "fa fa-search"})
+                    $("<i>").attr({"class": "fa icon-full"})
                     ).click(function (e) {
         if (!Utils.isNullOrUndefined(clickFn)) {
             clickFn($(this), e);
@@ -250,14 +247,21 @@ LayerMenuUtils.buildZoomToLayerButton = function (clickFn) {
  * Creates the Checkbox for the layer visibility in the Selected Layer Menu
  * 
  */
+var idchkbx = 0;
 LayerMenuUtils.createLayerSelectedMenuToggleVisibilityCheckbox = function (clickFn) {
-    var checkBox = $("<input>").attr("type", "checkbox").prop("checked", true).addClass("toggleLayerCheckbox");
-    checkBox.click(function (e) {
+    var checkBox = $("<input>").attr("type", "checkbox").prop("checked", true).prop("name", "chk" + idchkbx).addClass("toggleLayerCheckbox").addClass("css-checkbox");
+    var cont = $("<span>");
+    var l = $("<label>").addClass("css-label").prop("for", "chk" + idchkbx);
+    cont.append(checkBox);
+    cont.append(l);
+    l.click(function (e) {
         if (!Utils.isNullOrUndefined(clickFn)) {
             clickFn($(this), e);
         }
+        checkBox.prop("checked", !checkBox.prop("checked"));
     });
-    return checkBox;
+    idchkbx++;
+    return cont;
 };
 
 ///**
@@ -284,16 +288,25 @@ LayerMenuUtils.createLayerSelectedMenuToggleVisibilityCheckbox = function (click
  * Creates the Checkbox for the layer shown on the Layer Menu
  */
 LayerMenuUtils.createLayerMenuCheckboxForAdd = function (clickFn) {
-    var checkBox = $("<input>").attr("type", "checkbox").addClass("addLayerCheckbox").data({
+    var checkBox = $("<input>").attr("type", "checkbox").prop("name", "chk" + idchkbx).addClass("addLayerCheckbox").addClass("css-checkbox").data({
         locale_key: "TOC_Layers_Add_To_Selected_Panel",
         locale_ref: "title"
+    });
+    var cont = $("<span>");
+    var l = $("<label>").addClass("css-label").prop("for", "chk" + idchkbx);
+    cont.append(checkBox);
+    cont.append(l);
+    l.click(function (e) {
+        checkBox.prop("checked", !checkBox.prop("checked"));
+        checkBox.change();
     });
     checkBox.change(function (e) {
         if (!Utils.isNullOrUndefined(clickFn)) {
             clickFn($(this), e);
         }
     });
-    return checkBox;
+    idchkbx++;
+    return cont;
 };
 
 /*******************************

@@ -2,7 +2,7 @@
 <%@page import="it.gesp.geoportal.locale.LocaleUtils, it.gesp.geoportal.services.LoginService,it.gesp.geoportal.constants.Permissions, it.gesp.geoportal.dao.entities.User, it.gesp.geoportal.services.SystemSettingService" %>
 <div class="icon-container-all">
 
-    <div id="xtfdownload-btn" data-tool="xtfdownload" onclick="AdvancedPanel.toggleAdvancedTools($(this));" class="icon-container localizedElement" style="position: fixed;" data-locale_key="Base_Panel_Download_xtf" data-locale_ref="title"><i class="fa fa-code fa-2x"></i></div>
+    <div id="xtfdownload-btn" data-tool="xtfdownload" onclick="AdvancedPanel.toggleAdvancedTools($(this));" class="icon-xtf icon-menu-xtf icon-menu icon-container shadow1 localizedElement" data-locale_key="Base_Panel_Download_xtf" data-locale_ref="title"></div>
 
     <div id="xtfdownload-panel" class="tools-panel-right custom-hidden">
         <div data-locale_key="Base_Panel_Download_xtf" data-locale_ref="text" class="data-grid-form-header localizedElement"></div>

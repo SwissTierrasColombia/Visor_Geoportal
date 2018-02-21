@@ -111,7 +111,7 @@
 
                             <div class="col-md-8">
                                 <div class="col-md-3">
-                                    <img class="p_logo" src="images/LOGO-WEBGEO.png" alt="IDE AT">PEPE
+                                    <img class="p_logo" src="images/LOGO-WEBGEO.png" alt="IDE AT">
                                 </div>
 
                             </div>

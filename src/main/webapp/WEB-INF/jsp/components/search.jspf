@@ -1,7 +1,7 @@
 <!-- SEARCH -->
 <div id="wrap">
     <form action="" autocomplete="on" id="search">
-        <input id="tsearch" name="search" type="text" class="" placeholder="What're we looking for ?">
+        <input id="tsearch" name="search" type="text" class="" placeholder="">
     </form>
 </div>
 <script>
@@ -44,13 +44,13 @@
         name: 'my-dataset1',
         source: substringMatcher(states),
         templates: {
-            header: '<h3 class="league-name">L1</h3>'
+            header: '<h3 class="league-name">Búsqueda de datos</h3>'
         }
     }, {
         name: 'my-dataset2',
         source: substringMatcher(states),
         templates: {
-            header: '<h3 class="league-name">L2</h3>'
+            header: '<h3 class="league-name">Búsqueda de metadatos</h3>'
         }
     });
 </script>

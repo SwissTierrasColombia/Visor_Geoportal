@@ -46,11 +46,8 @@
     font-size: 11px;
     padding: 2px 9px 4px 0px !important;
     border-bottom: 1px solid rgb(194, 194, 194);
-    /* float: right; */
     text-align: right;
-    background: #ECECEC;
-    /* box-shadow: 0px 0px 1px 0px #B5B5B5; */
-    /* border-style: dashed; */
+    background: white;
 }
 
 #miniLegend div:first-child {
@@ -71,7 +68,7 @@
 /* } */
 
 #tab_toc {
-    /* 	overflow: auto; */
+    background: white;
 }
 
 #tab_search {
@@ -95,30 +92,29 @@
 #menu-switcher {
     overflow: hidden;
     padding: 5px 4px 5px 4px;
-    font-size: 15px;
-    background-color: #5A738E;
-
+    font-size: 13px;
+    background-color: white;
+    margin: 0px 0px 10px 0px;
     border-bottom: 1px solid #FFFFFF;
-    box-shadow: 2px 0px 5px 1px #A9A9B9;
-    -moz-box-shadow: 2px 0px 5px 1px #A9A9B9;
-    -webkit-box-shadow: 2px 0px 5px 1px #A9A9B9;
-    filter: progid:DXImageTransform.Microsoft.Shadow(color='#A9A9B9', Direction=100, Strength=1);		
+
 }
 .menu-tab-active {
     font-weight: 700;
-    color: #FFFFFF !important;
 }
+
 .menu-tab-switcher-item {
     float: left;
     overflow: hidden;
     padding: 1px 4px 1px 1px;
     cursor: pointer;
-    /* 	color: #585858; */
-    color: #FFFFFF;
+    color: #616161;
+    text-transform: uppercase;
 }
+
 .menu-switcher-icon {
     font-size: 9px;
 }
+
 .menu-tab-switcher-item div {
     float: left;
     padding: 0 3px 1px 1px;
@@ -346,7 +342,7 @@
     filter: alpha(opacity = 100) !important; /* For IE8 and earlier */
 }
 .root_item ul li.selected {
-    background: rgba(26, 73, 107, 0.7) !important;
+    background: rgba(80, 164, 228, 0.7) !important;
     -moz-border-radius: 4px;
     -webkit-border-radius: 4px;
     border-radius: 4px;
@@ -383,7 +379,7 @@
 .root_item ul li .menu-actions {
     float: right;
     overflow: hidden;
-    width: 44px;
+    width: 75px;
     padding: 0;
 }
 .root_item ul li .menu-actions span {

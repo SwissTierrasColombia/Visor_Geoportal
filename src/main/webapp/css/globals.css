@@ -110,7 +110,8 @@ div.dataTables_wrapper {
 }
 
 .btn-active {
-    background: #23527c !important;
+    background: rgb(80, 164, 228) !important;
+    color:white !important;
 }
 .btn-active-grid {
     background: #0C77BE !important;
@@ -152,98 +153,6 @@ div.dataTables_wrapper {
     font-size: 16px !important;
     padding-right: 4px;
     float: right;
-}
-
-/* ****************** */
-/* Override Jquery UI */
-/* ****************** */
-.ui-tabs .ui-tabs-nav .ui-tabs-anchor {
-    padding: 0.2em 1em !important;
-}
-.ui-tabs .ui-tabs-panel {
-    padding: 1em 0.6em !important;
-}
-.ui-widget {
-    font-family: Arial !important;
-    font-size: 1.0em;
-}
-
-.ui-slider-handle {
-    background: #A5BDC9 !important;
-    border: 1px solid #6C94B9 !important;
-    text-decoration: none !important;
-    cursor: pointer !important;
-    height: 1.7em !important;
-    top: -.6em !important;
-}
-.ui-slider-handle:focus {
-    outline: none !important;
-}
-
-/*
-see: http://stackoverflow.com/questions/16917430/jquery-ui-1-10-dialog-and-zindex-option
-*/
-.ui-dialog {
-    z-index: 1000 !important;
-    overflow: visible;
-}
-
-.ui-front {
-    z-index: 1000 !important;
-}
-.ui-dialog .ui-dialog-content {
-    padding: 0px 0px 0px 0px !important;	
-}
-
-.ui-dialog-titlebar {
-    padding: 2px 2px 0px 4px !important;
-    /* 	background: #4D6A75 !important; */
-    background: #4C4D4D !important;
-    color: #fff !important;	
-}
-
-.ui-dialog .ui-dialog-titlebar-close {
-    width: 16px !important;
-    height: 16px !important;
-    /* 	margin: -8px 0 0 0 !important;	 */
-}
-
-.ui-dialog .ui-dialog-titlebar-collapse {
-    width: 16px !important;
-    height: 15px !important;
-    margin-right: 3px;
-}
-
-.ui-dialog .ui-dialog-titlebar-collapse span {
-    margin: 0px !important;
-}
-
-.ui-dialog .ui-dialog-titlebar-minimize {
-    width: 16px !important;
-    height: 15px !important;
-    margin-right: 3px;
-}
-
-.ui-dialog .ui-dialog-titlebar-minimize span {
-    margin: 0px !important;
-}
-
-.ui-dialog .ui-dialog-titlebar-restore {
-    width: 16px !important;
-    height: 15px !important;
-    margin-right: 3px;
-}
-
-.ui-dialog .ui-dialog-titlebar-restore span {
-    margin: 0px !important;
-}
-
-.ui-slider {
-    font-size: 0.5em !important;
-}
-
-#dialog-extend-fixed-container {
-    bottom: 25px !important;
 }
 
 
@@ -440,22 +349,22 @@ input[type='checkbox'] {
     -moz-border-radius: 19px;
     -webkit-border-radius: 19px;
     border-radius: 19px;
-    width: 39px;
-    height: 39px;
-    background: #5A738E;
+    width: 34px;
+    height: 34px;
+    background: #d6d6d6;
     color: #FFFFFF;
-    border: solid 6px transparent;
+    border: solid 4px transparent;
     text-align: center;
     cursor: pointer;
     display: inline-block;
 }
 
 #baselayers-select .baselayer-circle:hover {
-    background: #23527c;
+    background: #323333;
 }
 
 #baselayers-select .baselayer-circle.se-selected {
-    background: #DF0101 !important;
+    background: #037af5cf !important;
 }
 
 .baselayer-circle .se-circle {
@@ -669,3 +578,181 @@ input[type='checkbox'] {
     }
 }
 
+/* ****************** */
+/* Override Jquery UI */
+/* ****************** */
+.ui-tabs .ui-tabs-nav .ui-tabs-anchor {
+    padding: 0.2em 1em !important;
+}
+.ui-tabs .ui-tabs-panel {
+    padding: 1em 0.6em !important;
+}
+.ui-widget {
+    font-family: Arial !important;
+    font-size: 1.0em;
+}
+
+.ui-slider-handle {
+    background: #ffffff !important;
+    border: 1px solid #292929 !important;
+    text-decoration: none !important;
+    cursor: pointer !important;
+    height: 10px !important;
+    top: -3px !important;
+    width: 10px !important;
+}
+.ui-slider-handle:focus {
+    outline: none !important;
+}
+
+/*
+see: http://stackoverflow.com/questions/16917430/jquery-ui-1-10-dialog-and-zindex-option
+*/
+.ui-dialog {
+    z-index: 1000 !important;
+    overflow: visible;
+}
+
+.ui-front {
+    z-index: 1000 !important;
+}
+.ui-dialog .ui-dialog-content {
+    padding: 0px 0px 0px 0px !important;	
+}
+
+.ui-dialog-titlebar {
+    padding: 2px 2px 0px 4px !important;
+    /* 	background: #4D6A75 !important; */
+    background: white !important;
+    color: #616161 !important;	
+}
+
+.ui-dialog .ui-dialog-titlebar-close {
+    width: 16px !important;
+    height: 16px !important;
+    /* 	margin: -8px 0 0 0 !important;	 */
+}
+
+.ui-dialog .ui-dialog-titlebar-collapse {
+    width: 16px !important;
+    height: 15px !important;
+    margin-right: 3px;
+}
+
+.ui-dialog .ui-dialog-titlebar-collapse span {
+    margin: 0px !important;
+}
+
+.ui-dialog .ui-dialog-titlebar-minimize {
+    width: 16px !important;
+    height: 15px !important;
+    margin-right: 3px;
+}
+
+.ui-dialog .ui-dialog-titlebar-minimize span {
+    margin: 0px !important;
+}
+
+.ui-dialog .ui-dialog-titlebar-restore {
+    width: 16px !important;
+    height: 15px !important;
+    margin-right: 3px;
+}
+
+.ui-dialog .ui-dialog-titlebar-restore span {
+    margin: 0px !important;
+}
+
+.ui-slider {
+    font-size: 0.5em !important;
+}
+
+#dialog-extend-fixed-container {
+    bottom: 25px !important;
+}
+
+.ui-widget-header{
+    border: none;
+    border-bottom: 1px solid silver;
+    border-radius: 0px;
+}
+
+.ui-dialog{
+    border-radius: 0px;
+}
+
+.ui-dialog-buttonset button{
+    border: none;
+    background: rgb(80, 164, 228);
+    color: white;
+}
+
+.ui-dialog-titlebar-close:before, .ui-dialog-titlebar-close:after {
+    position: absolute;
+    left: 7px;
+    top: 3px;
+    content: ' ';
+    height: 10px;
+    width: 2px;
+    background-color: #333;
+}
+.ui-dialog-titlebar-close:before {
+    transform: rotate(45deg);
+}
+.ui-dialog-titlebar-close:after {
+    transform: rotate(-45deg);
+}
+
+.ui-dialog-titlebar-close{
+    border: none;
+    background-color: white;
+    margin-top: -8px !important;
+}
+
+input[type=checkbox].css-checkbox {
+    position:absolute; z-index:-1000; left:-1000px; overflow: hidden; clip: rect(0 0 0 0); height:1px; width:1px; margin:-1px; padding:0; border:0;
+}
+
+input[type=checkbox].css-checkbox + label.css-label {
+    padding-left:20px;
+    height:15px; 
+    display:inline-block;
+    line-height:15px;
+    background-repeat:no-repeat;
+    background-position: 0 0;
+    font-size:30px;
+    vertical-align:middle;
+    cursor:pointer;
+
+}
+
+input[type=checkbox].css-checkbox:checked + label.css-label {
+    background-position: 0 -15px;
+}
+label.css-label {
+    background-image:url(../images/chk.png);
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+.css-label{
+    float: left;
+    margin-top: 2px;
+}
+
+.menu_title .root_text{
+    text-transform: uppercase;
+    font-size: 10px;
+    font-weight: 100;
+}
+
+.item-transparency-text{
+    color: #616161;
+}
+
+.item-text{
+    color: #616161;
+}

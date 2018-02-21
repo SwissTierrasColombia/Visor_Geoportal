@@ -4,17 +4,15 @@
 <style>
     .user-menu{
         position: fixed;
-        border: 1px solid black;
         right: 10px;
         top: 10px;
         z-index: 1000;
-        color: #ffffff;
     }
     .user-menu-list{
         position: fixed;
         border: 1px solid white;
         background-color: white;
-        z-index: 1000;
+        z-index: 1001;
         color: #ffffff;
         top: 58px;
         right: 10px;
@@ -68,8 +66,7 @@
         }
     }
 </script>
-<div class="user-menu icon-container" onclick="show()">
-    <i class="fa fa-user-circle fa-2x"></i>
+<div class="user-menu icon-user icon-menu icon-container icon-menu-user shadow1" onclick="show()">
 </div>
 <div class="user-menu-list triangle-border top slider">
     <ul class="dropdown-header pull-right float-user-menu">
