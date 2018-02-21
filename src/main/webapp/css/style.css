@@ -1,0 +1,337 @@
+@font-face {
+    font-family: 'icomoon';
+    src:  url('fonts/icomoon.eot?758j2k');
+    src:  url('fonts/icomoon.eot?758j2k#iefix') format('embedded-opentype'),
+        url('fonts/icomoon.ttf?758j2k') format('truetype'),
+        url('fonts/icomoon.woff?758j2k') format('woff'),
+        url('fonts/icomoon.svg?758j2k#icomoon') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+    /* use !important to prevent issues with browser extensions that change fonts */
+    font-family: 'icomoon' !important;
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-visor:before {
+    content: "\e946";
+}
+.icon-catalogue:before {
+    content: "\e93f";
+}
+.icon-gestor:before {
+    content: "\e940";
+}
+.icon-validate:before {
+    content: "\e941";
+}
+.icon-legal:before {
+    content: "\e942";
+}
+.icon-standar:before {
+    content: "\e943";
+}
+.icon-gestion:before {
+    content: "\e944";
+}
+.icon-techno:before {
+    content: "\e945";
+}
+.icon-xtf:before {
+    content: "\e92a";
+}
+.icon-interlis:before {
+    content: "\e93d";
+}
+.icon-theme:before {
+    content: "\e93e";
+}
+.icon-layers:before {
+    content: "\e900";
+}
+.icon-delete:before {
+    content: "\e901";
+}
+.icon-metadata:before {
+    content: "\e902";
+}
+.icon-plus:before {
+    content: "\e903";
+}
+.icon-minus:before {
+    content: "\e904";
+}
+.icon-close:before {
+    content: "\e905";
+}
+.icon-edit:before {
+    content: "\e906";
+}
+.icon-ruler:before {
+    content: "\e907";
+}
+.icon-refresh:before {
+    content: "\e908";
+}
+.icon-map:before {
+    content: "\e909";
+}
+.icon-info:before {
+    content: "\e90a";
+}
+.icon-net:before {
+    content: "\e90b";
+}
+.icon-target:before {
+    content: "\e90c";
+}
+.icon-point:before {
+    content: "\e90d";
+}
+.icon-line:before {
+    content: "\e90e";
+}
+.icon-area:before {
+    content: "\e90f";
+}
+.icon-user:before {
+    content: "\e910";
+}
+.icon-full:before {
+    content: "\e911";
+}
+.icon-upload:before {
+    content: "\e912";
+}
+.icon-download:before {
+    content: "\e913";
+}
+.icon-extern:before {
+    content: "\e914";
+}
+.icon-blank:before {
+    content: "\e915";
+}
+.icon-search:before {
+    content: "\e916";
+}
+.icon-print:before {
+    content: "\e917";
+}
+.icon-pointer:before {
+    content: "\e918";
+}
+.icon-controls:before {
+    content: "\e919";
+}
+.icon-square-check:before {
+    content: "\e91a";
+}
+.icon-pic:before {
+    content: "\e91b";
+}
+.icon-circle-place:before {
+    content: "\e91c";
+}
+.icon-square-place:before {
+    content: "\e91d";
+}
+.icon-check:before {
+    content: "\e91e";
+}
+.icon-circle-check:before {
+    content: "\e91f";
+}
+.icon-wfs:before {
+    content: "\e920";
+}
+.icon-area-expand:before {
+    content: "\e921";
+}
+.icon-area-fill:before {
+    content: "\e922";
+}
+.icon-area-left-fill:before {
+    content: "\e923";
+}
+.icon-themes:before {
+    content: "\e924";
+}
+.icon-kml:before {
+    content: "\e925";
+}
+.icon-kml-file:before {
+    content: "\e926";
+}
+.icon-vector:before {
+    content: "\e927";
+}
+.icon-mssql:before {
+    content: "\e928";
+}
+.icon-oracle-spatial:before {
+    content: "\e929";
+}
+.icon-oracle-raster:before {
+    content: "\e92b";
+}
+.icon-raster:before {
+    content: "\e92c";
+}
+.icon-postgis:before {
+    content: "\e92d";
+}
+.icon-text-delimited:before {
+    content: "\e92e";
+}
+.icon-spatialite:before {
+    content: "\e92f";
+}
+.icon-wcs:before {
+    content: "\e930";
+}
+.icon-triangle-area:before {
+    content: "\e931";
+}
+.icon-add-raster:before {
+    content: "\e932";
+}
+.icon-add-oracle-spatial:before {
+    content: "\e933";
+}
+.icon-add-oracle-raster:before {
+    content: "\e934";
+}
+.icon-add-wfs:before {
+    content: "\e935";
+}
+.icon-add-wcs:before {
+    content: "\e936";
+}
+.icon-add-wms:before {
+    content: "\e937";
+}
+.icon-add-spatialite:before {
+    content: "\e938";
+}
+.icon-add-postgis:before {
+    content: "\e939";
+}
+.icon-add-text-delimited:before {
+    content: "\e93a";
+}
+.icon-add-mssql:before {
+    content: "\e93b";
+}
+.icon-add-vector:before {
+    content: "\e93c";
+}
+.icon-menu{
+    color: #616161;/*#23a6ea;*/
+    font-size: 16pt;
+}
+.icon-menu:hover{
+}
+.icon-container:hover {
+    color:white;
+    background-color: rgb(80, 164, 228);/*#23527c;*/
+}
+.icon-menu-user{
+    padding: 4px 0px 0px 0px;
+    font-size: 27px;
+}
+.icon-menu-xtf{
+    font-size: 27px;
+    padding-top: 2px;
+}
+
+.no-display{
+    display: none;
+}
+
+@media (min-width: 768px){
+    .navbar-nav.navbar-right:last-child {
+        margin-right: 0px;
+    }
+}
+
+.nav-justified .main_container .top_nav {
+    margin-left: 0px;
+}
+
+.container, .main_container, .p_main_content {
+    height: 100%;
+}
+
+.p_logo{
+    width: 190px;
+    padding: 6px 20px;
+}
+
+.top_nav .navbar-right{
+    width: initial;
+}
+
+footer{
+    padding: 4px;
+}
+
+.nav_menu {
+    background: #ffffff;
+    -webkit-box-shadow: 0px 1px 15px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 1px 15px 0px rgba(0,0,0,0.75);
+    box-shadow: 0px 1px 15px 0px rgba(0,0,0,0.75);
+    z-index: 102;
+    position: absolute;
+    height: 58px;
+}
+
+#base-tools-panel{
+    left: 10px;
+    top: 20px;
+}
+
+div.olControlZoom a {
+    height: 34px;
+    width: 34px;
+    background-color: #373738;
+    background-size: 34px 34px;
+}
+.ologoagencia{
+    margin-top: -11px;
+    position: fixed;
+    bottom: 26px;
+    left: 2px;
+    opacity: 0.9;
+
+    /*background: #ffffffd1;
+    margin: 10px !important;
+    -moz-border-radius: 30px;
+    -webkit-border-radius: 30px;
+    border-radius: 30px;
+    -webkit-box-shadow: 0px 0px 6px 3px rgba(0, 0, 0, 0.1);
+    -moz-box-shadow: 0px 0px 6px 3px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 0px 6px 3px rgba(0, 0, 0, 0.1);*/
+}
+.ologoagencia img{
+    box-shadow: inset 0px 0px 1px 3px #f8b2b0;
+    -moz-border-radius: 30px;
+    -webkit-border-radius: 30px;
+    border-radius: 30px;
+    height: 50px;
+    width: 50px;
+}
+#footer{
+    text-shadow: 1px 1px 2px #000000;
+}

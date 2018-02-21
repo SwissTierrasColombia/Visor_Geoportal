@@ -229,7 +229,7 @@ LoadLayersUtils.enableActiveBaseLayerFromComboBox = function() {
 	// Se non trova layer impostati come attivi nel menù a tendina
 	// imposta il primo layer della combo come attivo
 	if (activeBl == null) {
-		var firstBL = baseMapLayerIcon.getCurrentSelectDOM();
+		var firstBL = baseMapLayerIcon.getCurrentSelectedDOM();
 		firstBL.addClass("se-selected");
 		if (firstBL.length > 0) {
 			activeBl = $(firstBL[0]);

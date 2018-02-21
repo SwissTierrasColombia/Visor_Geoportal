@@ -1,0 +1,55 @@
+<!-- PRINT TOOL -->
+<div class="icon-container-all">
+    <!-- Icon -->
+    <div id="gis-print" data-tool="print"  data-locale_key="Advanced_Panel_Print" data-locale_ref="title" class="icon-container icon-print icon-menu shadow1 localizedElement" onclick="AdvancedPanel.toggleAdvancedTools($(this));"></div>
+
+    <!-- Print panel -->
+    <div id="advance-print-panel" class="tools-panel custom-hidden">									
+        <!-- Title Map -->
+        <div class="itemform">
+            <div data-locale_key="Print_Label_TitleMap" data-locale_ref="text" class="form-label-title localizedElement"></div>
+            <input id="print-title">
+        </div>
+
+        <!-- Print layout -->
+        <div class="itemform no-border">
+            <div data-locale_key="Print_Label_Layout" data-locale_ref="text" class="form-label-title localizedElement"></div>
+            <select id="print-layout"></select>
+        </div>
+
+        <!-- Print format (PNG, PDF, ...) -->
+        <div class="itemform no-border">
+            <div data-locale_key="Print_Label_Format" data-locale_ref="text" class="form-label-title localizedElement"></div>
+            <select id="print-format"></select>
+        </div>
+
+        <!-- Print Scale -->
+        <div class="itemform no-border">
+            <div data-locale_key="Print_Label_Scale" data-locale_ref="text" class="form-label-title localizedElement"></div>
+            <select id="print-scale"></select>
+        </div>
+
+        <!-- Print DPI -->
+        <div class="itemform">
+            <div data-locale_key="Print_Label_Dpi" data-locale_ref="text" class="form-label-title localizedElement"></div>
+            <select id="print-dpi"></select>
+        </div>
+
+        <!-- Print Rotation (counterclockwise -->
+        <div class="itemform">
+            <div data-locale_key="Print_Label_Rotation" data-locale_ref="text" class="form-label-title localizedElement"></div>
+            <input id="print-rotation_angle" type="number">
+        </div>
+
+        <!-- Include legend -->
+        <div class="itemform">
+            <div data-locale_key="Print_Label_Include_Legend" data-locale_ref="text" class="form-label-title localizedElement"></div>
+            <input id="print-include_legend" type="checkbox">
+        </div>
+
+        <!-- Footer action buttons form -->
+        <div class="form-footer">
+            <button id="print-submit" data-locale_key="Print_Submit" data-locale_ref="text" class="localizedElement" onclick="print.requests.submit();"></button>
+        </div>
+    </div>
+</div>	

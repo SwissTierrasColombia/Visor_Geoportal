@@ -1,21 +1,22 @@
 /* CONTAINER ICON STYLE */
 .icon-container {
-    background: #5A738E;
-    color: #FFFFFF;
-    padding: 6px;
+    padding-top: 6px;
     border: none;
     text-align: center;
     cursor: pointer;
-    width: 40px;
-    /*height: 40px;*/
-
+    font-size: 10px;
+    width: 34px;
+    height: 34px;
+    background: white;/*#373738;*/
     -moz-border-radius: 19px;
     -webkit-border-radius: 19px;
     border-radius: 19px;
 }
 
-.icon-container:hover {
-    background: #23527c;
+.shadow1{
+    -webkit-box-shadow: 2px 2px 7px 2px rgba(0, 0, 0, 0.2);
+    -moz-box-shadow: 2px 2px 7px 2px rgba(0, 0, 0, 0.2);
+    box-shadow: 2px 2px 7px 2px rgba(0, 0, 0, 0.2);
 }
 
 /* Login Button Jquery */
@@ -129,12 +130,12 @@ html,body {
     right: 0px;
     left: 0px;
     color: #FFF;
-    background-color: rgba(40, 40, 40, 0.9);
+    background-color: rgba(40, 40, 40, 0.3);
     z-index: 101;
-
-    -webkit-box-shadow: 0px 0px 7px 2px rgba(0, 0, 0, 0.39);
-    -moz-box-shadow: 0px 0px 7px 2px rgba(0, 0, 0, 0.39);
-    box-shadow: 0px 0px 7px 2px rgba(0, 0, 0, 0.39);
+    text-shadow: 1px 1px 1px #000000;
+    -webkit-box-shadow: 0px 0px 7px 2px rgba(0, 0, 0, 0);
+    -moz-box-shadow: 0px 0px 7px 2px rgba(0, 0, 0, 0);
+    box-shadow: 0px 0px 7px 2px rgba(0, 0, 0, 0);
 }
 
 #map {
@@ -152,7 +153,7 @@ html,body {
 
 #mapContainer {
     position: absolute;
-    top: 58px;
+    top: 0px;/*58px;*/
     left: 0px;
     bottom: 0px;
     right: 0px;
@@ -311,28 +312,18 @@ html,body {
 
 #rightPanel {
     /* font-family: Arial; */
-    background: rgba(253,253,253,0.92);
+    background: rgba(255,255,255,0);
     font-size: 12px;
     position: absolute;
     /* 	width: 380px; */
     width: 345px;
-    top: 114px;
-    right: 0px;
     z-index: 1000;
 
-    border: 1px solid #C0C0C0;
-    -moz-border-bottom-left-radius: 4px;
-    -webkit-border-bottom-left-radius: 4px;
-    border-bottom-left-radius: 4px;
-    -moz-border-top-left-radius: 4px;
-    -webkit-border-top-left-radius: 4px;
-    border-bottom-top-radius: 4px;
+    top: 60px;
+    right: 50px;
 
-    /*-webkit-box-shadow: 6px 6px 12px rgba(0, 0, 0, 0.175);
-    box-shadow: 6px 6px 12px rgba(0, 0, 0, 0.175);*/
-    -webkit-box-shadow: 4px 4px 8px -4px rgba(0,0,0,1);
-    -moz-box-shadow: 4px 4px 8px -4px rgba(0,0,0,1);
-    box-shadow: 4px 4px 8px -4px rgba(0,0,0,1);
+    border: none;
+
 }
 
 #gis_coordinates {
@@ -399,7 +390,7 @@ html,body {
     /* 	left: 5px */
 }
 
-* Hides the default Mouse Position Control */
+/* Hides the default Mouse Position Control */
 .olControlMousePosition {
     display: none !important;
 }
@@ -537,7 +528,7 @@ text {
 }
 #base-tools-panel div {
     margin-top: 3px;
-    margin-bottom: 3px;
+    margin-bottom: 10px;
 }
 
 /* ***************** */
@@ -700,7 +691,7 @@ text {
 * uncomment if this is to be rendered in a DIV and
 *  not in a floating dialog
 /* #full-advance-alerts-panel { */
-/* /* 	overflow: visible !important; */ */
+/* /* 	overflow: visible !important;  */
 /* 	position: absolute; */
 /* 	bottom: 24px; */
 /* 	left: 95px; */
