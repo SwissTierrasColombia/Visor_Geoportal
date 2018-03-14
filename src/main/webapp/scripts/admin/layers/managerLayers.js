@@ -214,7 +214,8 @@ var mLayers = {
                     {"data": "downloadable", "name": "downloadable", "title": LocaleManager.getKey("Manager_Layers_Label_isDownloadable"), "sortable": true, "visible": true,
                         "render": function (data, type, row) {
                             return AdminUtils.getGridIconForBoolean(data);
-                        }}
+                        }},
+                    {"data": "attrMapping", "name": "attrMapping", "title": "attrMapping", "sortable": false, "visible": false}
                 ]
                 ,
                 "language": {
@@ -433,6 +434,11 @@ var mLayers = {
         layerObj.attributeNameForInfo = $("#layer-input-attribute-name-for-info").val();
 
         layerObj.referenceDate = $("#layer-input-reference-date").val();
+        if($("#preview-source").val()){
+            layerObj.visualTemplate = '{"template" : '+ '"'+$("#preview-source").val()+'",'+
+                    '"attributes" : '+$("#preview-extradata").val()+','+
+                    '"log" : true'+'}';
+        }
 
         return layerObj;
     },
@@ -472,9 +478,11 @@ var mLayers = {
         $("#layer-input-reference-date").val(selectedRow.referenceDate);
         console.log(selectedRow);
         try {
-            if (selectedRow.attrMapping != null) {
+            if (selectedRow.attrMapping) {
                 var objAttrMapping = JSON.parse(selectedRow.attrMapping);
-                console.log(objAttrMapping);
+                
+                $("#preview-source").val(objAttrMapping.template);
+                $("#preview-extradata").val(JSON.stringify(objAttrMapping.attributes));
             }
         } catch (e) {
             console.log(e);
@@ -558,7 +566,8 @@ var mLayers = {
                 wfsUrl: layerObj.wfsUrl,
                 wcsUrl: layerObj.wcsUrl,
                 attributeNameForInfo: layerObj.attributeNameForInfo,
-                referenceDate: layerObj.referenceDate
+                referenceDate: layerObj.referenceDate,
+                visualTemplate: layerObj.visualTemplate
             }, function (response) {
                 if (response.success) {
                     mLayers.reloadGrid(null, false);
@@ -594,7 +603,8 @@ var mLayers = {
                 wfsUrl: layerObj.wfsUrl,
                 wcsUrl: layerObj.wcsUrl,
                 attributeNameForInfo: layerObj.attributeNameForInfo,
-                referenceDate: layerObj.referenceDate
+                referenceDate: layerObj.referenceDate,
+                visualTemplate: layerObj.visualTemplate
             }, function (response) {
                 //Ok function
                 if (response.success) {

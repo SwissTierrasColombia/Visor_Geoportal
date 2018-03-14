@@ -140,6 +140,7 @@
 
 
         <form id="form-dialog" style="display:none; padding: 5px;" onSubmit="return false;">
+            <input type="hidden" id="layer-input-id">
             <div class="x_panel">
                 <div class="x_title">
                     <h2><i class="glyphicon glyphicon-th"></i> <span style="color: black;" id="form-dialog-header" data-locale_key="Manager_Layers_HeaderForm_Add" data-locale_ref="text"></span>
