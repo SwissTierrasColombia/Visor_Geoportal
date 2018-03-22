@@ -339,7 +339,7 @@ public class LayerService {
 	
 	public void updateWMSLayer(int layerId, Layer newLayer, Integer newLayerSourceId, String newImageFormat, 
 			double newOpacity, boolean singleTile, String newCacheUrl, String cacheWorkspace, 
-			boolean newCacheEnabled, String sldUrl, boolean sldOverrideEnabled, boolean forceUpdate) throws Exception {
+			boolean newCacheEnabled, String sldUrl, boolean sldOverrideEnabled, boolean forceUpdate, String attrMapping) throws Exception {
 		Session session = null;
 		try {
 			session = SessionFactoryManager.openSession();
@@ -433,12 +433,14 @@ public class LayerService {
 				layerConfig.setCacheEnabled(newCacheEnabled);
 				layerConfig.setCacheUrl(newCacheUrl);
 				layerConfig.setCacheWorkspace(cacheWorkspace);
+                                layerConfig.setAttrMapping(attrMapping);
 				
 				layerConfig.setSldOverrideEnabled(sldOverrideEnabled);
 				layerConfig.setSldUrl(sldUrl);
 				
 				//createLayerConfig(imageFormat, opacity, layer.isBaseLayer(), cacheUrl, cacheEnabled);
 				LayerConfigOptionsDTO opts = layerConfig.getParsedOptions(); 
+                                
 				
 				/*
 				 * If it is a JPEG image, it is not transparent!

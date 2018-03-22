@@ -417,7 +417,7 @@ public class LayerConfigServlet extends HttpServlet {
 					log.debug("Error parsing layerId parameter");
 					throw new DataInvalidException();
 				}
-				
+                                                                				
 				//ForceUpdate (false by default)
 				boolean forceUpdate = false;
 				try {
@@ -621,7 +621,10 @@ public class LayerConfigServlet extends HttpServlet {
 					log.debug("sldOverrideEnabled is true but no sldUrl specified.");
 					throw new DataInvalidException();
 				}
-				
+                                
+                                //Visual template for layer visualization in geoportal viewer
+				String attrMapping = request.getParameter("visualTemplate");                              
+                                
 				Layer newLayer = new Layer();
 				newLayer.setLayerDescription(layerDescription);
 				newLayer.setResponsible(layerResponsible);
@@ -644,7 +647,7 @@ public class LayerConfigServlet extends HttpServlet {
 				newLayer.setWfsSearchEnabled(wfsSearchEnabled);
 				newLayer.setShowInfoDialog(showInfoDialog);
 				
-				layerService.updateWMSLayer(layerId, newLayer, layerSourceId, imageFormat, opacity, singleTile, cacheUrl, cacheWorkspace, cacheEnabled, sldUrl, sldOverrideEnabled, forceUpdate);
+				layerService.updateWMSLayer(layerId, newLayer, layerSourceId, imageFormat, opacity, singleTile, cacheUrl, cacheWorkspace, cacheEnabled, sldUrl, sldOverrideEnabled, forceUpdate, attrMapping);
 				
 				jsonRes = GeoportalResponse.createSuccessResponse(null, true);
 				ServletUtils.writeAndFlush(log, w, jsonRes);
