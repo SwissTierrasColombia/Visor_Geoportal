@@ -11,6 +11,11 @@
         <meta name="viewport" content="width=device-width">
         <%-- 	<%@ include file="geoportal_import_js_min.jspf" %> --%>
         <%@ include file="geoportal_import.jspf" %>
+        <style>
+            div, p{
+                font-family: "Helvetica Neue", Roboto, Arial, "Droid Sans", sans-serif !important;
+            }
+        </style>
     </head>
     <body class="nav-justified footer_fixed">
         <div id="mainContainer" class="container body">
@@ -19,11 +24,11 @@
                 <!-- MENU -->
                 <%@ include file="components/menu.jspf" %>
                 <!-- END MENU -->
-                
+
                 <!-- SEARCH -->
-                <%--@ include file="components/search.jspf" --%>
+                <%@ include file="components/search.jspf" %>
                 <!-- END SEARCH -->
-                
+
                 <!-- page content -->
                 <div class="right_col p_main_content" role="main">
 
@@ -67,17 +72,17 @@
                             <div id="advance-tools-panel" class="tools-panel-master horizontal-panel">
 
                                 <!-- SEARCH WFS -->
-                                <%--@ include file="components/searchwfs.jspf" %-->
+                                <%--@ include file="components/searchwfs.jspf" --%>
                                 <!-- END SEARCH WFS -->
 
                                 <!--  CSW -->
                                 <!--div class="icon-container-all"-->
-                                    <!-- Icon -->
-                                    <!--div id="gis_cswClientBtn" data-tool="catalogcsw"  data-locale_key="Metadata_Panel_Csw_Search" data-locale_ref="title" class="localizedElement icon-container" onclick="AdvancedPanel.toggleAdvancedTools($(this));"><i class="fa fa-binoculars fa-2x"></i></div-->
+                                <!-- Icon -->
+                                <!--div id="gis_cswClientBtn" data-tool="catalogcsw"  data-locale_key="Metadata_Panel_Csw_Search" data-locale_ref="title" class="localizedElement icon-container" onclick="AdvancedPanel.toggleAdvancedTools($(this));"><i class="fa fa-binoculars fa-2x"></i></div-->
                                 <!--/div-->
                                 <!-- END CSW -->
 
-                                
+
 
                                 <!-- COMMENTS -->
                                 <%--@ include file="components/comments.jspf" --%>
@@ -544,7 +549,7 @@
                             <% } //ENDSIMPLEPANEL ALERTS_READ %>
 
 
-                            <div id="gis_information_popup" class="custom-hidden"></div>
+                            <div id="gis_information_popup" class="custom-hidden" style="display: none;"></div>
 
                             <div id="gis_layer_information_popup"></div>
 
