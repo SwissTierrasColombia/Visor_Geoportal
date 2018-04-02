@@ -108,11 +108,18 @@
 					<i class="fa fa-plus fa-2x"></i>
 				</div>
 				
-				<div id="m-maps-update" data-locale_key="Manager_Map_Button_AddMap"
+				<div id="m-maps-update" data-locale_key="Manager_Map_Button_UpdateMap"
 					 data-locale_ref="title"
 					 class="localizedElement grid-toolbar-item"
 					 onclick="mMapSettings.openDialogUpdateMap();">
 					<i class="fa fa-edit fa-2x"></i>
+				</div>
+                                
+                                <div id="m-maps-delete" data-locale_key="Manager_Map_Button_DeleteMap"
+					 data-locale_ref="title"
+					 class="localizedElement grid-toolbar-item"
+					 onclick="mMapSettings.openDialogDeleteMap();">
+					<i class="fa fa-minus fa-2x"></i>
 				</div>
 			</div>
 			</div>

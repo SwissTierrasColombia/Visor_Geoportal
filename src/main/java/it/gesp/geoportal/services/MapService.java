@@ -2,6 +2,7 @@ package it.gesp.geoportal.services;
 
 import it.gesp.geoportal.dao.SessionFactoryManager;
 import it.gesp.geoportal.dao.dto.MapDTO;
+import it.gesp.geoportal.dao.entities.LayerGroup;
 import it.gesp.geoportal.dao.entities.Map;
 import it.gesp.geoportal.dao.repositories.MapRepository;
 import it.gesp.geoportal.exceptions.OperationInvalidException;
@@ -163,4 +164,34 @@ public class MapService {
 			session.close();
 		}
 	}
+        /**
+         * Bussiness method for delete maps
+         * @author Agencia de Implementacion
+         */
+        public void deleteMap(Map map) throws Exception{
+
+            Session session = null;
+            try{
+                session = SessionFactoryManager.openSession();
+                MapRepository mapRepository = new MapRepository();
+		
+                LayerGroupService lgs = new LayerGroupService();
+                
+                //search layergroups of map to delete
+                List<LayerGroup> layerGroups = lgs.getLayerGroupsByMapId(map.getIdMap());
+                
+                //delete layergroups and layergroups_layers of map to delete
+                for(LayerGroup lg : layerGroups){
+                    lgs.deleteLayerGroup(lg.getIdLayerGroup(), true);
+                }
+                //delete map
+                mapRepository.delete(map);
+            }catch (Exception x) {
+                log.debug(x);
+            } finally {
+                session.close();
+            }
+
+        }
+        
 }

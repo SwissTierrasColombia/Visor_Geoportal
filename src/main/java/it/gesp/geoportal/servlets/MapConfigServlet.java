@@ -191,8 +191,35 @@ public class MapConfigServlet extends HttpServlet {
 				ServletUtils.writeAndFlush(log, w, jsonRes);
 			}
 			/*
-			 * SAVE MAP_SETTINGS 
+			 * DELETE MAP
+			 * @Author Agencia de Implementacion  
 			 */
+                        else if("deleteMap".equalsIgnoreCase(oper)){
+                            System.out.println("it.gesp.geoportal.servlets.MapConfigServlet.doWork() :::: deleteMap :::: linea 198");
+                            /*
+                             * Check whether the current user has the appropriate permission
+                             */
+                            if (!LoginService.hasPermission(currentUser,Permissions.MAP_SETTING_CONFIG_ADMIN)) {
+                                   // User does not have the permission
+                                   jsonRes = GeoportalResponse.createErrorResponse(userMessages.getString("USER_DOES_NOT_HAVE_PERMISSION"));
+                                   ServletUtils.writeAndFlush(log, w, jsonRes);
+                                   return;
+                            }
+                            
+                            String mapIdStr = request.getParameter("idMap");
+				if (Utils.isNullOrEmpty(mapIdStr)) {
+                                    log.debug("Error parsing idMap parameter");
+                                    throw new DataInvalidException();
+				}
+                            int mapId = Integer.parseInt(mapIdStr);
+                            MapService mapService = new MapService();
+                            it.gesp.geoportal.dao.entities.Map map = mapService.getMapById(mapId);
+                            mapService.deleteMap(map);
+                            
+                            jsonRes = GeoportalResponse.createSuccessResponse(null, true);
+                            ServletUtils.writeAndFlush(log, w, jsonRes);
+                        }
+                        
 			else if ("saveMapSettings".equalsIgnoreCase(oper)) {
 				
 				
