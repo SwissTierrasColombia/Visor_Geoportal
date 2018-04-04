@@ -106,8 +106,40 @@ var mMapSettings = {
 		
 		return;
 	},
-	
-	
+        openDialogDeleteMap: function(){
+            var selectedRow = Utils.getSelectedRow(this.dt)[0];
+            if(selectedRow.length == 0) {
+                AlertDialog.createOkDefaultDialog(
+                    LocaleManager.getKey("AlertDialog_Error_Title"),
+                    LocaleManaget.getKey("General_No_Dt_Record_Selected")
+                );
+		return;
+            }
+            
+            var buttons = {};
+            buttons[LocaleManager.getKey('General_Confirm')] = function(){
+		if (selectedRow.idMap != null && selectedRow.idMap != undefined)
+                    mMapSettings.requests.deleteMap(selectedRow.idMap);               
+		$(this).dialog("close");
+            };
+            
+            buttons[LocaleManager.getKey('General_Cancel')] = function(){
+		$(this).dialog("close");
+            };
+            
+            var deleteDialogConfirm = AlertDialog.buildDialog({
+                isToCreate: true,
+		title: LocaleManager.getKey("General_MsgConfirmTitle"),
+		message: LocaleManager.getKey("General_MsgConfirm"), 
+		type: "question",
+		buttons: buttons
+            });
+		
+            deleteDialogConfirm.data({"mapId": selectedRow.idMap});
+            deleteDialogConfirm.dialog("open");	
+
+        },
+		
 	createUpdateFormPanel: function() {
 		$("#form-dialog-header").data("locale_key", "Manager_Map_HeaderForm_Update");
 		LocaleManager.refreshLocalizedElement($("#form-dialog-header"));
@@ -411,6 +443,16 @@ var mMapSettings = {
 				}
 			});
 		},
+                deleteMap: function(idMap){
+                    Utils.ajaxCallSynch("./mapConfig", "POST", "json",{
+                       oper: "deleteMap",
+                       idMap: idMap
+                    },function(response){
+                        if(response.success){
+                            mMapSettings.reloadGrid();
+                        }
+                    });
+                },
 		
 		updateMap: function(settings) {
 			
@@ -446,11 +488,11 @@ var mMapSettings = {
 	toggleButtonsOnSelect: function() {
 		var selectedRow = Utils.getSelectedRow(this.dt)[0];
 		if (!Utils.isNullOrUndefined(selectedRow)) {
-			// $("#layers-delete").show();
+			$("#m-maps-delete").show();
 			$("#m-maps-update").show();
 		}
 		else  {
-			// $("#layers-delete").hide();
+			$("#m-maps-delete").hide();
 			$("#m-maps-update").hide();
 		}
 	},
