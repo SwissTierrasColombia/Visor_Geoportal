@@ -299,13 +299,13 @@ footer{
 
 #base-tools-panel{
     left: 10px;
-    top: 20px;
+    top: 108px;
 }
 
 div.olControlZoom a {
     height: 34px;
     width: 34px;
-    background-color: #373738;
+    background-color: white;
     background-size: 34px 34px;
 }
 .ologoagencia{
