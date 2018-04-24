@@ -1,4 +1,4 @@
-/* global chroma, Holder, LocaleManager */
+/* global chroma, Holder, LocaleManager, map */
 
 var themesPlugin = {
     panel: null,
@@ -80,7 +80,7 @@ var themesPlugin = {
                 var lat = map.getCenter().lat;
                 var lon = map.getCenter().lon;
                 var zoom = map.getZoom();
-                console.log("MAP:", map.getCenter().lat);
+                
                 window.location = window.location.pathname + '?config=' + $(this).data('theme-id') + '&lat=' + lat + '&lon=' + lon + '&zoom=' + zoom;
             });
 
