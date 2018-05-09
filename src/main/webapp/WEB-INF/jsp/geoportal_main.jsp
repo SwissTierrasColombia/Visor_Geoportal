@@ -17,7 +17,10 @@
             }
         </style>
     </head>
-    <body class="nav-justified footer_fixed">
+    <body class="nav-justified footer_fixed" >
+        <!-- XTF UPLOAD -->
+        <%@ include file="components/xtfupload.jspf" %>
+        <!-- END XTF UPLOAD -->
         <div id="mainContainer" class="container body">
             <div class="main_container">
 
