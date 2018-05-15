@@ -240,6 +240,7 @@ public class MapConfigServlet extends HttpServlet {
 				}
 				Gson gson = JsonFactory.getGson();
 				MapDTO mapDTO = gson.fromJson(settingsJson, MapDTO.class);
+                                
 				MapService mapService = new MapService();
 				mapService.updateMap(mapDTO);
 				

@@ -546,8 +546,11 @@ var LANG_ES = {
 		Manager_Map_Settings_Default_Extent_MaxY: "Y máxima",
 
 		Manager_Map_Settings_Label_NameMap: "Nombre del mapa",
+                Manager_Map_Settings_Label_MapThumbnail: "Imágen del mapa",
 		Manager_Map_Settings_Button_AddMap: "Agregar mapa",
 		Manager_Map_Settings_Button_UpdateMap: "Actualizar mapa",
+                
+                Manager_Map_Settings_File_Size_Exceeded: "Tamaño máximo excedido, la imagen no será cargada",
 		
 		// - Manager layer sources
 		
