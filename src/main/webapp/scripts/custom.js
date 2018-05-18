@@ -355,10 +355,17 @@ function loadAll() {
     LoadLayersUtils.loadLayersFromConfig(LayerMenu.groups, layerConfigs);
 
     /*
-     * Center map
+     * Center map if not url Hash provided
      */
     if (!map.getCenter()) {
         zoomToDefaultMapCenter();
+    } else {
+        /* if current map extent is outside defaultExtent move view to defaultExtent*/
+        var bounds = new OpenLayers.Bounds(mapConfig.defaultExtent);
+        bounds = bounds.transform(new OpenLayers.Projection(mapConfig.projection), map.getProjectionObject());
+        if(!bounds.intersectsBounds(map.getExtent())){
+            map.zoomToExtent(bounds);
+        }
     }
 
     /*
@@ -675,7 +682,7 @@ $(document).ready(function () {
             $("#gis_login").hide();
             $("#gis_logout").show();
             $("#login_content").hide();
-            
+
 
             userPermissions = new UserPermission(jsonObject.result);
         } else {
@@ -840,7 +847,7 @@ $(function () {
     /*
      * DOWNLOAD BUTTON
      */
-   // $("#gis_downloadBtn").click(MenuButtons.downloadButtonClicked);
+    // $("#gis_downloadBtn").click(MenuButtons.downloadButtonClicked);
 
     /*
      * MEASURE BUTTONS
@@ -1050,6 +1057,6 @@ function replaceUrlParam(url, paramName, paramValue) {
     return url + (url.indexOf('?') !== -1 ? '&' : '?') + paramName + '=' + paramValue
 }
 
-function clickLoginForm(event){
+function clickLoginForm(event) {
     event.stopPropagation();
 }

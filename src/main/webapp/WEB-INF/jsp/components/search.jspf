@@ -4,55 +4,120 @@
         <input id="tsearch" name="search" type="text" class="" placeholder="">
     </form>
 </div>
+<style>
+    .ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default{
+        background: none;
+        border: 1px solid white;
+        color:#333;
+    }
+    .ui-dialog-titlebar-close{
+        top:10px !important;
+    }
+    .ui-dialog .ui-dialog-title{
+        width: 80%;
+    }
+</style>
+
 <script>
-    var substringMatcher = function (strs) {
-        return function findMatches(q, cb) {
-            var matches, substringRegex;
+    var searchTimer;
 
-            // an array that will be populated with substring matches
-            matches = [];
+    var datawms = new Bloodhound({
+        datumTokenizer: Bloodhound.tokenizers.obj.whitespace('q'),
+        queryTokenizer: Bloodhound.tokenizers.whitespace,
+        local: []
+    });
 
-            // regex used to determine if a string contains the substring `q`
-            substrRegex = new RegExp(q, 'i');
+    var sg;
 
-            // iterate through the pool of strings and for any string that
-            // contains the substring `q`, add it to the `matches` array
-            $.each(strs, function (i, str) {
-                if (substrRegex.test(str)) {
-                    matches.push(str);
-                }
-            });
-
-            cb(matches);
-        };
-    };
-    var states = ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California',
-        'Colorado', 'Connecticut', 'Delaware', 'Florida', 'Georgia', 'Hawaii',
-        'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana',
-        'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota',
-        'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire',
-        'New Jersey', 'New Mexico', 'New York', 'North Carolina', 'North Dakota',
-        'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island',
-        'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont',
-        'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'
-    ];
-    $('#tsearch').typeahead({
+    var srch = $('#tsearch').typeahead({
         hint: true,
         highlight: true,
         minLength: 1
     }, {
-        name: 'my-dataset1',
-        source: substringMatcher(states),
+        name: 'states',
+        display: 'name',
+        value: 'value',
+        source: datawms,
         templates: {
-            header: '<h3 class="league-name">Búsqueda de datos</h3>'
+            header: '<h3 class="league-name">Búsqueda en capas</h3>',
+            suggestion: Handlebars.compile('<div>En la capa <strong>{{name}}</strong> se tienen <strong>{{hits}}</strong> coincidencias</div>')
         }
-    }, {
-        name: 'my-dataset2',
-        source: substringMatcher(states),
-        templates: {
-            header: '<h3 class="league-name">Búsqueda de metadatos</h3>'
+    }).on('typeahead:selected', function (ev, suggestion) {
+
+        var searchOptions = {
+            maxFeatures: 100,
+            matchCase: false,
+            isExact: false,
+            searchAllLayers: true,
+            bboxFilter: null,
+            crs: map.getProjection()
+        };
+
+        var options = {
+            maxFeatures: searchOptions.maxFeatures,
+            matchCase: searchOptions.matchCase,
+            bboxFilter: searchOptions.bboxFilter,
+            crs: searchOptions.crs,
+            likeSearch: !searchOptions.isExact
+        };
+
+        var layerConfig_i = catalog.getLayerConfigById(suggestion.value);
+        var layerTitle = layerConfig_i.getTitle();
+        var layerName = null;
+        var attributes = null;
+        if (layerConfig_i.getSource() === "wms") {
+            layerName = layerConfig_i.getName();
+            attributes = layerConfig_i.getAttributes();
+
+        } else if (layerConfig_i.getSource() === "wms_multi_layer") {
+            layerName = layerConfig_i.getNameByTitle(layerTitle);
+            attributes = layerConfig_i.getAttributes(layerName);
+        }
+
+        var searchParameters = {
+            url: layerConfig_i.getUrl(),
+            layerName: layerName,
+            onlyHits: true,
+            layerAttributeList: attributes,
+            searchTerm: suggestion.q,
+            searchOptions: options
+        };
+
+        featureGridPanel.startLoading(suggestion.value, suggestion.name, searchParameters, suggestion.hits, function (success) {
+        });
+        sg = "";
+        setTimeout(function () {
+            srch.val(sg).trigger("input");
+        }, 10);
+    }).on('typeahead:change', function (ev, suggestion) {
+        sg = suggestion.toString().trim();
+        setTimeout(function () {
+            srch.val(sg).trigger("input");
+        }.bind(this), 1);
+    }).on('keyup', function (ev) {
+        ev.stopPropagation();
+        ev.preventDefault();
+        if (ev.keyCode === 13) {
+            var mmm = searchP.requests.submit(srch.val(), false, true);
+            Promise.all(mmm).then((function (m) {
+                m = m.filter(function (res) {
+                    return res !== null;
+                });
+                for (var i = 0; i < m.length; i++) {
+                    m[i]["q"] = srch.val();
+                }
+                datawms.clear();
+                datawms.local = m;
+                datawms.initialize(true);
+                let t = srch.val();
+                srch.val(t + " ").trigger("input");
+                srch.val(t);
+            }), function () {
+                console.log("ERROR");
+            });
         }
     });
+
 </script>
 
 <!-- END SEARCH -->

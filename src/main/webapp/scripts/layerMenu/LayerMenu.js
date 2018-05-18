@@ -550,6 +550,8 @@ LayerMenu.addToSelectedLayerMenu = function (config) {
             e.stopPropagation();
             var item = btn.closest("li");
             LayerMenu._singleLayerClicked(item);
+            console.log("CLICKKKKKK");
+            MenuButtons.featureInfoComponentClicked ();
         },
         showInfoBtn: showInfoBtn,
         infoBtnClickedFn: LayerMenu.showLayerInfoClickFn

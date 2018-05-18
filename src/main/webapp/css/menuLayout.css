@@ -342,11 +342,11 @@
     filter: alpha(opacity = 100) !important; /* For IE8 and earlier */
 }
 .root_item ul li.selected {
-    background: rgba(80, 164, 228, 0.7) !important;
+    background: rgba(80, 164, 228, 0.26) !important;
     -moz-border-radius: 4px;
     -webkit-border-radius: 4px;
     border-radius: 4px;
-    color: #fff;
+    /*color: #fff;*/
 }
 
 /* .selected { */

@@ -39,12 +39,8 @@
             <div id="menu-switcher-toc" class="menu-tab-switcher-item menu-tab-active" data-tab="tab_toc" onclick="LayerMenu.switchTabMenu($(this));">
                 <div id="link_tab_layer" data-locale_key="Page_Menu_Tab_Layer" data-locale_ref="text" class="localizedElement"></div>										
             </div>
-            <div id="menu-switcher-toc" onclick="LayerMenu.toggleMenu($(this))" class="menu-tab-switcher-item menu-tab-active" data-tab="tab_toc" style="float: right;">
-                <div id="" class="menu-switcher-icon localizedElement" onclick="">
-                    <i class="fa fa-angle-right fa-2x"></i>
-                </div>
-            </div>
-            <div id="menu-switcher-toc" class="menu-tab-switcher-item menu-tab-active" data-tab="tab_toc" style="float: right;">
+
+            <!--div id="menu-switcher-toc" class="menu-tab-switcher-item menu-tab-active" data-tab="tab_toc" style="float: right;">
                 <div id="gis-uploadkml" data-tool="uploadkml"  data-locale_key="Advanced_Panel_KMLUpload" data-locale_ref="title" style="font-size: 19pt;" class="icon-kml-file icon-menu menu-switcher-icon localizedElement" onclick="AdvancedPanel.toggleAdvancedTools($(this));"></div>
             </div>
             <div id="menu-switcher-toc" class="menu-tab-switcher-item menu-tab-active" data-tab="tab_toc" style="float: right;">
@@ -53,7 +49,7 @@
             <div id="menu-switcher-search" class="menu-tab-switcher-item custom-hidden" data-tab="tab_search" onclick="LayerMenu.switchTabMenu($(this));">
                 <div class="menu-switcher-icon"><i class="fa fa-search fa-2x"></i></div>
                 <div id="link_tab_search" data-locale_key="Page_Menu_Tab_Search" data-locale_ref="text" class="localizedElement"></div>									
-            </div>
+            </div-->
         </div>
 
         <div id="tab_toc" class="tab-item shadow1">
@@ -64,10 +60,7 @@
 
                 <div id="menu_layers_active" class="root_item" data-grp_code="grp_layer_active">
                     <div class="menu_title">
-                        <div id="miniLegend">
-                            <div data-locale_key="Page_Menu_Layer_Official" data-locale_ref="text" class="localizedElement"></div>
-                            <div data-locale_key="Page_Menu_Layer_Not_Official" data-locale_ref="text" class="localizedElement"></div>
-                        </div>
+                        
                         <div data-locale_key="TOC_Layers_Selected_Panel" data-locale_ref="text" class="localizedElement root_text"></div>
                     </div>
                     <div class="menu_item_content">

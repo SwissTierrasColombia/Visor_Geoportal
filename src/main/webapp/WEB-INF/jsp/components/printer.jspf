@@ -4,7 +4,7 @@
     <div id="gis-print" data-tool="print"  data-locale_key="Advanced_Panel_Print" data-locale_ref="title" class="icon-container icon-print icon-menu shadow1 localizedElement" onclick="AdvancedPanel.toggleAdvancedTools($(this));"></div>
 
     <!-- Print panel -->
-    <div id="advance-print-panel" class="tools-panel custom-hidden">									
+    <div id="advance-print-panel" class="tools-panel-right custom-hidden">									
         <!-- Title Map -->
         <div class="itemform">
             <div data-locale_key="Print_Label_TitleMap" data-locale_ref="text" class="form-label-title localizedElement"></div>

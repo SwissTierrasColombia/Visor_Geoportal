@@ -13,9 +13,9 @@
         <!-- 		<property name="connection.datasource">java:comp/env/jdbc/GEOPORTAL_POSTGIS_DS</property> -->
 		
 		 
-        <property name="hibernate.connection.username">postgres</property>
-        <property name="hibernate.connection.password">123456</property>
-        <property name="hibernate.connection.url">jdbc:postgresql://192.168.98.180:5432/geoportal</property>
+        <property name="hibernate.connection.username">geoportal_user</property>
+        <property name="hibernate.connection.password">geoportal_user</property>
+        <property name="hibernate.connection.url">jdbc:postgresql://192.168.98.135:5432/geoportal</property>
  		
         <!-- Use the C3P0 connection pool. -->  
          

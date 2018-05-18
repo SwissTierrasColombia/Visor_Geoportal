@@ -1,4 +1,4 @@
-/* global chroma, Holder, LocaleManager */
+/* global chroma, Holder, LocaleManager, map */
 
 var themesPlugin = {
     panel: null,
@@ -26,7 +26,7 @@ var themesPlugin = {
         if (mapsList !== null) {
             this.themes = mapsList;
         }
-        
+
         if (this.panel === null) {
             this.panel = $("#advance-themes-panel");
         }
@@ -45,9 +45,15 @@ var themesPlugin = {
 
         //add themes to list
         this.themesListPanel.empty();
+        var size = 4;
+        if (this.themes.length === 2) {
+            size = 6;
+        } else if (this.themes.length === 1) {
+            size = 12;
+        }
         for (var i = 0; i < this.themes.length; i++) {
             var panel = $(
-                    '<div class="col-xs-4">' +
+                    '<div class="col-xs-'+size+'">' +
                     '    <div class="base-maps-thumbnail">' +
                     '        <div class="caption">' +
                     '            <p><strong>' + this.themes[i].name + '</strong></p>' +
@@ -56,11 +62,11 @@ var themesPlugin = {
                     '            <img style="width: 100%; display: block;" sytle="background-size: 100% 100%;" src="holder.js/100px100p?bg=' + this.chroma[i + 2] + '&text=theme preview" alt="image" />' +
                     '            <div class="mask">' +
 //                    '               <a href="' + window.location.pathname + '?config=' + this.themes[i].id + '">'+
-                    '               <a href="#" data-theme-id="' + this.themes[i].id + '" id="theme_' + this.themes[i].id + '_anchor">'+
+                    '               <a href="#" data-theme-id="' + this.themes[i].id + '" id="theme_' + this.themes[i].id + '_anchor">' +
                     '                   <p id="open-text" data-locale_key="Advanced_Panel_Themes_Label_Open_Theme" data-locale_ref="text" class="localizedElement"></p>' +
                     '                   <div class="tools tools-bottom">' +
                     '                       <i class="fa fa-share"></i>' +
-                    '                   </div>'+
+                    '                   </div>' +
                     '               </a>' +
                     '            </div>' +
                     '        </div>' +
@@ -70,15 +76,16 @@ var themesPlugin = {
             this.themesListPanel.append(panel);
 
             var anchor = $(panel).find('#theme_' + this.themes[i].id + '_anchor');
-            $(anchor).on('click', function(){
+            $(anchor).on('click', function () {
                 var lat = map.getCenter().lat;
                 var lon = map.getCenter().lon;
                 var zoom = map.getZoom();
-                window.location = window.location.pathname + '?config=' + $(this).data('theme-id') + '&lat=' + lat+ '&lon=' + lon+ '&zoom=' + zoom;
+                
+                window.location = window.location.pathname + '?config=' + $(this).data('theme-id') + '&lat=' + lat + '&lon=' + lon + '&zoom=' + zoom;
             });
-            
+
             LocaleManager.refreshLocalizedElement($(panel).find("#open-text"));
-            
+
             Holder.run({
                 images: panel.find('img')[0]
             });

@@ -756,3 +756,20 @@ label.css-label {
 .item-text{
     color: #616161;
 }
+
+.info-popup-table{
+    border: 1px solid #cecece; 
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.info-popup-table td{
+    padding: 0 10px 0 10px;
+}
+
+.info-popup-table tr:first-child td{
+    padding-top: 10px;
+}
+.info-popup-table tr:last-child td{
+    padding-bottom: 10px;
+}
