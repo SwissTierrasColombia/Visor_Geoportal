@@ -1,0 +1,224 @@
+<style>
+    #feedback{
+        background-color:#464646;
+        width:250px;
+        height:293px;
+        position:fixed;
+        bottom:0;
+        left: 90px;
+        margin-bottom:-270px;
+        z-index:10000;
+        /*border: 3px solid #3a3a3a;*/
+    }
+
+    #feedback .section{
+        /*background:url('images/feedback/bg.png') repeat-x top left;*/
+        border:1px solid #464646;
+        border-bottom:none;
+        padding:0px 19px 25px;
+    }
+
+    #feedback .color{
+        float:left;
+        height:4px;
+        width:20%;
+        overflow:hidden;
+    }
+
+    #feedback .color-1{ background-color:#d3b112;}
+    #feedback .color-2{ background-color:#12b6d3;}
+    #feedback .color-3{ background-color:#8fd317;}
+    #feedback .color-4{ background-color:#ca57df;}
+    #feedback .color-5{ background-color:#8ecbe7;}
+
+    #feedback h6{
+        /*background:url("images/feedback/feedback.png") no-repeat;*/
+        height:38px;
+        margin:5px 0 12px;
+        /*text-indent:-99999px;*/
+        cursor:pointer;
+        color:white;
+        font-size: 14px;
+        line-height: 16px;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    #feedback textarea{
+        background-color:#fff;
+        border:none;
+        color:#666666;
+        font:13px 'Lucida Sans',Arial,sans-serif;
+        height:100px;
+        padding:10px;
+        /*width:236px;*/
+        resize:none;
+        outline:none;
+        overflow:auto;
+
+        -moz-box-shadow:2px 2px 0 #292929;
+        -webkit-box-shadow:2px 2px 0 #292929;
+        box-shadow:2px 2px 0 #292929;
+    }
+
+    #feedback a.submit{
+        /* background: url(images/feedback/submit.png) no-repeat; */
+        border: none;
+        display: block;
+        height: 24px;
+        margin: 30px auto 0;
+        text-decoration: none;
+        /* text-indent: -99999px; */
+        width: 91px;
+        background-color: rgb(80, 164, 228);
+        color: white;
+        text-align: center;
+        line-height: 24px;
+        font-weight: bold;
+    }
+
+    #feedback a.submit:hover{
+        background-position:left bottom;
+    }
+
+    #feedback a.submit.working{
+        background-position:top right !important;
+        cursor:default;
+    }
+
+    #feedback .message{
+        font-family:Corbel,Arial,sans-serif;
+        color:#5a665b;
+        text-shadow:1px 1px 0 #b3c2b5;
+        margin-bottom:20px;
+    }
+
+    #feedback .arrow{
+        background:url('images/feedback/arrows.png') no-repeat;
+        float:right;
+        width:23px;
+        height:18px;
+        position:relative;
+        top:-2px;
+    }
+
+    #feedback .arrow.down{ background-position:left top;}
+    #feedback h6:hover .down{ background-position:left bottom;}
+    #feedback .arrow.up{ background-position:right top;}
+    #feedback h6:hover .up{ background-position:right bottom;}
+
+    #feedback .response{
+        font-size:21px;
+        margin-top:70px;
+        text-align:center;
+        text-shadow:2px 2px 0 #889889;
+        color:#FCFCFC;
+        display:block;
+    }
+</style>
+<div id="feedback">
+
+    <!-- Five color spans, floated to the left of each other -->
+
+    <span class="color color-1"></span>
+    <span class="color color-2"></span>
+    <span class="color color-3"></span>
+    <span class="color color-4"></span>
+    <span class="color color-5"></span>
+
+    <div class="section">
+
+        <!-- The arrow span is floated to the right -->
+        <h6><span class="arrow up"></span>Sugerencias</h6>
+        <textarea></textarea>
+        <a class="submit" href="">Submit</a>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+
+        // The relative URL of the submit.php script.
+        // You will probably have to change	it.
+        var submitURL = 'submit.php';
+
+        // Caching the feedback object:	
+        var feedback = $('#feedback');
+
+        $('#feedback h6').click(function () {
+
+            // We are storing the values of the animated
+            // properties in a separate object:
+
+            var anim = {
+                mb: 0, // Margin Bottom
+                pt: 25			// Padding Top
+            };
+
+            var el = $(this).find('.arrow');
+
+            if (el.hasClass('down')) {
+                anim = {
+                    mb: -270,
+                    pt: 0
+                };
+            }
+
+            // The first animation moves the form up or down, and the second one 
+            // moves the "Feedback heading" so it fits in the minimized version
+
+            feedback.stop().animate({marginBottom: anim.mb});
+
+            feedback.find('.section').stop().animate({paddingTop: anim.pt}, function () {
+                el.toggleClass('down up');
+            });
+        });
+
+        $('#feedback a.submit').live('click', function () {
+            var button = $(this);
+            var textarea = feedback.find('textarea');
+
+            // We use the working class not only for styling the submit button,
+            // but also as kind of a "lock" to prevent multiple submissions.
+
+            if (button.hasClass('working') || textarea.val().length < 5) {
+                return false;
+            }
+
+            // Locking the form and changing the button style:
+            button.addClass('working');
+
+            $.ajax({
+                url: submitURL,
+                type: 'post',
+                data: {message: textarea.val()},
+                complete: function (xhr) {
+
+                    var text = xhr.responseText;
+
+                    // This will help users troubleshoot their form:
+                    if (xhr.status == 404) {
+                        text = 'Your path to submit.php is incorrect.';
+                    }
+
+                    // Hiding the button and the textarea, after which
+                    // we are showing the received response from submit.php
+
+                    button.fadeOut();
+
+                    textarea.fadeOut(function () {
+                        var span = $('<span>', {
+                            className: 'response',
+                            html: text
+                        })
+                                .hide()
+                                .appendTo(feedback.find('.section'))
+                                .show();
+                    }).val('');
+                }
+            });
+
+            return false;
+        });
+    });
+</script>
