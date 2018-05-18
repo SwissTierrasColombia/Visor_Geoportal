@@ -435,7 +435,7 @@ var mLayers = {
 
         layerObj.referenceDate = $("#layer-input-reference-date").val();
         if($("#preview-source").val()){
-            layerObj.visualTemplate = '{"template" : '+ '"'+$("#preview-source").val().replace(/(\r\n\t|\n|\r\t)/gm,"")+'",'+
+            layerObj.visualTemplate = '{"template" : '+ '"'+encodeURIComponent($("#preview-source").val())+'",'+
                     '"attributes" : '+$("#preview-extradata").val()+','+
                     '"log" : true'+'}';
         }
@@ -481,7 +481,7 @@ var mLayers = {
             if (selectedRow.attrMapping) {
                 var objAttrMapping = JSON.parse(selectedRow.attrMapping);
                 
-                $("#preview-source").val(objAttrMapping.template);
+                $("#preview-source").val(decodeURIComponent(objAttrMapping.template));
                 $("#preview-extradata").val(JSON.stringify(objAttrMapping.attributes));
             }
         } catch (e) {
