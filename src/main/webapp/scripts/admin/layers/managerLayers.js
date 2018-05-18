@@ -435,7 +435,7 @@ var mLayers = {
 
         layerObj.referenceDate = $("#layer-input-reference-date").val();
         if($("#preview-source").val()){
-            layerObj.visualTemplate = '{"template" : '+ '"'+$("#preview-source").val()+'",'+
+            layerObj.visualTemplate = '{"template" : '+ '"'+$("#preview-source").val().replace(/(\r\n\t|\n|\r\t)/gm,"")+'",'+
                     '"attributes" : '+$("#preview-extradata").val()+','+
                     '"log" : true'+'}';
         }
