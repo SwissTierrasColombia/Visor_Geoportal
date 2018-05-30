@@ -174,7 +174,7 @@
             });
         });
 
-        $('#feedback a.submit').live('click', function () {
+        $('#feedback a.submit').on('click', function () {
             var button = $(this);
             var textarea = feedback.find('textarea');
 

@@ -53,13 +53,18 @@ var themesPlugin = {
         }
         for (var i = 0; i < this.themes.length; i++) {
             var panel = $(
-                    '<div class="col-xs-'+size+'">' +
+                    '<div class="col-xs-' + size + '">' +
                     '    <div class="base-maps-thumbnail">' +
                     '        <div class="caption">' +
                     '            <p><strong>' + this.themes[i].name + '</strong></p>' +
                     '        </div>' +
                     '        <div class="image view view-first">' +
-                    '            <img style="width: 100%; display: block;" sytle="background-size: 100% 100%;" src="holder.js/100px100p?bg=' + this.chroma[i + 2] + '&text=theme preview" alt="image" />' +
+                    (
+                            this.themes[i].thumbnail ?
+                            '   <img style="width: 100%; display: block;" sytle="background-size: 100% 100%;" src="' + this.themes[i].thumbnail + '" alt="image" />'
+                            :
+                            '   <img style="width: 100%; display: block;" sytle="background-size: 100% 100%;" src="holder.js/100px100p?bg=' + this.chroma[i + 2] + '&text=theme preview" alt="image" />'
+                            ) +
                     '            <div class="mask">' +
 //                    '               <a href="' + window.location.pathname + '?config=' + this.themes[i].id + '">'+
                     '               <a href="#" data-theme-id="' + this.themes[i].id + '" id="theme_' + this.themes[i].id + '_anchor">' +
@@ -80,7 +85,7 @@ var themesPlugin = {
                 var lat = map.getCenter().lat;
                 var lon = map.getCenter().lon;
                 var zoom = map.getZoom();
-                
+
                 window.location = window.location.pathname + '?config=' + $(this).data('theme-id') + '&lat=' + lat + '&lon=' + lon + '&zoom=' + zoom;
             });
 
