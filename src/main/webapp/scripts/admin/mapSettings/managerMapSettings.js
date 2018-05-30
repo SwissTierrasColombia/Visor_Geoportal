@@ -3,6 +3,7 @@ var mMapSettings = {
 	validatorFormAddMap: null,
 	dtPanel: null,
 	dt: null,
+        mapThumbnail:null,
 		
 	init: function(){
 		
@@ -18,6 +19,7 @@ var mMapSettings = {
 				form: this.pFormAddMap
 			});
 		}
+                document.getElementById('map-thumbnail').addEventListener('change', this.handleMapImageSelect, false);
 		
 		
 	},
@@ -158,8 +160,8 @@ var mMapSettings = {
 		buttons[LocaleManager.getKey('General_Save')] = function(){
 			//mMaps.submitAddMap();
 			var settings = mMapSettings.getDataFromPage();
-
-			var isValid = mMapSettings.validatorFormAddMap.valid();
+                        
+                        var isValid = mMapSettings.validatorFormAddMap.valid();
 			if(!isValid) {
 				return;
 			}
@@ -225,6 +227,9 @@ var mMapSettings = {
 	getDataFromPage: function() {
 		var settings = new Object();
 		
+                                               
+                settings.thumbnail = this.mapThumbnail;
+                
 		settings.idMap = $("#map-input-id").val();
 		settings.mapName = $("#name-input").val();
 		
@@ -285,6 +290,38 @@ var mMapSettings = {
 			$("#resolutions-delete").hide();
 		}
 	},
+        
+        handleMapImageSelect: function(evt){
+//            -------------------
+//            var maxSize = $("#map-thumbnail").attr("max-size");
+//            console.log(maxSize);
+//            -------------------
+        
+            var image = evt.target.files[0];
+            
+        
+            if(image.type.match('image.*')){
+                if(image.size>100000){
+                    $("#map-thumbnail-preview").remove();
+                    alert(LocaleManager.getKey("Manager_Map_Settings_File_Size_Exceeded"));
+                }else{
+                    var reader = new FileReader();
+                    reader.onload = (
+                            function(f){
+                                return function(e){
+                                    var result =  e.target.result;
+                                    mMapSettings.mapThumbnail = result;
+                                    var span = document.createElement('span');
+                                    span.innerHTML = ['<img class="thumb" src="', result,'" title="', escape(f.name), '"/>'].join('');
+                                    document.getElementById('map-thumbnail-preview').insertBefore(span, null);
+                                };
+                            }
+
+                    )(image);
+                    reader.readAsDataURL(image);
+                }
+            }
+        },
 	
 	populatePage: function(settings) {
 		
@@ -292,6 +329,14 @@ var mMapSettings = {
 		$("#name-input").val(settings.mapName);
 		$("#projection-input").val(settings.projection);
 		$("#units-input").val(settings.units);
+
+                $("#map-thumbnail-preview").empty();//always remove thumbnail preview
+                
+                if(settings.thumbnail !== void 0){
+                    var span = document.createElement('span');
+                    span.innerHTML = ['<img class="thumb" src="', settings.thumbnail,'"/>'].join('');
+                    document.getElementById('map-thumbnail-preview').insertBefore(span, null);
+                }
 		
 		$("#default-maxscale-input").val(settings.maxScale);
 		

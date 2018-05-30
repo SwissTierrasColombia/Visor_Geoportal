@@ -1,672 +1,220 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package it.gesp.geoportal.servlets;
-
-import it.gesp.geoportal.PaginationObject;
-import it.gesp.geoportal.PaginationRequest;
-import it.gesp.geoportal.PaginationResult;
-import it.gesp.geoportal.constants.Permissions;
-import it.gesp.geoportal.dao.dto.AlertConfigurationDTO;
-import it.gesp.geoportal.dao.dto.AlertCoordinatesDTO;
-import it.gesp.geoportal.dao.dto.AlertDTO;
-import it.gesp.geoportal.dao.dto.AlertIntersectionDTO;
-import it.gesp.geoportal.dao.dto.AlertTypeDTO;
-import it.gesp.geoportal.dao.entities.User;
-import it.gesp.geoportal.dao.entities.VWAlert;
-import it.gesp.geoportal.dao.repositories.AlertRepository;
-import it.gesp.geoportal.exceptions.DataInvalidException;
-import it.gesp.geoportal.exceptions.OperationInvalidException;
-import it.gesp.geoportal.exceptions.PermissionInvalidException;
-import it.gesp.geoportal.json.JsonFactory;
-import it.gesp.geoportal.locale.LocaleUtils;
-import it.gesp.geoportal.services.AlertService;
-import it.gesp.geoportal.services.LoginService;
-import it.gesp.geoportal.services.MapService;
-import it.gesp.geoportal.utils.Utils;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.lang.reflect.Type;
-import java.text.MessageFormat;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.ResourceBundle;
-
+import java.util.Properties;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 
-import org.apache.log4j.Logger;
-
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-
+/**
+ *
+ * @author felipe
+ */
 public class SuggestServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
 
-	private static final Logger log = Logger.getLogger(AlertServlet.class);
-	
-	private ResourceBundle dbMessages = LocaleUtils.getDBMessages();
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
 
-	public SuggestServlet() {
-		super();
-	}
+        response.setContentType("application/json;charset=UTF-8");
+        String resp = "{";
+        try (PrintWriter out = response.getWriter()) {
 
-	protected void doGet(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
-		doWork(request, response);
-	}
+            String name = request.getParameter("name");
+            String email = request.getParameter("email");
+            String msg = request.getParameter("message");
 
-	protected void doPost(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
-		doWork(request, response);
-	}
+            if (name != null && !name.isEmpty() && email != null && !email.isEmpty() && msg != null && !msg.isEmpty()) {
 
-	@SuppressWarnings("unchecked")
-	private void doWork(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+                System.out.println("Sending email...");
 
-		HttpSession currentSession = request.getSession(false);
-		
-		String currentLanguage = LoginService.getCurrentLanguageFromSessionOrDefault(currentSession);
-		ResourceBundle userMessages = LocaleUtils.getUserMessages(currentLanguage);
-		
-		User currentUser = LoginService.getLoggedInUserFromSession(currentSession);
-		
-		it.gesp.geoportal.dao.entities.Map currentMap = new MapService().getMapByName("icf_map");
-		int idMap = currentMap.getIdMap();
-		
-		AlertService alertService = new AlertService();
-		PrintWriter w = response.getWriter();
-		String jsonRes = null;
+                final String username = "lcano@appsglobals.com";
+                final String password = "xxxxxx";
 
-		String oper = request.getParameter("oper");
-		if (oper != null) {
-			log.debug("Alert Servlet - Operation " + oper);
-		}
-		else {
-			log.debug("Alert Servlet - NULL Operation parameter");
-		}
-		
-		/*
-		 * Check that the user is connected.
-		 * The only allowed operation for anonimous users (aka not logged) are
-		 * - insertAnonimous
-		 * - getGeomByReferenceCode
-		 */
-		if (currentUser == null && 
-				(!"insert".equals(oper) && !"getGeomByReferenceCode".equals(oper) && !"getAlertAddedMessage".equals(oper) && !"getAlertsIntersectionConfigurationForUser".equals(oper)) 
-			) {
-			
-			log.debug("Current user is null.");
-			jsonRes = GeoportalResponse.createErrorResponse(userMessages.getString("USER_NOT_LOGGED_IN"));
-			ServletUtils.writeAndFlush(log, w, jsonRes);
-			return;
-		}
-		
-		try {
-			
-			/*
-			 * ADMINISTRATION
-			 */
-			if ("getAlertConfiguration".equalsIgnoreCase(oper)) {
-				/*
-				 * Check whether the current user has the appropriate permission
-				 */
-				if (!LoginService.hasPermission(currentUser, Permissions.ALERTS_CONFIG_ADMIN)) {
-					jsonRes = GeoportalResponse.createErrorResponse(userMessages.getString("USER_DOES_NOT_HAVE_PERMISSION"));
-					ServletUtils.writeAndFlush(log, w, jsonRes);
-					return;
-				}
-				
-				AlertConfigurationDTO conf = new AlertService().getAlertConfigurationDTO(idMap);
-								
-				jsonRes = GeoportalResponse.createSuccessResponseWithSerializationOfNulls(conf, true);
-				ServletUtils.writeAndFlush(log, w, jsonRes);
-			}
-			
-			else if ("saveAlertConfiguration".equalsIgnoreCase(oper)) {
-				/*
-				 * Check whether the current user has the appropriate permission
-				 */
-				if (!LoginService.hasPermission(currentUser, Permissions.ALERTS_CONFIG_ADMIN)) {
-					jsonRes = GeoportalResponse.createErrorResponse(userMessages.getString("USER_DOES_NOT_HAVE_PERMISSION"));
-					ServletUtils.writeAndFlush(log, w, jsonRes);
-					return;
-				}
-				
-				String referenceLayerIdStr = request.getParameter("referenceLayerId");
-				Integer referenceLayerId = null;
-				if (!Utils.isNullOrEmpty(referenceLayerIdStr)) {
-					try {
-						referenceLayerId = Integer.parseInt(referenceLayerIdStr);
-					} catch (Exception x) {
-						log.debug("Error parsing referenceLayerIdStr parameter");
-						throw new DataInvalidException();
-					}	
-				}
-				
-				String alertAddedMessage = request.getParameter("alertAddedMessage");
-				
-				AlertConfigurationDTO dto = new AlertConfigurationDTO();
-				dto.setReferenceLayerId(referenceLayerId);
-				dto.setAlertAddedMessage(alertAddedMessage);
-				
-				new AlertService().saveAlertsSettings(idMap,dto);
-				
-				//Save..
-				//new LayerService().setReferenceLayerForAlert(idMap, referenceLayerId);
-				
-				jsonRes = GeoportalResponse.createSuccessResponse(null, true);
-				ServletUtils.writeAndFlush(log, w, jsonRes);
-				
-			}
-			
-			else if ("getAlertsIntersectionConfigurationForUser".equalsIgnoreCase(oper)) {
-				
-				Map returnMap = new AlertService().getAlertIntersections(false);
-				jsonRes = GeoportalResponse.createSuccessResponseWithSerializationOfNulls(returnMap, true);
-				ServletUtils.writeAndFlush(log, w, jsonRes);
-			}
-			
-			else if ("getAlertIntersectionConfiguration".equalsIgnoreCase(oper)) {
-				/*
-				 * Check whether the current user has the appropriate permission
-				 */
-				if (!LoginService.hasPermission(currentUser, Permissions.ALERTS_CONFIG_ADMIN)) {
-					jsonRes = GeoportalResponse.createErrorResponse(userMessages.getString("USER_DOES_NOT_HAVE_PERMISSION"));
-					ServletUtils.writeAndFlush(log, w, jsonRes);
-					return;
-				}
-				Map returnMap = new AlertService().getAlertIntersections(true);
-				
-				jsonRes = GeoportalResponse.createSuccessResponseWithSerializationOfNulls(returnMap, true);
-				ServletUtils.writeAndFlush(log, w, jsonRes);
-			}
-			
-			else if ("saveAlertIntersectionConfiguration".equalsIgnoreCase(oper)) {
-				/*
-				 * Check whether the current user has the appropriate permission
-				 */
-				if (!LoginService.hasPermission(currentUser, Permissions.ALERTS_CONFIG_ADMIN)) {
-					jsonRes = GeoportalResponse.createErrorResponse(userMessages.getString("USER_DOES_NOT_HAVE_PERMISSION"));
-					ServletUtils.writeAndFlush(log, w, jsonRes);
-					return;
-				}
-				
-				String dataJson = request.getParameter("data");
-				
-				Map<String, AlertIntersectionDTO> intersectionDTOMap = null;
-				
-				try {
-					Type collectionType = new TypeToken<Map<String, AlertIntersectionDTO>>() {
-					}.getType();
-					intersectionDTOMap = new Gson().fromJson(dataJson, collectionType);
-					
-				} catch (Exception x) {
-					// Error parsing the featureList
-					String errorJson = GeoportalResponse.createErrorResponse(userMessages.getString("NO_FEATURELIST_SPECIFIED"));
-					ServletUtils.writeAndFlush(log, w, errorJson);
-					return;
-				}
+                Properties props = new Properties();
+                props.put("mail.smtp.starttls.enable", "true");
+                props.put("mail.smtp.auth", "true");
+                props.put("mail.smtp.host", "sub4.mail.dreamhost.com");
+                props.put("mail.smtp.port", "587");
 
-				new AlertService().saveAlertIntersections(intersectionDTOMap);
-				
-				jsonRes = GeoportalResponse.createSuccessResponse(null, true);
-				ServletUtils.writeAndFlush(log, w, jsonRes);
-			}
-			
-			
-//			else if ("referenceLayerList".equalsIgnoreCase(oper)) {
-//				/*
-//				 * Check whether the current user has the appropriate permission
-//				 */
-//				if (!LoginService.hasPermission(currentUser, Permissions.ALERTS_CONFIG_ADMIN)) {
-//					jsonRes = GeoportalResponse.createErrorResponse(userMessages.getString("USER_DOES_NOT_HAVE_PERMISSION"));
-//					ServletUtils.writeAndFlush(log, w, jsonRes);
-//					return;
-//				}
-//				
-//				AlertConfigurationDTO conf = new LayerService().getAlertConfigurationDTO(idMap);
-//				
-//				jsonRes = GeoportalResponse.createSuccessResponseWithSerializationOfNulls(conf, true);
-//				ServletUtils.writeAndFlush(log, w, jsonRes);
-//				
-//			}
-//			
-//			else if ("saveReferenceLayer".equalsIgnoreCase(oper)) {
-//				/*
-//				 * Check whether the current user has the appropriate permission
-//				 */
-//				if (!LoginService.hasPermission(currentUser, Permissions.ALERTS_CONFIG_ADMIN)) {
-//					jsonRes = GeoportalResponse.createErrorResponse(userMessages.getString("USER_DOES_NOT_HAVE_PERMISSION"));
-//					ServletUtils.writeAndFlush(log, w, jsonRes);
-//					return;
-//				}
-//				
-//				String referenceLayerIdStr = request.getParameter("referenceLayerId");
-//				Integer referenceLayerId = null;
-//				if (!Utils.isNullOrEmpty(referenceLayerIdStr)) {
-//					try {
-//						referenceLayerId = Integer.parseInt(referenceLayerIdStr);
-//					} catch (Exception x) {
-//						log.debug("Error parsing referenceLayerIdStr parameter");
-//						throw new DataInvalidException();
-//					}	
-//				}
-//				
-//				//Save..
-//				new LayerService().setReferenceLayerForAlert(idMap, referenceLayerId);
-//				
-//				jsonRes = GeoportalResponse.createSuccessResponse(null, true);
-//				ServletUtils.writeAndFlush(log, w, jsonRes);
-//				
-//			}
-			
-			else if ("getAlertAddedMessage".equalsIgnoreCase(oper)) {
-				
-				AlertConfigurationDTO conf = new AlertService().getAlertConfigurationDTO(idMap);
-								
-				jsonRes = GeoportalResponse.createSuccessResponseWithSerializationOfNulls(conf.getAlertAddedMessage(), true);
-				ServletUtils.writeAndFlush(log, w, jsonRes);
-			}
-			
-			else if ("addAlertType".equalsIgnoreCase(oper)) {
-				/*
-				 * Check whether the current user has the appropriate permission
-				 */
-				if (!LoginService.hasPermission(currentUser, Permissions.ALERTS_CONFIG_ADMIN)) {
-					jsonRes = GeoportalResponse.createErrorResponse(userMessages.getString("USER_DOES_NOT_HAVE_PERMISSION"));
-					ServletUtils.writeAndFlush(log, w, jsonRes);
-					return;
-				}
-				
-				String alertTypeName = request.getParameter("name");
-				if (Utils.isNullOrEmpty(alertTypeName)) {
-					log.debug("Error parsing name parameter");
-					throw new DataInvalidException();
-				}
-				
-				
-				alertService.addAlertType(alertTypeName);
-				
-				jsonRes = GeoportalResponse.createSuccessResponse(null, true);
-				ServletUtils.writeAndFlush(log, w, jsonRes);
-			}
-			
-			else if ("updateAlertType".equalsIgnoreCase(oper)) {
-				/*
-				 * Check whether the current user has the appropriate permission
-				 */
-				if (!LoginService.hasPermission(currentUser, Permissions.ALERTS_CONFIG_ADMIN)) {
-					jsonRes = GeoportalResponse.createErrorResponse(userMessages.getString("USER_DOES_NOT_HAVE_PERMISSION"));
-					ServletUtils.writeAndFlush(log, w, jsonRes);
-					return;
-				}
-				
-				String alertTypeJson = request.getParameter("alertType");
-				if (Utils.isNullOrEmpty(alertTypeJson)) {
-					log.debug("Error parsing alertType parameter");
-					throw new DataInvalidException();
-				}
-				
-				Gson gson = JsonFactory.getGson();
-				
-				AlertTypeDTO alertTypeDTO = new Gson().fromJson(alertTypeJson, AlertTypeDTO.class);
-				
-				alertService.updateAlertType(alertTypeDTO);
-				
-				jsonRes = GeoportalResponse.createSuccessResponse(null, true);
-				ServletUtils.writeAndFlush(log, w, jsonRes);
-			}
-			
-			else if ("deleteAlertType".equalsIgnoreCase(oper)) {
-				/*
-				 * Check whether the current user has the appropriate permission
-				 */
-				if (!LoginService.hasPermission(currentUser, Permissions.ALERTS_CONFIG_ADMIN)) {
-					jsonRes = GeoportalResponse.createErrorResponse(userMessages.getString("USER_DOES_NOT_HAVE_PERMISSION"));
-					ServletUtils.writeAndFlush(log, w, jsonRes);
-					return;
-				}
-				
-				//alertTypeId
-				int idAlertType = -1;
-				try {
-					String idAlertTypeStr = request.getParameter("idAlertType");
-					idAlertType = Integer.parseInt(idAlertTypeStr);
-				} catch (Exception x) {
-					log.debug("Error parsing idAlertType parameter");
-					throw new DataInvalidException();
-				}
-				
-				alertService.deleteAlertType(idAlertType);
-				
-				jsonRes = GeoportalResponse.createSuccessResponse(null, true);
-				ServletUtils.writeAndFlush(log, w, jsonRes);
-			}
+                try {
 
-			/*
-			 * CHECK IF USER CAN EDIT ALERT
-			 */
-			else if ("checkIfUserCanEdit".equals(oper)) {
-				/*
-				 * Check whether the current user has the appropriate permission
-				 */
-				if (!LoginService.hasPermission(currentUser, Permissions.ALERTS_UPDATE)) {
-					jsonRes = GeoportalResponse.createErrorResponse(userMessages.getString("USER_DOES_NOT_HAVE_PERMISSION"));
-					ServletUtils.writeAndFlush(log, w, jsonRes);
-					return;
-				}
-				
-				//Get departments of the user based on permission list
-				//String layerName = "m1102va001970_hn";
+                    Session session = Session.getInstance(props,
+                            new javax.mail.Authenticator() {
+                        protected PasswordAuthentication getPasswordAuthentication() {
+                            return new PasswordAuthentication(username, password);
+                        }
+                    });
 
-				//String x = request.getParameter("alert_x");
-				//String y = request.getParameter("alert_y");
-				String alertCoordsString = request.getParameter("alertCoords");
-				
-				if (alertCoordsString == null) {
-					throw new DataInvalidException("Missing point coordinates");
-				}
-				
-				// Parse alertCoords
-				List<AlertCoordinatesDTO> alertCoordinates = null;
-				try {
-					
-					Type collectionType = new TypeToken<List<AlertCoordinatesDTO>>() {}.getType();
-					alertCoordinates = new Gson().fromJson(alertCoordsString,collectionType);
-				} catch (Exception x) {
-					log.debug("Error parsing alertCoords parameter", x);
-					throw new DataInvalidException();
-				}
-				
-				
-				//x = "-87.15339691987192";
-				//y = "15.162770568339457";
-//				AlertCoordinatesDTO acDTO = new AlertCoordinatesDTO(x, y);
-//				List<AlertCoordinatesDTO> alertCoordinates = new ArrayList<AlertCoordinatesDTO>();
-//				alertCoordinates.add(acDTO);
-				boolean res = alertService.checkIfUserCanEditAlerts(currentUser, alertCoordinates);
-				
-				jsonRes = GeoportalResponse.createSuccessResponse(res, true);
-				ServletUtils.writeAndFlush(log, w, jsonRes);
-			}
-			
-			/*
-			 * GET
-			 */
-			else if ("getAll".equalsIgnoreCase(oper)) {
+                    Message message = new MimeMessage(session);
+                    message.setContent(message, "text/html; charset=utf-8");
+                    message.setFrom(new InternetAddress("lcano@appsglobals.com"));
+                    message.setRecipients(Message.RecipientType.TO,
+                            InternetAddress.parse("felipecanol@gmail.com"));
+                    message.setSubject("Testing Subject");
+                    message.setContent(this.getMessage(name, email, msg), "text/html; charset=utf-8");
 
-				PaginationResult<VWAlert> alerts = null;
-				
-				/*
-				 * Check whether the current user has the appropriate permission
-				 */
-				if (!LoginService.hasPermission(currentUser, Permissions.ALERTS_READ)) {
-					// User does not have the permission
-					jsonRes = GeoportalResponse.createErrorResponse(userMessages.getString("USER_DOES_NOT_HAVE_PERMISSION"));
-					ServletUtils.writeAndFlush(log, w, jsonRes);
-					return;
-				}
+                    Transport.send(message);
 
-				//check if there is an idAlert filter
-				String idAlertStr = request.getParameter("idAlert"); 
-				Integer idAlert = null;
-				if (!Utils.isNullOrEmpty(idAlertStr)) {
-					try {
-						idAlert = Integer.parseInt(idAlertStr);
-					} catch (Exception x) {
-						log.error("Error parsing idAlert parameter");
-						throw new DataInvalidException();
-					}
-					log.debug("Get alert by id= " + idAlert);	
-				}
-				
-				// Handle pagination
-				PaginationRequest pagReq = new PaginationRequest(request);
+                    System.out.println("Done");
+                    resp += "\"status\" : \"success\"";
 
-				log.debug("Get paginated alerts.");
-				alerts = alertService.getPaginatedAlerts(currentUser,
-						pagReq.getStartFrom(), pagReq.getSize(),
-						pagReq.getSortColumn(), pagReq.getSortDir(), idAlert);
+                } catch (MessagingException e) {
+                    System.out.println("ERROR !!!" + e.getMessage());
+                    resp += "\"status\" : \"error\",\"message\" : \"" + e.getMessage() + "\"";
+                }
+            } else {
+                resp += "\"status\" : \"fail\"";
+                resp += ",\"data\" : {";
+                String s = "";
+                if (name == null || (name != null && name.isEmpty())) {
+                    resp += s + "\"name\" : false";
+                    s = ",";
+                }
+                if (email == null || (email != null && email.isEmpty())) {
+                    resp += s + "\"email\" : false";
+                    s = ",";
+                }
+                if (msg == null || (msg != null && msg.isEmpty())) {
+                    resp += s + "\"message\" : false";
+                }
+                resp += "}";
+            }
+            resp += "}";
+            out.println(resp);
+        } catch (Exception e) {
+            System.out.println("ERROR !!!" + e.getMessage());
+        }
 
-				PaginationObject<VWAlert> paginationObject = PaginationObject
-						.createFromPaginationResult(alerts);
-				paginationObject.setDraw(pagReq.getPage());
+    }
 
-				GeoportalResponse gpr = new GeoportalResponse();
-				gpr.setSuccess(true);
-				gpr.setResult(paginationObject);
-				//jsonRes = new Gson().toJson(gpr);
-				jsonRes = JsonFactory.getGson(true, true, false).toJson(gpr);
-				log.debug("Response: " + jsonRes);
-				ServletUtils.writeAndFlush(log, w, jsonRes);
-			}
+    private String getMessage(String name, String email, String message) {
+        String msg = "<!DOCTYPE html>\n"
+                + "<html lang=3D&quot;en-US&quot;>\n"
+                + "    <head>\n"
+                + "        <meta charset=3D&quot;utf-8&quot;>\n"
+                + "    </head>\n"
+                + "    <body>\n"
+                + "        <div class=\"container\">\n"
+                + "            <div class=\"content\">\n"
+                + "                <table bgcolor=\"#06857E\" width=\"100%\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\" style=\"min-width:332px;max-width:700px;border:1px solid #e0e0e0;border-bottom:0;border-top-left-radius:3px;border-top-right-radius:3px\">\n"
+                + "                    <tbody>\n"
+                + "                        <tr>\n"
+                + "                            <td height=\"20px\" colspan=\"3\"></td>\n"
+                + "                        </tr>\n"
+                + "                        <tr>\n"
+                + "                            <td width=\"32px\"></td>\n"
+                + "                            <td style=\"font-family:Roboto-Regular,Helvetica,Arial,sans-serif;font-size:24px;color:#ffffff;line-height:1.25;font-weight: bold;\">\n"
+                + "                                !NUEVA SUGERENCIA!\n"
+                + "                            </td>\n"
+                + "                            <td width=\"32px\"></td>\n"
+                + "                        </tr>\n"
+                + "                        <tr>\n"
+                + "                            <td height=\"18px\" colspan=\"3\"></td>\n"
+                + "                        </tr>\n"
+                + "                    </tbody>\n"
+                + "                </table>\n"
+                + "                <table bgcolor=\"#FAFAFA\" width=\"100%\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\" style=\"min-width:332px;max-width:700px;border:1px solid #f0f0f0;border-bottom:1px solid #c0c0c0;border-top:0;border-bottom-left-radius:3px;border-bottom-right-radius:3px\">\n"
+                + "                    <tbody>\n"
+                + "                        <tr height=\"16px\">\n"
+                + "                            <td width=\"32px\" rowspan=\"3\"></td>\n"
+                + "                            <td></td>\n"
+                + "                            <td width=\"32px\" rowspan=\"3\"></td>\n"
+                + "                        </tr>\n"
+                + "                        <tr>\n"
+                + "                            <td>\n"
+                + "                                <table style=\"min-width:300px\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\">\n"
+                + "                                    <tbody>\n"
+                + "                                        <tr>\n"
+                + "                                            <td style=\"font-family:Roboto-Regular,Helvetica,Arial,sans-serif;font-size:13px;color:#202020;line-height:1.5;text-align: justify;\">\n"
+                + "                                                <br />\n"
+                + "                                                <div>\n"
+                + "                                                    <b>Nombre:</b>&nbsp;" + name
+                + "                                                </div>\n"
+                + "                                                <div>\n"
+                + "                                                    <b>Email:</b>&nbsp;" + email
+                + "                                                </div>\n"
+                + "                                                <div>\n"
+                + "                                                    <b>Mensaje:</b>&nbsp;" + message
+                + "                                                </div>\n"
+                + "                                            </td>\n"
+                + "                                        </tr>\n"
+                + "                                        <tr height=\"32px\"></tr>\n"
+                + "                                        <tr height=\"16px\"></tr>\n"
+                + "                                    </tbody>\n"
+                + "                                </table>\n"
+                + "                            </td>\n"
+                + "                        </tr>\n"
+                + "                        <tr height=\"32px\"></tr>\n"
+                + "                    </tbody>\n"
+                + "                </table>\n"
+                + "            </div>\n"
+                + "        </div>\n"
+                + "    </body>\n"
+                + "</html>";
+        return msg;
+    }
 
-			else if ("getGeomByReferenceCode".equalsIgnoreCase(oper)) {
-				
-//				// Check that the user has the permission
-//				if (!LoginService.hasPermission(currentUser, Permissions.ALERTS_READ)) {
-//					jsonRes = GeoportalResponse.createErrorResponse(userMessages.getString("USER_DOES_NOT_HAVE_PERMISSION"));
-//					ServletUtils.writeAndFlush(log, w, jsonRes);
-//					return;
-//				}
-				
-				String referenceCode = request.getParameter("referenceCode");
-				if (Utils.isNullOrEmpty(referenceCode)) {
-					log.debug("Error parsing referenceCode parameter");
-					throw new DataInvalidException();
-				} 
-				
-				log.debug("Get alert by referenceCode.");
-				VWAlert alert = alertService.getAlertByReferenceCode(referenceCode);
-				alertService.setEpsg(alert, AlertRepository.EPSG_DEFAULT_ALERTS);
-				
-				GeoportalResponse gpr = new GeoportalResponse();
-				gpr.setSuccess(true);
-				gpr.setResult(alert);
-				jsonRes = new Gson().toJson(gpr);
-				
-				log.debug("Response: " + jsonRes);
-				w.write(jsonRes);
-				w.flush();
-			}
-			/*
-			 * GET GEOMETRIES
-			 */
-			else if ("getGeoms".equalsIgnoreCase(oper)) {
-				
-				// Check that the user has the permission
-				if (!LoginService.hasPermission(currentUser, Permissions.ALERTS_READ)) {
-					jsonRes = GeoportalResponse.createErrorResponse(userMessages.getString("USER_DOES_NOT_HAVE_PERMISSION"));
-					ServletUtils.writeAndFlush(log, w, jsonRes);
-					return;
-				}
-				
-				log.debug("Get alerts.");
-				List<VWAlert> alerts = alertService.getAlerts(currentUser);
-				alertService.setEpsg(alerts, AlertRepository.EPSG_DEFAULT_ALERTS);
-				
-				GeoportalResponse gpr = new GeoportalResponse();
-				gpr.setSuccess(true);
-				gpr.setResult(alerts);
-				jsonRes = new Gson().toJson(gpr);
-				
-				log.debug("Response: " + jsonRes);
-				w.write(jsonRes);
-				w.flush();
-			}
-			
-			/*
-			 * SAVE (Anonymous or not...)
-			 */
-			else if ("insert".equalsIgnoreCase(oper)) {
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    /**
+     * Handles the HTTP <code>GET</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        processRequest(request, response);
+    }
 
-				// Response
-				GeoportalResponse gpr = new GeoportalResponse();
-				
-//				// Check that the user has the permission
-//				if (!LoginService.hasPermission(currentUser, Permissions.ALERTS_INSERT)) {
-//					jsonRes = GeoportalResponse.createErrorResponse(userMessages.getString("USER_DOES_NOT_HAVE_PERMISSION"));
-//					ServletUtils.writeAndFlush(log, w, jsonRes);
-//					return;
-//				}
-				
-				String featureString = (String) request.getParameter("data");
-				AlertDTO alertDTORequest = null;
+    /**
+     * Handles the HTTP <code>POST</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        processRequest(request, response);
+    }
 
-				// Parse alert
-				try {
-					alertDTORequest = new Gson().fromJson(featureString, AlertDTO.class);
-					alertDTORequest.setDateFromEventDateStr();
-
-				} catch (Exception x) {
-					jsonRes = GeoportalResponse.createErrorResponse(userMessages.getString("NO_DATA_SPECIFIED"));
-					ServletUtils.writeAndFlush(log, w, jsonRes);
-					return;
-				}
-
-				try {
-
-					String alertReferenceCode = alertService.addAlertFromDTO(currentUser, alertDTORequest);
-
-//					LogService.writeLog(currentUser,dbMessages.getString("ALERTS_CONTEXT"),
-//							dbMessages.getString("ALERTS_SAVE_OPERATION"),
-//							dbMessages.getString("ALERTS_SAVED_DESC"));
-
-					gpr.setSuccess(true);
-					Map<String, String> data = new HashMap<String, String>();
-					data.put("referenceCode", alertReferenceCode);
-					
-					gpr.setResult(data);
-					jsonRes = new Gson().toJson(gpr);
-
-					log.debug("Feature saved. Response " + jsonRes);
-
-					w.write(jsonRes);
-					w.flush();
-
-				} catch (DataInvalidException x) {
-					jsonRes = GeoportalResponse.createErrorResponse(userMessages.getString("MISSING_PARAMETERS"));
-					ServletUtils.writeAndFlush(log, w, jsonRes);
-					log.debug("Data invalid exception", x);
-				} 
-			}
-
-			/*
-			 * UPDATE
-			 */
-			else if ("update".equalsIgnoreCase(oper)) {
-
-				// Response
-				GeoportalResponse gpr = new GeoportalResponse();
-
-				// Check that the user has the permission
-				if (!LoginService.hasPermission(currentUser,Permissions.ALERTS_UPDATE)) {
-					throw new PermissionInvalidException(userMessages.getString("USER_DOES_NOT_HAVE_PERMISSION"));
-				}
-
-				String featureString = (String) request.getParameter("data");
-				AlertDTO alertDTORequest = null;
-
-				// Parse alert
-				try {
-					alertDTORequest = new Gson().fromJson(featureString,AlertDTO.class);
-					alertDTORequest.setDateFromEventDateStr();
-				} catch (Exception x) {
-					log.debug("Error parsing the the alert", x);
-					throw new DataInvalidException();
-				}
-
-				// Update
-				try {
-
-					alertService.updateAlertFromDTO(currentUser, alertDTORequest);
-					
-					// Response
-					gpr.setSuccess(true);
-					jsonRes = new Gson().toJson(gpr);
-					ServletUtils.writeAndFlush(log, w, jsonRes);
-
-				} catch (Exception x) {
-					log.debug("Error updating the alert", x);
-					throw x;
-				}
-			/*
-			 * CHANGE STATUS
-			 */
-			} else if ("changeStatus".equalsIgnoreCase(oper)){
-				// Response
-				GeoportalResponse gpr = new GeoportalResponse();
-				
-				// Check that the user has the permission
-				if (!LoginService.hasPermission(currentUser,Permissions.ALERTS_CHANGE_STATUS)) {
-					throw new PermissionInvalidException(userMessages.getString("USER_DOES_NOT_HAVE_PERMISSION"));
-				}
-				
-				//Change status
-				String newStatus = request.getParameter("status");
-				String alertIdsString = request.getParameter("alertIds");
-				String note = request.getParameter("note");
-				
-				List<Integer> alertIds = null;
-				// Parse alert
-				try {
-					
-					Type collectionType = new TypeToken<List<Integer>>() {}.getType();
-					alertIds = new Gson().fromJson(alertIdsString,collectionType);
-				} catch (Exception x) {
-					log.debug("Error parsing the alert ids", x);
-					throw new DataInvalidException();
-				}
-				
-				try {
-					alertService.changeAlertStatus(currentUser, alertIds, newStatus, note);
-					
-					// Response
-					gpr.setSuccess(true);
-					jsonRes = new Gson().toJson(gpr);
-					log.debug("Alert Servlet response: UPDATE: feature saved. Response "+ jsonRes);
-					ServletUtils.writeAndFlush(log, w, jsonRes);
-					
-				} catch (Exception x) {
-					log.debug("Error in changing the alert status", x);
-					throw x;
-				}
-				
-			} else {
-				log.debug("Alert Servlet Wrong OPER param");
-				throw new DataInvalidException();
-
-			}
-
-		} catch (DataInvalidException de) {
-			if (de.getMessage() != null) {jsonRes = GeoportalResponse.createErrorResponse(de.getMessage());
-			} else {
-				jsonRes = GeoportalResponse.createErrorResponse(userMessages.getString("MISSING_PARAMETERS"));
-			}
-			ServletUtils.writeAndFlush(log, w, jsonRes);
-
-		} catch (PermissionInvalidException pei) {
-			log.debug("Permission invalid exception", pei);
-			jsonRes = GeoportalResponse.createErrorResponse(userMessages.getString("USER_DOES_NOT_HAVE_PERMISSION"));
-			ServletUtils.writeAndFlush(log, w, jsonRes);
-		} catch (OperationInvalidException oie) {
-			try {
-				String realMess = MessageFormat.format(userMessages.getString(oie.getExceptionCode()), (Object[])oie.getArgs());
-				log.debug("OperationInvalidException", oie);
-				jsonRes = GeoportalResponse.createErrorResponse(realMess, oie.getExceptionCode(), oie.getDetailException());
-			} catch (Exception x) {
-				jsonRes = GeoportalResponse.createErrorResponse(userMessages.getString("GENERIC_ERROR"));
-			}
-			ServletUtils.writeAndFlush(log, w, jsonRes);
-		} catch (Exception x) {
-			log.debug("Generic exception", x);
-			jsonRes = GeoportalResponse.createErrorResponse(userMessages.getString("GENERIC_ERROR"));
-			ServletUtils.writeAndFlush(log, w, jsonRes);
-		}
-	}
+    /**
+     * Returns a short description of the servlet.
+     *
+     * @return a String containing servlet description
+     */
+    @Override
+    public String getServletInfo() {
+        return "Short description";
+    }// </editor-fold>
 
 }

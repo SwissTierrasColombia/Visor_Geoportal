@@ -300,7 +300,7 @@ var featureInfoResults = {
                 console.log("attrMapping:", attrMapping);
                 console.log("feature.attributes:", attributes);
             }
-            var output = Mustache.render(attrMapping.template, attributes);
+            var output = Mustache.render(unescape(attrMapping.template), attributes);
             featBody.html(output);
         } else {
 
