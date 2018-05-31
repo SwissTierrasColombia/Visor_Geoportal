@@ -217,7 +217,7 @@
                     textarea.fadeOut(function () {
                         var span = jQuery('<span>', {
                             className: 'response',
-                            html: Gracias por sus comentarios.
+                            html: "Gracias por sus comentarios."
                         })
                                 .hide()
                                 .appendTo(feedback.find('.section'))
