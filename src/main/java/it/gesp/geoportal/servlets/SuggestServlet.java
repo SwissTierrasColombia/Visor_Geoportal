@@ -51,8 +51,8 @@ public class SuggestServlet extends HttpServlet {
 
                 System.out.println("Sending email...");
 
-                final String username = "agenciaimplementacion@gmail.com";
-                final String password = "IncigeSas2018";
+                final String username = "";
+                final String password = "";
 
                 Properties props = new Properties();
                 props.put("mail.smtp.starttls.enable", "true");
@@ -71,9 +71,9 @@ public class SuggestServlet extends HttpServlet {
 
                     Message message = new MimeMessage(session);
                     message.setContent(message, "text/html; charset=utf-8");
-                    message.setFrom(new InternetAddress("lcano@appsglobals.com"));
+                    message.setFrom(new InternetAddress("agenciaimplementacion@gmail.com"));
                     message.setRecipients(Message.RecipientType.TO,
-                            InternetAddress.parse("felipecanol@gmail.com"));
+                            InternetAddress.parse("agenciaimplementacion@gmail.com"));
                     message.setSubject("Sugerencia Geoportal");
                     message.setContent(this.getMessage(name, email, msg), "text/html; charset=utf-8");
 
