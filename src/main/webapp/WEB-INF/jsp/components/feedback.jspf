@@ -152,7 +152,7 @@
         var submitURL = '/geoportal/SuggestServlet';
         // Caching the feedback object:	
         var feedback = jQuery('#feedback');
-        jQuery('#feedback h6').click(function () {
+        jQuery('#feedback h6').on("click",function () {
 
             // We are storing the values of the animated
             // properties in a separate object:

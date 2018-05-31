@@ -69,7 +69,7 @@ LayerMenuUtils.buildLayerMenuItemForWMSMulti = function (title, deleteBtn, zoomT
     var item = $("<li>").attr({"class": "layerMenuItem"}).append(
             $("<div>").attr("class", "item-text word-wrap").text(title),
             $("<div>").attr("class", "menu-actions").append(
-            $("<div>").append(deleteButton, LayerMenuUtils.buildZoomToLayerButton(zoomToClickedFn), LayerMenuUtils.buildLayerMenuItemForDownload(downloadClickFn)),
+                $("<div>").append(deleteButton, LayerMenuUtils.buildZoomToLayerButton(zoomToClickedFn), LayerMenuUtils.buildLayerMenuItemForDownload(downloadClickFn)),
             ),
             LayerMenuUtils.buildToggleLegendImgBtn(true)
             );
