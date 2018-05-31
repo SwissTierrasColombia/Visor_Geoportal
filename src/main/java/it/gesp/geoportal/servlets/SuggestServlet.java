@@ -51,13 +51,13 @@ public class SuggestServlet extends HttpServlet {
 
                 System.out.println("Sending email...");
 
-                final String username = "lcano@appsglobals.com";
-                final String password = "xxxxxx";
+                final String username = "agenciaimplementacion@gmail.com";
+                final String password = "IncigeSas2018";
 
                 Properties props = new Properties();
                 props.put("mail.smtp.starttls.enable", "true");
                 props.put("mail.smtp.auth", "true");
-                props.put("mail.smtp.host", "sub4.mail.dreamhost.com");
+                props.put("mail.smtp.host", "smtp.gmail.com");
                 props.put("mail.smtp.port", "587");
 
                 try {
@@ -74,16 +74,20 @@ public class SuggestServlet extends HttpServlet {
                     message.setFrom(new InternetAddress("lcano@appsglobals.com"));
                     message.setRecipients(Message.RecipientType.TO,
                             InternetAddress.parse("felipecanol@gmail.com"));
-                    message.setSubject("Testing Subject");
+                    message.setSubject("Sugerencia Geoportal");
                     message.setContent(this.getMessage(name, email, msg), "text/html; charset=utf-8");
 
                     Transport.send(message);
 
                     System.out.println("Done");
-                    resp += "\"status\" : \"success\"";
+                    resp += "\"status\" : \"success\",";
+                    resp += "\"data\" : \"Gracias por sus comentarios.\"";
 
                 } catch (MessagingException e) {
-                    System.out.println("ERROR !!!" + e.getMessage());
+                    System.out.println("1 ERROR !!! " + e.getMessage());
+                    resp += "\"status\" : \"error\",\"message\" : \"" + e.getMessage() + "\"";
+                }catch (Exception e) {
+                    System.out.println("2 ERROR !!! " + e.getMessage());
                     resp += "\"status\" : \"error\",\"message\" : \"" + e.getMessage() + "\"";
                 }
             } else {
@@ -106,7 +110,7 @@ public class SuggestServlet extends HttpServlet {
             resp += "}";
             out.println(resp);
         } catch (Exception e) {
-            System.out.println("ERROR !!!" + e.getMessage());
+            System.out.println("3 ERROR !!! " + e.getMessage());
         }
 
     }

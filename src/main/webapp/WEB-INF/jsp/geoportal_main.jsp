@@ -552,11 +552,11 @@
                             <% } //ENDSIMPLEPANEL ALERTS_READ %>
 
 
-                            <div id="gis_information_popup" class="custom-hidden" style="display: none;"></div>
+                            <!--div id="gis_information_popup" class="custom-hidden" style="display: none;"></div>
 
                             <div id="gis_layer_information_popup"></div>
 
-                            <div id="gis-map-overview" class="custom-hidden"></div>
+                            <div id="gis-map-overview" class="custom-hidden"></div-->
 
                         </div>
                         <div id="footer">
