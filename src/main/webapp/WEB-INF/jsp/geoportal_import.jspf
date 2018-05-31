@@ -280,6 +280,9 @@
 <script type="text/javascript" src="scripts/kmlUploader/kmlupload.js"></script>
 <script type="text/javascript" src="scripts/kmlUploader/KmlUploader.js"></script>
 
+<!--  JSON Upload functions -->
+<script type="text/javascript" src="scripts/geoJSONUploader/geoJSONUploader.js"></script>
+
 <!-- Catalog functions  -->
 <script type="text/javascript" src="scripts/catalog/catalogCsw.js"></script>
 
