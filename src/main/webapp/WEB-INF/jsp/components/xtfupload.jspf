@@ -40,8 +40,8 @@
     }
 </style>
 <script>
-    var XTF_UPLOAD_URL = "http://web.intranet:8883/ilivalidator/v1/ili2geojson";
-    var XTF_DOWNLOAD_URL = "http://web.intranet:8883/ilivalidator/v1/download";
+    var XTF_UPLOAD_URL = "<%= ConfigUtils.get("xtf.base.url").toString() %>ili2geojson";
+    var XTF_DOWNLOAD_URL = "<%= ConfigUtils.get("xtf.base.url").toString() %>download";
     function dropHandler(files) {
         var hasValidFiles = false;
 
