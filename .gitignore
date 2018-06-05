@@ -7,3 +7,5 @@ nb-configuration.xml
 nbactions.xml
 src/main/webapp/META-INF/context.xml
 .DS_Store
+src/main/resources/geoportal.properties
+

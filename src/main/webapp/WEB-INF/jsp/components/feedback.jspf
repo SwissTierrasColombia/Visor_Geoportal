@@ -137,9 +137,9 @@
 
         <!-- The arrow span is floated to the right -->
         <h6><span class="arrow up"></span>Sugerencias</h6>
-        <div style="margin-bottom: 5px;"><div style="width: 55px;float:left;color: white;">Nombre:</div><div><input name="name" style="width: 154px;" type="text"/></div></div>
-        <div style="margin-bottom: 5px;"><div style="width: 55px;float:left;color: white;">Email:</div><div><input name="email" style="width: 154px;" type="email"/></div></div>
-        <textarea></textarea>
+        <div class="c" style="margin-bottom: 5px;"><div style="width: 55px;float:left;color: white;">Nombre:</div><div><input name="name" style="width: 154px;" type="text"/></div></div>
+        <div class="c" style="margin-bottom: 5px;"><div style="width: 55px;float:left;color: white;">Email:</div><div><input name="email" style="width: 154px;" type="email"/></div></div>
+        <textarea class=""></textarea>
         <a class="submit" href="#">Submit</a>
     </div>
 </div>
@@ -152,7 +152,9 @@
         var submitURL = '/geoportal/SuggestServlet';
         // Caching the feedback object:	
         var feedback = jQuery('#feedback');
-        jQuery('#feedback h6').on("click",function () {
+        jQuery('#feedback h6').on("click", function () {
+            
+            
 
             // We are storing the values of the animated
             // properties in a separate object:
@@ -167,6 +169,14 @@
                     mb: -270,
                     pt: 0
                 };
+                setTimeout(function () {
+                    feedback.find('input[name="name"]').val('');
+                    feedback.find('input[name="email"]').val('');
+                    jQuery('#feedback .c').show();
+                    jQuery('#feedback .submit').text('Send').show();
+                    feedback.find('textarea').empty().show();
+                    feedback.find('.msg').remove();
+                }, 1000);
             }
 
             // The first animation moves the form up or down, and the second one 
@@ -178,13 +188,15 @@
             });
         });
         jQuery('#feedback a.submit').on('click', function () {
-
+            
             var button = jQuery(this);
             var name = feedback.find('input[name="name"]');
             var email = feedback.find('input[name="email"]');
             var textarea = feedback.find('textarea');
             // We use the working class not only for styling the submit button,
             // but also as kind of a "lock" to prevent multiple submissions.
+            
+            button.text('Sending...');
 
             if (button.hasClass('working') || textarea.val().length < 5) {
                 return false;
@@ -210,19 +222,20 @@
 
                     // Hiding the button and the textarea, after which
                     // we are showing the received response from submit.php
-
+                    button.removeClass('working');
                     button.fadeOut();
-                    name.fadeOut();
-                    email.fadeOut();
+                    jQuery('#feedback .c').fadeOut();
                     textarea.fadeOut(function () {
                         var span = jQuery('<span>', {
                             className: 'response',
-                            html: "Gracias por sus comentarios."
+                            html: "<span class='msg' style='color:white'>Gracias por sus comentarios.</span>"
                         })
                                 .hide()
                                 .appendTo(feedback.find('.section'))
                                 .show();
-                        setTimeout(function(){ jQuery('#feedback h6').click(); }, 3000);
+                        setTimeout(function () {
+                            jQuery('#feedback h6').click();
+                        }, 2000);
                     }).val('');
                 }
             });

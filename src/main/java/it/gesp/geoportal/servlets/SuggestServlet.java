@@ -5,6 +5,7 @@
  */
 package it.gesp.geoportal.servlets;
 
+import it.gesp.geoportal.utils.ConfigUtils;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Properties;
@@ -51,14 +52,14 @@ public class SuggestServlet extends HttpServlet {
 
                 System.out.println("Sending email...");
 
-                final String username = "";
-                final String password = "";
+                final String username = ConfigUtils.get("mail.smtp.user").toString();
+                final String password = ConfigUtils.get("mail.smtp.password").toString();
 
                 Properties props = new Properties();
-                props.put("mail.smtp.starttls.enable", "true");
-                props.put("mail.smtp.auth", "true");
-                props.put("mail.smtp.host", "smtp.gmail.com");
-                props.put("mail.smtp.port", "587");
+                props.put("mail.smtp.starttls.enable", ConfigUtils.get("mail.smtp.starttls.enable").toString());
+                props.put("mail.smtp.auth", ConfigUtils.get("mail.smtp.auth").toString());
+                props.put("mail.smtp.host", ConfigUtils.get("mail.smtp.host").toString());
+                props.put("mail.smtp.port", ConfigUtils.get("mail.smtp.port").toString());
 
                 try {
 
@@ -71,9 +72,9 @@ public class SuggestServlet extends HttpServlet {
 
                     Message message = new MimeMessage(session);
                     message.setContent(message, "text/html; charset=utf-8");
-                    message.setFrom(new InternetAddress("agenciaimplementacion@gmail.com"));
+                    message.setFrom(new InternetAddress(ConfigUtils.get("mail.smtp.from").toString()));
                     message.setRecipients(Message.RecipientType.TO,
-                            InternetAddress.parse("agenciaimplementacion@gmail.com"));
+                            InternetAddress.parse(ConfigUtils.get("mail.smtp.to").toString()));
                     message.setSubject("Sugerencia Geoportal");
                     message.setContent(this.getMessage(name, email, msg), "text/html; charset=utf-8");
 
