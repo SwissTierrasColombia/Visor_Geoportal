@@ -24,22 +24,131 @@
     .dragMarkup{
         border: 5px dashed silver;
         width: 90%;
-        height: 90%;
-        margin: auto;
+        height: 75%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .result_detail{
+        padding: 20px;
+        height: 80%;
+        overflow: auto;
+    }
+
+    #result_detail_list{
+
     }
 </style>
 <script>
+    var XTF_UPLOAD_URL = "http://web.intranet:8883/ilivalidator/v1/ili2geojson";
+    var XTF_DOWNLOAD_URL = "http://web.intranet:8883/ilivalidator/v1/download";
     function dropHandler(files) {
-        for (var i = 0, file; file = files[i]; i++) {
-            console.log(file);
+        var hasValidFiles = false;
+
+        $("#dragFileContent").find("#result_detail_list").empty();
+
+        for (var i = 0, file; i < files.length; i++) {
+            var file = files[i];
+            if (file.name.endsWith(".xtf") || file.name.endsWith(".itf")) {
+                //has almost one valid file
+                hasValidFiles |= true;
+
+                var data = new FormData();
+                data.append('file[]', file);
+
+                //show filename
+                $("#dragFileContent").find(".dragMarkup > h3").text($("#dragFileContent").find(".dragMarkup > h3").text() + " - " + file.name);
+
+                //send file to ili2geojson service
+                jQuery.ajax({
+                    url: XTF_UPLOAD_URL,
+                    data: data,
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    useProxy: true,
+                    type: 'POST',
+                    context: file,
+                    success: function (data) {
+                        $("#dragFileContent").find(".dragMarkup").collapse('hide');
+                        $("#dragFileContent").find(".result_detail").collapse('show');
+
+                        //wait toggle collapse
+                        //wait(300);
+
+                        if (data && data.length > 0) {
+                            for (var i = 0; i < data.length; i++) {
+                                var proccessedFile = data[i];
+                                if (proccessedFile.datasets) {
+                                    for (var j = 0; j < proccessedFile.datasets.length; j++) {
+                                        var res = proccessedFile.datasets[j];
+                                        $("#dragFileContent").find("#result_detail_list").append(
+                                                '<a target="_blank" ' +
+                                                '       href="#"' +
+                                                //'       href="' + XTF_DOWNLOAD_URL + '/' + proccessedFile.result_id + '/' + res.key + '/geojson"'+
+                                                '       class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"' +
+                                                '       data-dataset-name="' + proccessedFile.result_id + '" data-json-id="' + res.key + '">' + this.name + " - " + res.key +
+                                                '   <span class="badge badge-primary badge-pill">' + res.count + '</span>' +
+                                                '</a>');
+                                    }
+                                }
+                            }
+                            $("#dragFileContent").find(".list-group-item").on('click', function () {
+                                var dataset = $(this).data('datasetName');
+                                var jsonId = $(this).data('jsonId');
+                                new JsonUploader().getFeaturesFromJSON(XTF_DOWNLOAD_URL + '/' + dataset + '/' + jsonId + '/geojson');
+                            });
+                        } else {
+                            $("#dragFileContent").find(".dragMarkup > h3").text("No data");
+                        }
+                    }
+                }).fail(function (jqXHR, textStatus, error) {
+                    if (Utils.isEmpty(error)) {
+                        error = LocaleManager.getKey("Ajax_General_Error");
+                    }
+                    AlertDialog.createOkDefaultDialog(LocaleManager.getKey("AlertDialog_Error_Title"), error, "error");
+                    $("#dragFileContent").hide();
+                });
+            }
+        }
+
+        if (!hasValidFiles) {
+            $("#dragFileContent").find(".dragMarkup > h3").text("No valid files found, only .xtf and .itf files allowed");
         }
     }
+
+    function wait(ms) {
+        var start = new Date().getTime();
+        var end = start;
+        while (end < start + ms) {
+            end = new Date().getTime();
+        }
+    }
+
     function dragOverHandler(event) {
-        $("#dragFileContent").show();
+        if ($("#dragFileContent:hidden").length > 0) {
+            $("#dragFileContent").show();
+        }
+
+        if ($("#dragFileContent").find(".dragMarkup:hidden").length > 0) {
+            $("#dragFileContent").find(".dragMarkup > h3").text("Upload files");
+            $("#dragFileContent").find(".dragMarkup").collapse('show');
+            $("#dragFileContent").find(".result_detail").collapse('hide');
+        }
+
     }
     function dragEndHandler(event) {
         $("#dragFileContent").hide();
     }
+
+    function resetXTFUploadDialog() {
+        $("#dragFileContent").hide();
+        $("#dragFileContent").find("#result_detail_list").empty();
+        $("#dragFileContent").find(".dragMarkup > h3").text("Upload files");
+        $("#dragFileContent").find(".dragMarkup").collapse('show');
+        $("#dragFileContent").find(".result_detail").collapse('hide');
+    }
+
     window.addEventListener("dragover", function (e) {
         e = e || event;
         e.preventDefault();
@@ -50,12 +159,27 @@
         e.stopPropagation();
         e.preventDefault();
         dropHandler(e.dataTransfer.files);
-    }, false);
+    }, false);</script>
 
-</script>
-
-<div id="dragFileContent" class="modal" ondragexit="dragEndHandler(event);" ondragleave="dragEndHandler(event);" >
+<div id="dragFileContent" class="modal"  ondragleave="dragEndHandler(event);" >
     <div class="dragDialog">
-        <div class="dragMarkup"></div>
+        <div class="x_title" style="margin: 10px;padding-top: 15px;">
+            <h2>XTF - GeoJSON</h2>
+            <ul class="nav navbar-right panel_toolbox">
+                <li class="pull-right">
+                    <a class="close-link" onclick="resetXTFUploadDialog()"><i class="fa fa-close"></i></a>
+                </li>
+            </ul>
+            <div class="clearfix"></div>
+        </div>
+
+        <div class="dragMarkup text-center collapse in" >
+            <h3 style="position: relative;top: 50%;color: rgba(0,0,0,0.4); width: 100%; white-space: normal !important; word-wrap: break-word;">Upload files</h3>
+        </div>
+
+        <div class="result_detail collapse">
+            <ul id="result_detail_list" class="list-group list-group-flush">
+            </ul>
+        </div>
     </div>
 </div>
