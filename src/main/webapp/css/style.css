@@ -342,3 +342,7 @@ div.olControlZoom a {
 #feature-grid-panel-toolbar{
     display: none;
 }
+
+#gis_information_message, .olControlOverviewMap{
+    display: none !important;
+}

@@ -33,7 +33,7 @@
 
     #feedback h6{
         /*background:url("images/feedback/feedback.png") no-repeat;*/
-        height:38px;
+        height:30px;
         margin:5px 0 12px;
         /*text-indent:-99999px;*/
         cursor:pointer;
@@ -44,14 +44,11 @@
         padding-right: 10px;
     }
 
-    #feedback textarea{
+    #feedback textarea, #feedback input{
         background-color:#fff;
         border:none;
         color:#666666;
         font:13px 'Lucida Sans',Arial,sans-serif;
-        height:100px;
-        padding:10px;
-        /*width:236px;*/
         resize:none;
         outline:none;
         overflow:auto;
@@ -59,6 +56,16 @@
         -moz-box-shadow:2px 2px 0 #292929;
         -webkit-box-shadow:2px 2px 0 #292929;
         box-shadow:2px 2px 0 #292929;
+    }
+
+    #feedback input{
+        height:20px;
+    }
+
+    #feedback textarea{
+        height:100px;
+        padding:10px;
+        /*width:236px;*/        
     }
 
     #feedback a.submit{
@@ -130,22 +137,24 @@
 
         <!-- The arrow span is floated to the right -->
         <h6><span class="arrow up"></span>Sugerencias</h6>
-        <textarea></textarea>
-        <a class="submit" href="">Submit</a>
+        <div class="c" style="margin-bottom: 5px;"><div style="width: 55px;float:left;color: white;">Nombre:</div><div><input name="name" style="width: 154px;" type="text"/></div></div>
+        <div class="c" style="margin-bottom: 5px;"><div style="width: 55px;float:left;color: white;">Email:</div><div><input name="email" style="width: 154px;" type="email"/></div></div>
+        <textarea class=""></textarea>
+        <a class="submit" href="#">Submit</a>
     </div>
 </div>
 
 <script>
-    $(document).ready(function () {
+    jQuery(document).ready(function () {
 
         // The relative URL of the submit.php script.
         // You will probably have to change	it.
-        var submitURL = 'submit.php';
-
+        var submitURL = '/geoportal/SuggestServlet';
         // Caching the feedback object:	
-        var feedback = $('#feedback');
-
-        $('#feedback h6').click(function () {
+        var feedback = jQuery('#feedback');
+        jQuery('#feedback h6').on("click", function () {
+            
+            
 
             // We are storing the values of the animated
             // properties in a separate object:
@@ -154,32 +163,40 @@
                 mb: 0, // Margin Bottom
                 pt: 25			// Padding Top
             };
-
-            var el = $(this).find('.arrow');
-
+            var el = jQuery(this).find('.arrow');
             if (el.hasClass('down')) {
                 anim = {
                     mb: -270,
                     pt: 0
                 };
+                setTimeout(function () {
+                    feedback.find('input[name="name"]').val('');
+                    feedback.find('input[name="email"]').val('');
+                    jQuery('#feedback .c').show();
+                    jQuery('#feedback .submit').text('Send').show();
+                    feedback.find('textarea').empty().show();
+                    feedback.find('.msg').remove();
+                }, 1000);
             }
 
             // The first animation moves the form up or down, and the second one 
             // moves the "Feedback heading" so it fits in the minimized version
 
             feedback.stop().animate({marginBottom: anim.mb});
-
             feedback.find('.section').stop().animate({paddingTop: anim.pt}, function () {
                 el.toggleClass('down up');
             });
         });
-
-        $('#feedback a.submit').on('click', function () {
-            var button = $(this);
+        jQuery('#feedback a.submit').on('click', function () {
+            
+            var button = jQuery(this);
+            var name = feedback.find('input[name="name"]');
+            var email = feedback.find('input[name="email"]');
             var textarea = feedback.find('textarea');
-
             // We use the working class not only for styling the submit button,
             // but also as kind of a "lock" to prevent multiple submissions.
+            
+            button.text('Sending...');
 
             if (button.hasClass('working') || textarea.val().length < 5) {
                 return false;
@@ -187,15 +204,17 @@
 
             // Locking the form and changing the button style:
             button.addClass('working');
-
-            $.ajax({
+            jQuery.ajax({
                 url: submitURL,
                 type: 'post',
-                data: {message: textarea.val()},
+                data: {
+                    message: textarea.val(),
+                    name: name.val(),
+                    email: email.val()
+                },
                 complete: function (xhr) {
 
                     var text = xhr.responseText;
-
                     // This will help users troubleshoot their form:
                     if (xhr.status == 404) {
                         text = 'Your path to submit.php is incorrect.';
@@ -203,21 +222,23 @@
 
                     // Hiding the button and the textarea, after which
                     // we are showing the received response from submit.php
-
+                    button.removeClass('working');
                     button.fadeOut();
-
+                    jQuery('#feedback .c').fadeOut();
                     textarea.fadeOut(function () {
-                        var span = $('<span>', {
+                        var span = jQuery('<span>', {
                             className: 'response',
-                            html: text
+                            html: "<span class='msg' style='color:white'>Gracias por sus comentarios.</span>"
                         })
                                 .hide()
                                 .appendTo(feedback.find('.section'))
                                 .show();
+                        setTimeout(function () {
+                            jQuery('#feedback h6').click();
+                        }, 2000);
                     }).val('');
                 }
             });
-
             return false;
         });
     });

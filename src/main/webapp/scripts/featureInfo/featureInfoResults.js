@@ -272,19 +272,19 @@ var featureInfoResults = {
         if (attrMapping !== null && attrMapping.hasOwnProperty("template")) {
             var attributes = feature.attributes;
             var bounds = null;
-            
-            if(feature.geometry && !feature.geometry.boudns){
+
+            if (feature.geometry && !feature.geometry.boudns) {
                 feature.geometry.calculateBounds();
             }
-            
+
             bounds = feature.geometry.bounds.toGeometry();
             //double call.... don't kwow why, first time should be done
             bounds.transform(new OpenLayers.Projection(feature.forcedEpsg), new OpenLayers.Projection(map.getProjection()));
             bounds = bounds.transform(new OpenLayers.Projection(feature.forcedEpsg), new OpenLayers.Projection(map.getProjection()));
-            if(!bounds.boudns){
+            if (!bounds.boudns) {
                 bounds.calculateBounds();
             }
-            
+
             if (attrMapping.hasOwnProperty("attributes")) {
                 $.extend(attributes, attrMapping.attributes, {
                     geom: {
@@ -295,7 +295,7 @@ var featureInfoResults = {
                     }
                 });
             }
-            attributes["fid"]= this.getGidFromFid(feature.fid);           
+            attributes["fid"] = this.getGidFromFid(feature.fid);
             if (attrMapping.hasOwnProperty("log") && attrMapping.log == true) {
                 console.log("attrMapping:", attrMapping);
                 console.log("feature.attributes:", attributes);
@@ -323,9 +323,9 @@ var featureInfoResults = {
                     return false;
                 }
             });
-
+            
+            var tableInfo = $("<table>").attr({"class": "info-table"});
             $.each(feature.attributes, function (key, value) {
-
                 /*
                  * Skip the "hyperlink" field, as it is rendered 
                  * in a different DIV 
@@ -334,17 +334,19 @@ var featureInfoResults = {
                     return true;
                 }
 
-                var rowInfo = $("<div>").attr({"class": "info-row"});
-                var iconRow = $("<div>").attr({"class": "info-icon-row"}).append(
+
+                var rowInfo = $("<tr>").attr({"class": "info-row"});
+                /*var iconRow = $("<div>").attr({"class": "info-icon-row"}).append(
                         $("<i>").attr({"class": "fa fa-circle"})
-                        );
+                        );*/
 
-                var field = $("<div>").attr({"class": "info-left"}).text(key);
-                var valueField = $("<div>").attr({"class": "info-right word-wrap"}).text(value);
+                var field = $("<td>").attr({"class": "info-left"}).text(key.replace(/_/gi, " ").toUpperCase());
+                var valueField = $("<td>").attr({"class": "info-right word-wrap"}).text(value);
 
-                rowInfo.append(iconRow, field, valueField);
-                featBody.append(rowInfo);
+                rowInfo.append(field, valueField);
+                tableInfo.append(rowInfo);
             });
+            featBody.append(tableInfo);
 
         }
 
@@ -366,7 +368,7 @@ var featureInfoResults = {
             //Clone the feature
             var clonedFeature = feature.clone();
             clonedFeature.forcedEpsg = feature.forcedEpsg;
-            
+
             this.vLayer.removeAllFeatures();
             this.vLayer.addFeatures(clonedFeature);
 
