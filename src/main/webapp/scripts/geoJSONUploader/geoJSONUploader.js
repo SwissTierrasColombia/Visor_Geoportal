@@ -1,4 +1,4 @@
-/* global map */
+/* global map, LocaleManager, Utils, AlertDialog */
 
 var JsonUploader = function () {
 

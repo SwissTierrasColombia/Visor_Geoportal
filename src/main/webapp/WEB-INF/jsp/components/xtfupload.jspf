@@ -42,7 +42,34 @@
 <script>
     var XTF_UPLOAD_URL = "http://web.intranet:8883/ilivalidator/v1/ili2geojson";
     var XTF_DOWNLOAD_URL = "http://web.intranet:8883/ilivalidator/v1/download";
+
+
+    var xtfUploadIdleTime = 0;
+    var xtfUploadIdleLimit = 2;
+    var xtfUploadIdleInterval;
+
+    function xtfUploadStartInterval() {
+        if (!xtfUploadIdleInterval) {
+            xtfUploadIdleInterval = setInterval("xtfUploadTimerIncrement()", 100);
+        }
+    }
+
+    function xtfUploadClearInterval() {
+        clearInterval(xtfUploadIdleInterval);
+        xtfUploadIdleInterval = null;
+        xtfUploadIdleTime = 0;
+    }
+
+    function xtfUploadTimerIncrement() {
+        xtfUploadIdleTime = xtfUploadIdleTime + 1;
+        if (xtfUploadIdleTime >= xtfUploadIdleLimit) {
+            xtfUploadClearInterval();
+            $("#dragFileContent").hide();
+        }
+    }
+
     function dropHandler(files) {
+        xtfUploadClearInterval();
         var hasValidFiles = false;
 
         $("#dragFileContent").find("#result_detail_list").empty();
@@ -83,7 +110,7 @@
                                     for (var j = 0; j < proccessedFile.datasets.length; j++) {
                                         var res = proccessedFile.datasets[j];
                                         $("#dragFileContent").find("#result_detail_list").append(
-                                                '<a target="_blank" ' +
+                                                '<a ' +
                                                 '       href="#"' +
                                                 //'       href="' + XTF_DOWNLOAD_URL + '/' + proccessedFile.result_id + '/' + res.key + '/geojson"'+
                                                 '       class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"' +
@@ -126,6 +153,7 @@
     }
 
     function dragOverHandler(event) {
+        xtfUploadClearInterval();
         if ($("#dragFileContent:hidden").length > 0) {
             $("#dragFileContent").show();
         }
@@ -138,7 +166,8 @@
 
     }
     function dragEndHandler(event) {
-        $("#dragFileContent").hide();
+        //$("#dragFileContent").hide();
+        xtfUploadStartInterval();
     }
 
     function resetXTFUploadDialog() {
@@ -152,14 +181,19 @@
     window.addEventListener("dragover", function (e) {
         e = e || event;
         e.preventDefault();
-        dragOverHandler(e);
+        if (e.dataTransfer && e.dataTransfer.types && e.dataTransfer.types.indexOf("Files") !== -1) {
+            dragOverHandler(e);
+        }
     }, false);
     window.addEventListener("drop", function (e) {
         e = e || event;
         e.stopPropagation();
         e.preventDefault();
-        dropHandler(e.dataTransfer.files);
-    }, false);</script>
+        if (e.dataTransfer && e.dataTransfer.types && e.dataTransfer.types.indexOf("Files") !== -1) {
+            dropHandler(e.dataTransfer.files);
+        }
+    }, false);
+</script>
 
 <div id="dragFileContent" class="modal"  ondragleave="dragEndHandler(event);" >
     <div class="dragDialog">
