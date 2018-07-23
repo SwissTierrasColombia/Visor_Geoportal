@@ -40,8 +40,8 @@
     }
 </style>
 <script>
-    var XTF_UPLOAD_URL = "<%= ConfigUtils.get("xtf.base.url").toString() %>ili2geojson";
-    var XTF_DOWNLOAD_URL = "<%= ConfigUtils.get("xtf.base.url").toString() %>download";
+    var XTF_UPLOAD_URL = "<%= ConfigUtils.get("xtf.base.url").toString()%>ili2geojson";
+    var XTF_DOWNLOAD_URL = "<%= ConfigUtils.get("xtf.base.url").toString()%>download";
 
     var xtfUploadIdleTime = 0;
     var xtfUploadIdleLimit = 2;
@@ -92,7 +92,8 @@
                     cache: false,
                     contentType: false,
                     processData: false,
-                    useProxy: true,
+                    useProxy: false,
+                    method: 'POST',
                     type: 'POST',
                     context: file,
                     success: function (data) {
@@ -122,7 +123,96 @@
                             $("#dragFileContent").find(".list-group-item").on('click', function () {
                                 var dataset = $(this).data('datasetName');
                                 var jsonId = $(this).data('jsonId');
-                                new JsonUploader().getFeaturesFromJSON(XTF_DOWNLOAD_URL + '/' + dataset + '/' + jsonId + '/geojson');
+                                //new JsonUploader().getFeaturesFromJSON(XTF_DOWNLOAD_URL + '/' + dataset + '/' + jsonId + '/geojson');
+
+                                var urlData = XTF_DOWNLOAD_URL + '/' + dataset + '/' + jsonId + '/geojson';
+                                
+                                /*
+                                var objectConfig = {
+                                    "id": 1001,
+                                    "url": urlData,
+                                    "source": "geojson",
+                                    "title": "Prueba",
+                                    "name": "prueba",
+                                    "group": "345",
+                                    "external": false,
+                                    "showInfoDialog": true,
+                                    "enabled": true
+                                };
+                                */
+                               
+                               
+                            /*
+                            var tmpConf = {
+                                    // "id": catalog._createNewId(),
+                                    "url": urlData,
+                                    "description": "description",
+                                    "responsible": "load",
+                                    "external": false,
+                                    "downloadable": false,
+                                    "showInfoDialog": false,
+                                    "attributeNameForInfo": "",
+                                    "referenceDate": "",
+                                    "groupName": "Load XTF",
+                                    "source": "geojson",
+                                    "title": "title",
+                                    "name": "name",
+                                    "position": 10,
+                                    "enabled": true,
+                                    "group": "layers"
+                                };    
+                            var lc = new LayerConfig(tmpConf);
+                            var loadLayerCallback = function(lc) {
+
+                                    // Adds the layer to the LayerConfigCatalog
+                                    catalog.addLayerToConfig(lc);
+
+                                    LoadLayersUtils.loadStdLayerInSelectedLayerTreeFromOutside(lc, function() {
+
+                                            var bounds = lc.getBounds();
+                                            if (!Utils.isNullOrUndefined(bounds)) {
+                                                    // If bounds is not null...
+                                                    zoomToExtent(bounds, true);
+                                            }
+                                    });
+                            };
+                            */
+                               
+                             
+                                var objectConfig = {
+                                    "id": "prueba",
+                                    "url": urlData,
+                                    "group": "345",
+                                    "description": "description",
+                                    "responsible": "load",
+                                    "external": false,
+                                    "downloadable": false,
+                                    "showInfoDialog": false,
+                                    "attributeNameForInfo": "",
+                                    "referenceDate": "",
+                                    "groupName": "Load XTF",
+                                    "source": "geojson",
+                                    "title": "title",
+                                    "name": "name",
+                                    "position": 10,
+                                    "enabled": true
+                                };
+
+                                //tree.createNewGroupInMenu("345", "Load XTF");
+                                var geojsonLayerConfig = new LayerConfig(objectConfig);
+                                // Adds the layer to the LayerConfigCatalog
+                                catalog.addLayerToConfig(geojsonLayerConfig);
+                                
+                                //var li = LoadLayersUtils.loadStdLayer(configService);
+                                LoadLayersUtils.loadStdLayerInSelectedLayerTreeFromOutside(geojsonLayerConfig);
+                                //LoadLayersUtils.loadStdLayerInSelectedLayerTreeFromOutside(configService);
+                                //LayerMenu.selectAndOpenLayerInMenu(li);
+                                //LayerMenu._addToSelectedLayerPanel(li);
+
+
+                                //var layer = new CreateLayer.createOLLayer(configService);
+                                //map.addLayer(layer);
+                                
                             });
                         } else {
                             $("#dragFileContent").find(".dragMarkup > h3").text("No data");

@@ -129,6 +129,12 @@ LoadLayersUtils.loadStdLayer = function(layerConfig) {
 	else if (layerConfig.getSource() == "wms_multi_layer") {
 		LayerMenu.addMultiLayerToMenu(layerConfig, olLayer, hasDelete);
 	}
+        
+        else if (layerConfig.getSource() == "geojson") {
+            hasLegend = false;
+            hasDelete = true;
+            li = LayerMenu.addToMenu(layerConfig, olLayer, enabled, hasDelete, hasLegend);
+	}
 
 	/*if (!Utils.isNullOrUndefined(onSuccessFunction)) {
 		onSuccessFunction();

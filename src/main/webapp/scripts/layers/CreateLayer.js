@@ -38,6 +38,9 @@ CreateLayer.createOLLayer = function (layerConfig) {
         case "osmbw":
             olLayer = CreateLayer.createOSMBWLayer(layerConfig);
             break;
+        case "geojson":
+            olLayer = CreateLayer.createGeoJSONLayer(layerConfig);
+            break;
     }
 
     return olLayer;
@@ -233,4 +236,19 @@ CreateLayer.createWMSMultiLayer = function (layerConfig) {
     }, olOptions);
 
     return wmsLayer;
+};
+
+CreateLayer.createGeoJSONLayer = function (layerConfig){
+    
+    var geoJSONLayer = new OpenLayers.Layer.Vector("GeoJSON", {
+            projection: "EPSG:3116",
+            strategies: [new OpenLayers.Strategy.Fixed()],
+            protocol: new OpenLayers.Protocol.HTTP({
+                url: layerConfig.getUrl(),
+                format: new OpenLayers.Format.GeoJSON()
+            })
+        });
+    
+    return geoJSONLayer;
+    
 };
