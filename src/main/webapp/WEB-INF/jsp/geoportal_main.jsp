@@ -18,9 +18,6 @@
         </style>
     </head>
     <body class="nav-justified footer_fixed" >
-        <!-- XTF UPLOAD -->
-        <%@ include file="components/xtfupload.jspf" %>
-        <!-- END XTF UPLOAD -->
         <div id="mainContainer" class="container body">
             <div class="main_container">
 
@@ -59,9 +56,8 @@
                                 <!-- PRINT TOOL -->
 
                                 <!-- DOWNLOAD XTF -->
-                                <%@ include file="components/xtfdownload.jspf" %>
+                                <%@ include file="components/xtf/menu.jspf" %>
                                 <!-- END DOWNLOAD XTF -->
-
 
                                 <div class="icon-container-all" style="margin-top: 59px">
                                     <div id="gis_gisBaseLayerBtn" data-locale_key="Base_Panel_SelectBaseMap" data-locale_ref="title" class="icon-menu icon-container icon-map ctrlButtons shadow1 localizedElement" onclick="baseMapLayerIcon.onclick();"></div>
@@ -583,5 +579,6 @@
                 Print_Configuration.printerHealthCheck();
             });
         </script>
+        <script>//var console={log:function(a){}, info:function(a){}}</script>
     </body>
 </html>

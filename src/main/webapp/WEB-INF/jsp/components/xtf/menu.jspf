@@ -1,0 +1,28 @@
+<%@page import="it.gesp.geoportal.utils.ConfigUtils"%>
+<%@page import="it.gesp.geoportal.locale.LocaleUtils, it.gesp.geoportal.services.LoginService,it.gesp.geoportal.constants.Permissions, it.gesp.geoportal.dao.entities.User, it.gesp.geoportal.services.SystemSettingService" %>
+
+<style>
+    <%@ include file="xtf.css" %>
+</style>
+
+<!-- Icon -->
+<div class="icon-container-all">
+    <div id="xtfdownload-btn" data-tool="xtfdownload" onclick="AdvancedPanel.toggleAdvancedTools($(this));" class="icon-xtf icon-menu-xtf icon-menu icon-container shadow1 localizedElement" data-locale_key="Base_Panel_Download_xtf" data-locale_ref="title"></div>
+    <div id="xtfdownload-panel" class="tools-panel-right custom-hidden">
+        <%@ include file="content.jspf" %>
+    </div>
+</div>
+
+<div id="dragFileContent" class="modal"  ondragleave="dragEndHandler(event);" ></div>
+
+<script>
+    var XTF_UPLOAD_URL = "<%= ConfigUtils.get("xtf.base.url").toString()%>ili2json";
+    var XTF_DOWNLOAD_URL = "<%= ConfigUtils.get("xtf.base.url").toString()%>download";
+    <%@ include file="XtfDatasetController.js" %>
+    <%@ include file="XtfFileController.js" %>
+    <%@ include file="XtfComponent.js" %>
+    <%@ include file="xtf.js" %>
+    jQuery(function ($) {
+        var xtfComponent = new $.XtfComponent($("#xtfComponent"));
+    });
+</script>

@@ -1,0 +1,197 @@
+.px-5{
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.py-5{
+    padding-top: 10px;
+    padding-botom: 10px;
+}
+.w100{
+    width: 100%;
+}
+
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 5000; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+.dragDialog{
+    background: white;
+    width: 60%;
+    height: 60%;
+    margin: auto;
+    margin-top: 15vh;
+}
+
+
+
+.result_detail{
+    padding: 20px;
+    overflow: auto;
+}
+
+#result_detail_list{
+
+}
+
+
+.background-blink {
+    color: #ffffff;
+    -webkit-animation: background-blink 4s infinite;  /* Safari 4+ */
+    -moz-animation: background-blink 4s infinite;  /* Fx 5+ */
+    -o-animation: background-blink 4s infinite;  /* Opera 12+ */
+    animation: background-blink 4s infinite;  /* IE 10+, Fx 29+ */
+
+}
+
+@-webkit-keyframes background-blink {
+    0% {
+        color: #ffffff;
+    }
+    40%, 60% {
+        color: #dcf7dc;
+    }
+    100% {
+        color: #ffffff;
+    }
+}
+
+.jstree-container-ul i.icon-xtf{
+    font-size: 24px;
+}
+
+.xtf-container{
+    min-width: 300px;
+}
+
+/* PANEL */
+.tab-pane{
+    max-height: 260px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}    
+
+/* XTF DRAG MARKUP */
+
+.drag-markup-text{
+    height: 100px; 
+    line-height: 143px; 
+    position: relative;
+    color: rgba(0,0,0,0.4); 
+    width: 100%; 
+    white-space: normal !important; 
+    word-wrap: break-word;
+}
+
+.drag-markup{
+    display: block;
+    position: absolute;
+    background: #ffffffed;
+    border: 5px dashed silver;
+    height: 175px;
+    cursor: pointer;
+    width: 360px;
+    top: 84px;
+    left: 12px;
+}
+
+/* XTF TABLE */
+.xtf-file-name{
+    white-space: nowrap; 
+    overflow: hidden; 
+    text-overflow: ellipsis;
+    display: block;
+    width: 340px;
+    float: left; 
+    margin-top: 1px;
+}
+
+.xtf-file-status{
+    font-size: 10px;
+}
+
+.xtftable{
+    width: 350px;
+}
+
+.xtftable tbody tr td, .xtftable thead tr th{
+    width: 50px;
+    text-align: center;
+}
+
+.xtftable tbody tr td:first-child, .xtftable thead tr th:first-child{
+    width: 300px;
+    text-align: left;
+}
+
+.xtftable tfoot tr th{
+    width: 50px;
+    text-align: center;
+}
+
+#input_uploadxtf{
+    margin-left: 115px;
+}
+
+.xtfcdownload{
+    overflow: hidden;
+}
+.xtfchead{}
+.xtfcbody{
+    height: 180px;
+    border: 1px solid silver;
+    overflow: auto;
+}
+.xtfcfoot{
+    height: 100px;
+    margin-top: 22px;
+}
+.xtfcupload{
+    height: 260px;
+    overflow: hidden;
+}
+
+.xtf-file-title{
+    font-weight: bold;
+    margin-bottom: 0px !important;
+    height: 23px;
+}
+
+.xtf-file-name{
+    display: block;
+    padding-top: 4px;
+    width: 250px;
+    font-size: 12px;
+}
+
+.xtf-table-layers{
+    list-style: none;
+}
+
+.xtf-table-layers tr td{
+    text-align: left !important;
+    padding: 5px;
+    border: 1px solid silver;
+}
+
+.xtf-layer-icon{
+    width: 30px !important;
+    float: left;
+}
+
+.xtf-file-icon{
+    font-size: 25px;
+    float: left;
+}
+
+#input_uploadxtf{
+    display: none;
+}
