@@ -749,7 +749,7 @@ LayerMenu.getLayerLIFromMenu = function (urlToSearch, nameToSearch) {
 LayerMenu.zoomToLayer = function (id, title) {
     var layerConfig = catalog.getLayerConfigById(id);
     
-    console.log(layerConfig);
+    console.log("LayerMenu.zoomToLayer.layerConfig",layerConfig);
 
     var layerName = null;
     if (layerConfig.getSource() === "wms_multi_layer") {
@@ -764,7 +764,7 @@ LayerMenu.zoomToLayer = function (id, title) {
 
     var bbox = layerConfig.getBbox(layerName);
     
-    console.log(bbox);
+    console.log("BBOX", layerConfig, bbox);
 
     if (layerConfig.getSource() === "kml") {
         //Zoom to the bounding box...

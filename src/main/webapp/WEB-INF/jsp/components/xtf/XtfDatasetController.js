@@ -31,43 +31,39 @@
 
     $.XtfDatasetController.prototype = {
         OnClick: function () {
-            var dataset = this.datasetName;
-            var jsonId = this.odata.key;
-            var urlData = XTF_DOWNLOAD_URL + '/' + dataset + '/' + jsonId + '/json';
-            try {
-                var objectConfig = {
-                    "id": "prueba",
-                    "url": urlData,
-                    "group": "345",
-                    "description": "description",
-                    "responsible": "load",
-                    "external": false,
-                    "downloadable": false,
-                    "showInfoDialog": false,
-                    "attributeNameForInfo": "",
-                    "referenceDate": "",
-                    "groupName": "Load XTF",
-                    "source": "geojson",
-                    "title": jsonId.replace(".json", ""),
-                    "name": "name",
-                    "position": 10,
-                    "enabled": true,
-                    "getBbox": function (layerName) {
-                        console.log(this.getLayerConfigById);
-                        return {
-                            "minx": 0,
-                            "miny": 0,
-                            "maxx": 0,
-                            "maxy": 0
-                        };
-                    }
-                };
-                var geojsonLayerConfig = new LayerConfig(objectConfig);
-                // Adds the layer to the LayerConfigCatalog
-                catalog.addLayerToConfig(geojsonLayerConfig);
-                LoadLayersUtils.loadStdLayerInSelectedLayerTreeFromOutside(geojsonLayerConfig);
-            } catch (e) {
-                console.error(e);
+            if (this.type === "spatial") {
+                var dataset = this.datasetName;
+                var jsonId = this.odata.key;
+                var urlData = XTF_DOWNLOAD_URL + '/' + dataset + '/' + jsonId + '/json';
+                try {
+                    var objectConfig = {
+                        "id": "prueba",
+                        "url": urlData,
+                        "group": "345",
+                        "description": "description",
+                        "responsible": "load",
+                        "external": false,
+                        "downloadable": false,
+                        "showInfoDialog": false,
+                        "attributeNameForInfo": "",
+                        "referenceDate": "",
+                        "groupName": "Load XTF",
+                        "source": "geojson",
+                        "title": jsonId.replace(".json", ""),
+                        "name": "name",
+                        "position": 10,
+                        "enabled": true
+                    };
+                    var geojsonLayerConfig = new LayerConfig(objectConfig);
+                    console.log("geojsonLayerConfig", geojsonLayerConfig);
+                    // Adds the layer to the LayerConfigCatalog
+                    catalog.addLayerToConfig(geojsonLayerConfig);
+                    LoadLayersUtils.loadStdLayerInSelectedLayerTreeFromOutside(geojsonLayerConfig);
+                } catch (e) {
+                    console.error(e);
+                }
+            } else {
+                console.log("Datos");
             }
         }
     };

@@ -68,6 +68,7 @@
                 var file = files[i];
                 new $.XtfFileController(this.xtfBodyTable, file);
             }
+            this.xtfInput.val('');
         }
     };
 }(jQuery));

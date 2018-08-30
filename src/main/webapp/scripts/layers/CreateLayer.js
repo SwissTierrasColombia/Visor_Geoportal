@@ -214,6 +214,7 @@ CreateLayer.createWMSLayer = function (layerConfig) {
     }
 
     var wmsLayer = new OpenLayers.Layer.WMS(layerConfig.getTitle(), url, WMS_PARAMS, olOptions);
+    console.log("wmsLayer", wmsLayer);
     return wmsLayer;
 };
 
@@ -238,17 +239,33 @@ CreateLayer.createWMSMultiLayer = function (layerConfig) {
     return wmsLayer;
 };
 
-CreateLayer.createGeoJSONLayer = function (layerConfig){
-    
+CreateLayer.createGeoJSONLayer = function (layerConfig) {
+
+    $.ajax({url: layerConfig.getUrl(), dataType: "json", async: false}).done(function (data) {
+        console.log("GeoJSON:", data);
+        var bbox = turf.bbox(data);
+        data['bbox'] = bbox;
+        console.log("data:", data);
+    });
+    /*
+     $.getJSON("Points.json", function (json) {
+     var bbox = turf.bbox(json);
+     console.log("Points: " + bbox)
+     
+     //Sirve para obtener un polygono en formato geojson si se quiere dibujar
+     var bboxPolygon = turf.bboxPolygon(bbox);
+     console.log(bboxPolygon);
+     });
+     */
     var geoJSONLayer = new OpenLayers.Layer.Vector("GeoJSON", {
-            projection: "EPSG:3116",
-            strategies: [new OpenLayers.Strategy.Fixed()],
-            protocol: new OpenLayers.Protocol.HTTP({
-                url: layerConfig.getUrl(),
-                format: new OpenLayers.Format.GeoJSON()
-            })
-        });
-    
+        projection: "EPSG:3116",
+        strategies: [new OpenLayers.Strategy.Fixed()],
+        protocol: new OpenLayers.Protocol.HTTP({
+            url: layerConfig.getUrl(),
+            format: new OpenLayers.Format.GeoJSON()
+        })
+    });
+    console.log("LAYER", geoJSONLayer);
     return geoJSONLayer;
-    
+
 };
