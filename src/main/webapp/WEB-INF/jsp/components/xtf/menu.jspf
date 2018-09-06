@@ -21,7 +21,6 @@
     <%@ include file="XtfDatasetController.js" %>
     <%@ include file="XtfFileController.js" %>
     <%@ include file="XtfComponent.js" %>
-    <%@ include file="xtf.js" %>
     jQuery(function ($) {
         var xtfComponent = new $.XtfComponent($("#xtfComponent"));
     });
