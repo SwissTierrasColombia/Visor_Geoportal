@@ -214,7 +214,6 @@ CreateLayer.createWMSLayer = function (layerConfig) {
     }
 
     var wmsLayer = new OpenLayers.Layer.WMS(layerConfig.getTitle(), url, WMS_PARAMS, olOptions);
-    console.log("wmsLayer", wmsLayer);
     return wmsLayer;
 };
 
@@ -242,10 +241,8 @@ CreateLayer.createWMSMultiLayer = function (layerConfig) {
 CreateLayer.createGeoJSONLayer = function (layerConfig) {
 
     $.ajax({url: layerConfig.getUrl(), dataType: "json", async: false}).done(function (data) {
-        console.log("GeoJSON:", data);
         var bbox = turf.bbox(data);
         data['bbox'] = bbox;
-        console.log("data:", data);
     });
     /*
      $.getJSON("Points.json", function (json) {
@@ -265,7 +262,6 @@ CreateLayer.createGeoJSONLayer = function (layerConfig) {
             format: new OpenLayers.Format.GeoJSON()
         })
     });
-    console.log("LAYER", geoJSONLayer);
     return geoJSONLayer;
 
 };
