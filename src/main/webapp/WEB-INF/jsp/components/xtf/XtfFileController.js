@@ -69,7 +69,7 @@
                                 }
                                 if (proccessedFile.alphanumeric_datasets) {
                                     for (var j = 0; j < proccessedFile.alphanumeric_datasets.length; j++) {
-                                        this.nodes['a' + i + 'e' + j] = new $.XtfDatasetController(this.aldata, proccessedFile.alphanumeric_datasets[j], "alphanumeric", proccessedFile.transfer.substring(0, proccessedFile.transfer.length - 4), 'a' + i + 'e' + j);
+                                        this.nodes['a' + i + 'e' + j] = new $.XtfDatasetController(this.aldata, proccessedFile.alphanumeric_datasets[j], "alphanumeric", proccessedFile.transfer.substring(0, proccessedFile.transfer.length - 4), 'a' + i + 'e' + j, proccessedFile.result_id);
                                     }
                                 }
                             }

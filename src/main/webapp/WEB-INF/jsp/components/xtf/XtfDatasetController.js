@@ -31,10 +31,11 @@
 
     $.XtfDatasetController.prototype = {
         OnClick: function () {
+            var dataset = this.datasetName;
+            var jsonId = this.odata.key;
+            var urlData = XTF_DOWNLOAD_URL + '/' + dataset + '/' + jsonId + '/json';
+            console.log("Datos", this.odata);
             if (this.type === "spatial") {
-                var dataset = this.datasetName;
-                var jsonId = this.odata.key;
-                var urlData = XTF_DOWNLOAD_URL + '/' + dataset + '/' + jsonId + '/json';
                 try {
                     var objectConfig = {
                         "id": "prueba",
@@ -63,7 +64,53 @@
                     console.error(e);
                 }
             } else {
-                console.log("Datos");
+                $.getJSON(urlData, function (jsondata) {
+                    console.log("Data:", jsondata);
+                    if (jsondata.hasOwnProperty("features")) {
+                        var dialogOptions = {
+                            closeFn: function () {
+                                console.log("Close");
+                                this.dialogDiv.dialog("close");
+                            }.bind(this),
+                            height: 350,
+                            width: 1000,
+                            resizable: false,
+                            modal: false,
+                            extensions: true,
+                            collapsable: true
+                        };
+                        var html = "<table class='table xtf-data-table'>";
+                        var header = {};
+                        $.each(jsondata.features, function (k, v) {
+                            $.each(v.properties, function (id, val) {
+                                if (!header.hasOwnProperty(id)) {
+                                    header[id] = true;
+                                }
+                            });
+                        });
+                        html += "<thead><tr>";
+                        $.each(header, function (id, val) {
+                            html += "<th>"+id+"</th>";
+                        });
+                        html += "</tr></thead><tbody>";
+                        console.log(header);
+                        $.each(jsondata.features, function (k, v) {
+                            html += "<tr>";
+                            console.log("array", v);
+                            $.each(header, function (id, val) {
+                                if (!v.properties.hasOwnProperty(id))
+                                    html += "<td>NULL</td>";
+                                else
+                                    html += "<td>" + v.properties[id] + "</td>";
+                            });
+                            html += "</tr>";
+                        });
+                        html += "</tbody></table>";
+                        var a = $('<div>').html(html);
+                        this.dialogDiv = DialogUtils.createDialog(jsondata.name, {}, dialogOptions, a);
+                        this.dialogDiv.dialog("open");
+                    }
+                }.bind(this));
             }
         }
     };
