@@ -27,8 +27,8 @@
 <!--  JQuery Dialog Extend -->
 <script src="lib/jqueryui_dialogextend/jquery.dialogextend.min.js"></script>
 
-<!-- JQUERY Scrollbar -->
-<script src="lib/scrollbar/jquery.mCustomScrollbar.min.js"></script>
+<!-- JQUERY Scrollbar 
+<script src="lib/scrollbar/jquery.mCustomScrollbar.min.js"></script>-->
 
 <!-- Date.js -->
 <script src="lib/date/date.js"></script>

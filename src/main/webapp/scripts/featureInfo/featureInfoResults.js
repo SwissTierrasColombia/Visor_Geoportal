@@ -226,8 +226,24 @@ var featureInfoResults = {
 
         try {
             var lo = layerConfig.getOpenLayersOptions();
-            if (lo != null && lo.attrMapping != null)
+            if (lo != null && lo.attrMapping != null) {
                 attrMapping = eval("(" + layerConfig.getOpenLayersOptions().attrMapping + ")");
+                if (attrMapping.hasOwnProperty("template") && attrMapping.template !== null && typeof attrMapping.template === 'object') {
+                    var tmpl = null;
+                    if (userPermissions) {
+                        $.each(attrMapping.template, function (cod, val) {
+                            if (userPermissions.hasPermission(cod)) {
+                                tmpl = val;
+                            }
+                        });
+                    }
+                    if (tmpl != null) {
+                        attrMapping.template = tmpl;
+                    } else {
+                        attrMapping = null;
+                    }
+                }
+            }
         } catch (e) {
             console.error(e);
         }

@@ -579,6 +579,6 @@
                 Print_Configuration.printerHealthCheck();
             });
         </script>
-        <script>var console={log:function(a){}, info:function(a){}}</script>
+        <script>//var console = {log: function (a) {}, info: function (a) {}}</script>
     </body>
 </html>

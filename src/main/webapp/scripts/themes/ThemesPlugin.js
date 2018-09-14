@@ -63,7 +63,8 @@ var themesPlugin = {
                             this.themes[i].thumbnail ?
                             '   <img style="width: 100%; display: block;" sytle="background-size: 100% 100%;" src="' + this.themes[i].thumbnail + '" alt="image" />'
                             :
-                            '   <img style="width: 100%; display: block;" sytle="background-size: 100% 100%;" src="holder.js/100px100p?bg=' + this.chroma[i + 2] + '&text=theme preview" alt="image" />'
+                            '   <img style="width: 100%; display: block;" sytle="background-size: 100% 100%;" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAKUAAABaCAIAAABWjQFBAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH4gkODSINq0yspQAAAB1pVFh0Q29tbWVudAAAAAAAQ3JlYXRlZCB3aXRoIEdJTVBkLmUHAAAAo0lEQVR42u3RAQEAMAQAwVlOPcQngQTuI/xFdj2d6VvAW7zFW7zFW7zFW7zFW7zFW7x5i7d4i7d4i7d4i7d4i7d4i7d48xZv8RZv8RZv8RZv8RZv8RZv8eYt3uIt3uIt3uIt3uIt3uIt3uLNW7zFW7zFW7zFW7zFW7zFW7zFm7d4i7d4i7d4i7d4i7d4i7d4izdv8RZv8RZv8RZv8RZv8RZvrQ15VgKGWu72VQAAAABJRU5ErkJggg==" alt="image" />'
+                            //'   <img style="width: 100%; display: block;" sytle="background-size: 100% 100%;" src="holder.js/100px100p?bg=' + this.chroma[i + 2] + '&text=theme preview" alt="image" />'
                             ) +
                     '            <div class="mask">' +
 //                    '               <a href="' + window.location.pathname + '?config=' + this.themes[i].id + '">'+

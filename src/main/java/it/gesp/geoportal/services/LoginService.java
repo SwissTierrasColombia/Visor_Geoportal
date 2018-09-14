@@ -3,10 +3,12 @@ package it.gesp.geoportal.services;
 import it.gesp.geoportal.constants.Permissions;
 import it.gesp.geoportal.dao.entities.User;
 import it.gesp.geoportal.locale.LocaleUtils;
+import java.util.logging.Level;
 
 import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
+import org.apache.log4j.Priority;
 
 public class LoginService {
 	private static final Logger log = Logger.getLogger(LoginService.class);
@@ -96,7 +98,7 @@ public class LoginService {
 				hasPermission = true;
 			}
 		}
-		log.debug("Checking if user " + user.getUsername() + " has permission " + permission + ": " + hasPermission);
+		log.log(Priority.INFO, "BIANCO: Checking if user " + user.getUsername() + " has permission " + permission + ": " + hasPermission);
 		return hasPermission;
 	}
 	
@@ -108,7 +110,6 @@ public class LoginService {
 			userStr = user.getUsername();
 			return hasPermission = hasPermission(user, permission);
 		}
-		
 		log.debug("Checking if current user (" + userStr +  ") has permission " + permission + ": " + hasPermission);
 		return hasPermission;
 	}
