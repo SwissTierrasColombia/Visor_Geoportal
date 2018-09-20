@@ -269,7 +269,12 @@ var mMapSettings = {
 		
 		settings.customScales = this.getScalesFromPage();
 		settings.customResolutions  = this.getResolutionsFromPage(); 
-		
+                
+                settings.roles=[];
+                $(".mm_roles").each(function(i, obj){
+                    if($(obj).is(":checked"))
+                    settings.roles.push(parseInt($(obj).val())) ;
+                });
 		return settings;
 	},
 	

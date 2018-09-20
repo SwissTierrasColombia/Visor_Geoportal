@@ -550,6 +550,7 @@ var LANG_EN = {
 		Manager_Map_Settings_Button_UpdateMap: "Update map",
                 
                 Manager_Map_Settings_File_Size_Exceeded: "Max file size exceeded, image will not be loaded",
+                Manager_Map_Settings_Roles: "Roles Map",
 		
 		// - Manager layer sources
 		

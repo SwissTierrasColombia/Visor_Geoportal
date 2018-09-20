@@ -28,3 +28,10 @@
 	width: 300px !important;
 	padding-top: 7px;
 }
+.mm_roles{
+    margin-right: 10px;
+}
+
+.mm_role_name{
+    line-height: 30px;
+}

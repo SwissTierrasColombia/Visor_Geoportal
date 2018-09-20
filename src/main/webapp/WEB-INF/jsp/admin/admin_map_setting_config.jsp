@@ -26,6 +26,26 @@
                     AdminMenu.setMapSettingsConfigPageActive();
 
                     mMapSettings.init();
+                    $.ajax({
+                        url: './roles',
+                        type: 'POST',
+                        dataType: 'json',
+                        data: {oper: 'roles'}
+                    }).done(function (response) {
+                        var cont = $("#mm_roles");
+                        $.each(response.result.data, function (i, rol) {
+                            var chk_cont = $("<tr>", {});
+                            var chk_cont2 = $("<td>", {'class':'mm_role_name', 'html': rol.roleName});
+                            var chk = $("<input>", {
+                                type: "checkbox",
+                                value: rol.idRole,
+                                class: "mm_roles"
+                            });
+                            chk_cont2.append(chk);
+                            chk_cont.append(chk_cont2);
+                            cont.append(chk_cont);
+                        });
+                    });
                 });
             </script>
 
@@ -259,6 +279,13 @@
                         <div class="itemform">
                             <div data-locale_key="Manager_Map_Settings_Show_Overview" data-locale_ref="text" class="localizedElement form-label-title"></div>
                             <div><input type="checkbox" id="show_overview"  name="show_overview"></div>
+                        </div>
+
+                        <div class="itemform">
+                            <div data-locale_key="Manager_Map_Settings_Roles" data-locale_ref="text" class="localizedElement form-label-title"></div>
+                            <table id="mm_roles">
+
+                            </table>
                         </div>
 
                     </div>

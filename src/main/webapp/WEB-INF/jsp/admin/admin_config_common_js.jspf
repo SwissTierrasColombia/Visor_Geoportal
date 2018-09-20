@@ -13,8 +13,8 @@
 <!-- JQueryUI -->
 <script src="lib/jqueryui/jquery-ui-1.10.4/js/jquery-ui-1.10.4.custom.min.js"></script>
 
-<!-- JQUERY Scrollbar -->
-<script src="lib/scrollbar/jquery.mCustomScrollbar.min.js"></script>
+<!-- JQUERY Scrollbar 
+<script src="lib/scrollbar/jquery.mCustomScrollbar.min.js"></script>-->
 
 <!-- MD5 -->
 <script src="lib/md5/md5.js"></script>
