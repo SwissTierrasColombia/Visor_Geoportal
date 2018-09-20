@@ -1,0 +1,58 @@
+<%@page import="it.gesp.geoportal.utils.ConfigUtils"%>
+<%@page import="it.gesp.geoportal.locale.LocaleUtils, it.gesp.geoportal.services.LoginService,it.gesp.geoportal.constants.Permissions, it.gesp.geoportal.dao.entities.User, it.gesp.geoportal.services.SystemSettingService" %>
+
+<div id="xtfComponent" class="py-5 px-5 xtf-container">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 w100">
+                <ul class="nav nav-tabs" id="xtfTabsComponent">
+                    <li class="nav-item active">
+                        <a href="" class="active nav-link" data-toggle="tab" data-target="#tabone">Descargar</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#tabtwo" data-toggle="tab" data-target="#tabtwo">Cargar</a>
+                    </li>
+                </ul>
+                <div class="tab-content mt-2">
+                    <div class="tab-pane active py-5 xtfcdownload" id="tabone" role="tabpanel">
+                        <form class="">
+                            <div class="form-group">
+                                <label>Conjunto de datos</label>
+                                <select id="xtfdownload-dataset" class="form-control">
+                                </select>
+                                <small class="form-text text-muted">Seleccione un conjunto de datos a descargar</small>
+                            </div>
+                            <div class="form-group text-center">
+                                <button data-locale_key="General_Download" data-locale_ref="text" class="localizedElement btn btn-default" id="xtfdownload-download_Btn" onclick="xtfDownload.downloadXtf();"></button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="tab-pane py-5 xtfcupload" id="tabtwo" role="tabpanel">
+                        <div id="dragmarkup" class="drag-markup text-center collapse in background-blink">
+                            <h3 class="drag-markup-text">Arrastre el archivo aquí</h3>
+                        </div>
+                        <div class="xtfchead">
+                            <table class="xtftable">
+                                <thead>
+                                    <tr>
+                                        <th>Archivo</th>
+                                        <th>Estado</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                        <div class="xtfcbody">
+                            <table class="xtftable table table-striped">
+                                <tbody id="xtfbodytable" class="">
+                                </tbody>
+                            </table>
+                        </div>
+                        <div id="xtffootertable" class="xtfcfoot text-center">
+                            <a id="xtfbtnupload" href="#" class="btn btn-default">Buscar archivo</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

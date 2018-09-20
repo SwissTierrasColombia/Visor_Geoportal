@@ -2,7 +2,6 @@ package it.gesp.geoportal.servlets;
 
 import it.gesp.geoportal.dao.entities.User;
 import it.gesp.geoportal.locale.LocaleUtils;
-import it.gesp.geoportal.services.LogService;
 import it.gesp.geoportal.services.LoginService;
 import it.gesp.geoportal.services.UserService;
 
@@ -24,11 +23,8 @@ import org.apache.log4j.Logger;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import it.gesp.geoportal.json.JsonFactory;
 import it.gesp.geoportal.utils.ConfigUtils;
 import java.io.BufferedReader;
-import java.io.DataOutputStream;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
@@ -66,9 +62,7 @@ public class Login extends HttpServlet {
             User currentUser = LoginService
                     .getLoggedInUserFromSession(currentSession);
             if (currentUser != null) {
-//				LogService.writeLog(currentUser, dbMessages.getString("LOGIN_CONTEXT"),
-//						dbMessages.getString("LOGOUT_OPERATION"),
-//						dbMessages.getString("LOGOUT_DESC"));
+//TODO
             }
 
             currentSession.invalidate();

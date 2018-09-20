@@ -38,6 +38,9 @@ CreateLayer.createOLLayer = function (layerConfig) {
         case "osmbw":
             olLayer = CreateLayer.createOSMBWLayer(layerConfig);
             break;
+        case "geojson":
+            olLayer = CreateLayer.createGeoJSONLayer(layerConfig);
+            break;
     }
 
     return olLayer;
@@ -233,4 +236,32 @@ CreateLayer.createWMSMultiLayer = function (layerConfig) {
     }, olOptions);
 
     return wmsLayer;
+};
+
+CreateLayer.createGeoJSONLayer = function (layerConfig) {
+
+    $.ajax({url: layerConfig.getUrl(), dataType: "json", async: false}).done(function (data) {
+        var bbox = turf.bbox(data);
+        data['bbox'] = bbox;
+    });
+    /*
+     $.getJSON("Points.json", function (json) {
+     var bbox = turf.bbox(json);
+     console.log("Points: " + bbox)
+     
+     //Sirve para obtener un polygono en formato geojson si se quiere dibujar
+     var bboxPolygon = turf.bboxPolygon(bbox);
+     console.log(bboxPolygon);
+     });
+     */
+    var geoJSONLayer = new OpenLayers.Layer.Vector("GeoJSON", {
+        projection: "EPSG:3116",
+        strategies: [new OpenLayers.Strategy.Fixed()],
+        protocol: new OpenLayers.Protocol.HTTP({
+            url: layerConfig.getUrl(),
+            format: new OpenLayers.Format.GeoJSON()
+        })
+    });
+    return geoJSONLayer;
+
 };

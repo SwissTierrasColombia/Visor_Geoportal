@@ -208,7 +208,7 @@ var featureInfoResults = {
     },
 
     getGidFromFid: function (fid) {
-        var splits = fid.split(".");
+        var splits = fid != null ? fid.split(".") : [];
         return splits[splits.length - 1];
     },
 
@@ -225,8 +225,25 @@ var featureInfoResults = {
         var attrMapping = null;
 
         try {
-            if (layerConfig.getOpenLayersOptions().attrMapping != null)
+            var lo = layerConfig.getOpenLayersOptions();
+            if (lo != null && lo.attrMapping != null) {
                 attrMapping = eval("(" + layerConfig.getOpenLayersOptions().attrMapping + ")");
+                if (attrMapping.hasOwnProperty("template") && attrMapping.template !== null && typeof attrMapping.template === 'object') {
+                    var tmpl = null;
+                    if (userPermissions) {
+                        $.each(attrMapping.template, function (cod, val) {
+                            if (userPermissions.hasPermission(cod)) {
+                                tmpl = val;
+                            }
+                        });
+                    }
+                    if (tmpl != null) {
+                        attrMapping.template = tmpl;
+                    } else {
+                        attrMapping = null;
+                    }
+                }
+            }
         } catch (e) {
             console.error(e);
         }
@@ -323,7 +340,7 @@ var featureInfoResults = {
                     return false;
                 }
             });
-            
+
             var tableInfo = $("<table>").attr({"class": "info-table"});
             $.each(feature.attributes, function (key, value) {
                 /*
@@ -337,8 +354,8 @@ var featureInfoResults = {
 
                 var rowInfo = $("<tr>").attr({"class": "info-row"});
                 /*var iconRow = $("<div>").attr({"class": "info-icon-row"}).append(
-                        $("<i>").attr({"class": "fa fa-circle"})
-                        );*/
+                 $("<i>").attr({"class": "fa fa-circle"})
+                 );*/
 
                 var field = $("<td>").attr({"class": "info-left"}).text(key.replace(/_/gi, " ").toUpperCase());
                 var valueField = $("<td>").attr({"class": "info-right word-wrap"}).text(value);
@@ -445,6 +462,7 @@ var featureInfoResults = {
      */
     showKMLGetFeatureInfoDialog: function (kml) {
 
+
         this.closeDialog();
 
         this.init();
@@ -475,7 +493,6 @@ var featureInfoResults = {
             },
 
         }, infoDiv);
-
-        this.infoDialogDiv.dialog("open");
+        this.infoDialog.dialog("open");
     }
 };

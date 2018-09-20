@@ -27,8 +27,8 @@
 <!--  JQuery Dialog Extend -->
 <script src="lib/jqueryui_dialogextend/jquery.dialogextend.min.js"></script>
 
-<!-- JQUERY Scrollbar -->
-<script src="lib/scrollbar/jquery.mCustomScrollbar.min.js"></script>
+<!-- JQUERY Scrollbar 
+<script src="lib/scrollbar/jquery.mCustomScrollbar.min.js"></script>-->
 
 <!-- Date.js -->
 <script src="lib/date/date.js"></script>
@@ -337,4 +337,7 @@
 <script src="lib/intro/intro.min.js" type="text/javascript"></script>
 <script src="lib/typeahead/typeahead.bundle.js" type="text/javascript"></script>
 <script src="lib/handlebars/handlebars-v4.0.11.js" type="text/javascript"></script>
+<script src="lib/vakata-jstree-0097fab/dist/jstree.min.js" type="text/javascript"></script>
+<link rel="stylesheet" href="lib/vakata-jstree-0097fab/dist/themes/default/style.min.css" />
 
+<script src="https://cdn.jsdelivr.net/npm/@turf/turf@5/turf.min.js"></script>
