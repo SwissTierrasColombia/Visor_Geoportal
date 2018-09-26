@@ -32,6 +32,7 @@ public class MapDTO {
 	private List<Integer> customScales;
 	private List<Double> customResolutions;
 	private String thumbnail;
+        private List<Integer> roles;
 	
 	public int getIdMap() {
 		return idMap;
@@ -117,6 +118,8 @@ public class MapDTO {
 		mapDTO.setDotsPerInch(map.getDotsPerInch());
 		if(map.getThumbnail()!=null)
 			mapDTO.setThumbnail(map.getThumbnail());
+                
+                mapDTO.setRoles(map.getRolesId());
 		return mapDTO;
 	}
 
@@ -220,5 +223,19 @@ public class MapDTO {
 	public void setThumbnail(String thumbnail) {
 		this.thumbnail = thumbnail;
 	}
-	
+
+        public List<Integer> getRoles() {
+            return roles;
+        }
+        
+        public String getRolesAsJson() {
+		Gson gson = JsonFactory.getGson();
+		String rolesAsJson = gson.toJson(this.roles);
+		return rolesAsJson;
+	}
+
+        public void setRoles(List<Integer> roles) {
+            this.roles = roles;
+        }
+             
 }

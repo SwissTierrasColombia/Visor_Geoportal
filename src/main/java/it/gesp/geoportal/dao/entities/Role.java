@@ -3,6 +3,7 @@ package it.gesp.geoportal.dao.entities;
 import it.gesp.geoportal.GsonExclude;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -27,9 +28,14 @@ public class Role {
 	private int idRole;
 	private String roleName;
 	private String roleDescription;
+        
+        @GsonExclude
+	private List<Map> maps;
 	
 	@GsonExclude
 	private Set<Permission> permissions = new HashSet<Permission>();
+        
+        
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -74,4 +80,15 @@ public class Role {
 	public void setRoleDescription(String roleDescription) {
 		this.roleDescription = roleDescription;
 	}
+
+        @ManyToMany(mappedBy = "roles")
+        public List<Map> getMaps() {
+            return maps;
+        }
+
+        public void setMaps(List<Map> maps) {
+            this.maps = maps;
+        }
+        
+        
 }

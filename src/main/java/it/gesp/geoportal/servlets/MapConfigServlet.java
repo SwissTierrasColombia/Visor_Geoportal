@@ -131,7 +131,7 @@ public class MapConfigServlet extends HttpServlet {
 				int mapId = Integer.parseInt(mapIdStr);
 				it.gesp.geoportal.dao.entities.Map map = new MapService().getMapById(mapId);
 				MapDTO mapDTO = MapDTO.parseFromMap(map);
-				
+                                                              				
 				jsonRes = GeoportalResponse.createSuccessResponse(mapDTO, true);
 				ServletUtils.writeAndFlush(log, w, jsonRes);
 			}
@@ -180,7 +180,7 @@ public class MapConfigServlet extends HttpServlet {
 					log.debug("Error parsing settings parameter");
 					throw new DataInvalidException();
 				}
-				
+                                
 				Gson gson = JsonFactory.getGson();
 				MapDTO mapDTO = gson.fromJson(settingsJsonNewMap, MapDTO.class);
 				
@@ -238,6 +238,7 @@ public class MapConfigServlet extends HttpServlet {
 					log.debug("Error parsing settings parameter");
 					throw new DataInvalidException();
 				}
+                                                                
 				Gson gson = JsonFactory.getGson();
 				MapDTO mapDTO = gson.fromJson(settingsJson, MapDTO.class);
                                 

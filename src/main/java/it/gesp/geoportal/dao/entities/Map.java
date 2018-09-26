@@ -19,6 +19,14 @@ import org.hibernate.annotations.Type;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import it.gesp.geoportal.GsonExclude;
+import java.util.HashSet;
+import java.util.Set;
+import javax.persistence.CascadeType;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 
 @Entity
 @Table(name = "maps", uniqueConstraints = { @UniqueConstraint(columnNames = { "id_map" }) })
@@ -41,6 +49,9 @@ public class Map {
 	private String customScales;
 	private String customResolutions;
 	private String thumbnail;
+        
+        @GsonExclude
+	private List<Role> roles;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -212,5 +223,23 @@ public class Map {
 		this.thumbnail = thumbnail;
 	}
 	
+	@ManyToMany(cascade = {CascadeType.ALL})
+	@JoinTable(name = "role_permission", joinColumns = { @JoinColumn(name = "id_role", nullable = false, updatable = false) }, inverseJoinColumns = { @JoinColumn(name = "id_permission", nullable = false, updatable = false) })
+	public List<Role> getRoles() {
+		return roles;
+	}
+        
+        @Transient
+        public List<Integer> getRolesId(){
+            List<Integer> ids = new ArrayList<Integer>();
+            for(Role r : this.getRoles()){
+                ids.add(r.getIdRole());
+            }
+            return ids;
+        }
+
+	public void setRoles(List<Role> roles) {
+		this.roles = roles;
+	}
 	
 }

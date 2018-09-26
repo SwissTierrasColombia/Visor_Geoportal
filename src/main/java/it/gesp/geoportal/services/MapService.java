@@ -4,12 +4,15 @@ import it.gesp.geoportal.dao.SessionFactoryManager;
 import it.gesp.geoportal.dao.dto.MapDTO;
 import it.gesp.geoportal.dao.entities.LayerGroup;
 import it.gesp.geoportal.dao.entities.Map;
+import it.gesp.geoportal.dao.entities.Role;
 import it.gesp.geoportal.dao.repositories.MapRepository;
+import it.gesp.geoportal.dao.repositories.RoleRepository;
 import it.gesp.geoportal.exceptions.OperationInvalidException;
 
 import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -37,7 +40,16 @@ public class MapService {
 		try{
 			session = SessionFactoryManager.openSession();
 			MapRepository mr = new MapRepository();
-			return mr.getById(session, Map.class, mapId);
+                        
+                        
+			Map map = mr.getById(session, Map.class, mapId);
+                        List<Role> roles = map.getRoles();
+			
+			//Loads permission eagerly
+			Hibernate.initialize(roles);
+                        
+                        return map;
+                        
 		}catch (Exception x) {
 			log.debug(x);
 			return null;
@@ -116,7 +128,7 @@ public class MapService {
 			session = SessionFactoryManager.openSession();
 			Transaction tx = session.beginTransaction();
 			try {
-
+                                
 				Map existingMap = mapRepository.getById(session, Map.class, mapDTO.getIdMap()); 
 				if (existingMap == null) {
 					throw OperationInvalidException.createMissingIdExeption("Map",  mapDTO.getIdMap());
@@ -144,6 +156,10 @@ public class MapService {
 				existingMap.setCustomScales(mapDTO.getCustomScalesAsJson());
 				existingMap.setCustomResolutions(mapDTO.getCustomResolutionsAsJson());
 				
+                                List<Role> rolesPerMap = getRolesByIds(mapDTO.getRoles());
+                                if(rolesPerMap!=null){
+                                 existingMap.setRoles(rolesPerMap);
+                                }
 				//Dots per inch override
 				existingMap.setDotsPerInch(mapDTO.getDotsPerInch());
 				if(mapDTO.getThumbnail()!=null)
@@ -193,5 +209,21 @@ public class MapService {
             }
 
         }
+        
+        private List<Role> getRolesByIds(List<Integer> ids) {
+		Session session = null;
+		try {
+			session = SessionFactoryManager.openSession();
+			RoleRepository rr = new RoleRepository();
+			return rr.getRolesByIds(session, ids);
+
+		} catch (Exception x) {
+			log.debug(x);
+			//throw x;
+			return null;
+		} finally {
+			session.close();
+		}
+	}
         
 }
