@@ -24,7 +24,6 @@ import javax.persistence.UniqueConstraint;
 
 @Entity
 @Table(name = "roles", uniqueConstraints = { @UniqueConstraint(columnNames = { "id_role" }) })
-@Cacheable(false)
 public class Role {
 
 	private int idRole;

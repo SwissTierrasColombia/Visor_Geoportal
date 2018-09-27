@@ -31,7 +31,6 @@ import javax.persistence.ManyToMany;
 
 @Entity
 @Table(name = "maps", uniqueConstraints = { @UniqueConstraint(columnNames = { "id_map" }) })
-@Cacheable(false)
 public class Map {
 
 	private int idMap;
