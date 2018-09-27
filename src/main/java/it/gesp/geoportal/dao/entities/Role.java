@@ -5,6 +5,7 @@ import it.gesp.geoportal.GsonExclude;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import javax.persistence.Cacheable;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -23,6 +24,7 @@ import javax.persistence.UniqueConstraint;
 
 @Entity
 @Table(name = "roles", uniqueConstraints = { @UniqueConstraint(columnNames = { "id_role" }) })
+@Cacheable(false)
 public class Role {
 
 	private int idRole;

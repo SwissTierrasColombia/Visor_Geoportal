@@ -24,28 +24,7 @@
                 $(document).ready(function () {
                     LocaleManager.refreshLocale();
                     AdminMenu.setMapSettingsConfigPageActive();
-
                     mMapSettings.init();
-                    $.ajax({
-                        url: './roles',
-                        type: 'POST',
-                        dataType: 'json',
-                        data: {oper: 'roles'}
-                    }).done(function (response) {
-                        var cont = $("#mm_roles");
-                        $.each(response.result.data, function (i, rol) {
-                            var chk_cont = $("<tr>", {});
-                            var chk_cont2 = $("<td>", {'class':'mm_role_name', 'html': rol.roleName});
-                            var chk = $("<input>", {
-                                type: "checkbox",
-                                value: rol.idRole,
-                                class: "mm_roles"
-                            });
-                            chk_cont2.append(chk);
-                            chk_cont.append(chk_cont2);
-                            cont.append(chk_cont);
-                        });
-                    });
                 });
             </script>
 

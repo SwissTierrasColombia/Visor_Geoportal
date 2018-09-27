@@ -22,6 +22,7 @@ import com.google.gson.GsonBuilder;
 import it.gesp.geoportal.GsonExclude;
 import java.util.HashSet;
 import java.util.Set;
+import javax.persistence.Cacheable;
 import javax.persistence.CascadeType;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
@@ -30,6 +31,7 @@ import javax.persistence.ManyToMany;
 
 @Entity
 @Table(name = "maps", uniqueConstraints = { @UniqueConstraint(columnNames = { "id_map" }) })
+@Cacheable(false)
 public class Map {
 
 	private int idMap;
@@ -224,7 +226,7 @@ public class Map {
 	}
 	
 	@ManyToMany(cascade = {CascadeType.ALL})
-	@JoinTable(name = "role_permission", joinColumns = { @JoinColumn(name = "id_role", nullable = false, updatable = false) }, inverseJoinColumns = { @JoinColumn(name = "id_permission", nullable = false, updatable = false) })
+	@JoinTable(name = "maps_roles", joinColumns = { @JoinColumn(name = "id_map", nullable = false, updatable = false) }, inverseJoinColumns = { @JoinColumn(name = "id_role", nullable = false, updatable = false) })
 	public List<Role> getRoles() {
 		return roles;
 	}
