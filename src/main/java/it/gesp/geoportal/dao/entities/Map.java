@@ -50,6 +50,7 @@ public class Map {
 	private String customScales;
 	private String customResolutions;
 	private String thumbnail;
+        private Boolean isDefault = null;
         
         @GsonExclude
 	private List<Role> roles;
@@ -242,5 +243,14 @@ public class Map {
 	public void setRoles(List<Role> roles) {
 		this.roles = roles;
 	}
-	
+
+        @Column(name = "is_default")
+        public Boolean getIsDefault() {
+            return isDefault;
+        }
+
+        public void setIsDefault(Boolean isDefault) {
+            this.isDefault = isDefault;
+        }
+
 }

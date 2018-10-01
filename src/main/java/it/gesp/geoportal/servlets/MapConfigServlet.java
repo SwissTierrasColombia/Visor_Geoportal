@@ -195,7 +195,6 @@ public class MapConfigServlet extends HttpServlet {
 			 * @Author Agencia de Implementacion  
 			 */
                         else if("deleteMap".equalsIgnoreCase(oper)){
-                            System.out.println("it.gesp.geoportal.servlets.MapConfigServlet.doWork() :::: deleteMap :::: linea 198");
                             /*
                              * Check whether the current user has the appropriate permission
                              */
@@ -214,7 +213,12 @@ public class MapConfigServlet extends HttpServlet {
                             int mapId = Integer.parseInt(mapIdStr);
                             MapService mapService = new MapService();
                             it.gesp.geoportal.dao.entities.Map map = mapService.getMapById(mapId);
-                            mapService.deleteMap(map);
+                            boolean result = mapService.deleteMap(map);
+                            if(!result){
+                                jsonRes = GeoportalResponse.createErrorResponse(userMessages.getString("DEFAULT_MAP_ERROR"));
+                                ServletUtils.writeAndFlush(log, w, jsonRes);
+                                return;
+                            }
                             
                             jsonRes = GeoportalResponse.createSuccessResponse(null, true);
                             ServletUtils.writeAndFlush(log, w, jsonRes);

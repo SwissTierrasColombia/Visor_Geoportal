@@ -56,10 +56,22 @@ public class BaseRepository<T> {
 	public void update(Session session, T obj) {
 		session.update(obj);
 	}
+        
+        public void updateAll(Session session, List<T> objList){
+            for(T obj : objList){
+                session.update(obj);
+            }
+        }
 	
 	public void save(Session session, T obj) {
 		session.saveOrUpdate(obj);
 	}
+        
+        public void saveAll(Session session, List<T> objList){
+            for(T obj : objList){
+                session.saveOrUpdate(obj);
+            }
+        }
 
 	public void delete(T obj) throws Exception{
 		try {

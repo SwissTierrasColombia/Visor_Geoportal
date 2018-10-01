@@ -33,6 +33,7 @@ public class MapDTO {
 	private List<Double> customResolutions;
 	private String thumbnail;
         private List<Integer> roles;
+        private Boolean isDefault = null;
 	
 	public int getIdMap() {
 		return idMap;
@@ -120,6 +121,10 @@ public class MapDTO {
 			mapDTO.setThumbnail(map.getThumbnail());
                 
                 mapDTO.setRoles(map.getRolesId());
+                if(map.getIsDefault()!=null)
+                    mapDTO.setIsDefault(map.getIsDefault());
+                else
+                    mapDTO.setIsDefault(Boolean.FALSE);
 		return mapDTO;
 	}
 
@@ -236,6 +241,14 @@ public class MapDTO {
 
         public void setRoles(List<Integer> roles) {
             this.roles = roles;
+        }
+
+        public Boolean getIsDefault() {
+            return isDefault;
+        }
+
+        public void setIsDefault(Boolean isDefault) {
+            this.isDefault = isDefault;
         }
              
 }

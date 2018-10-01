@@ -101,6 +101,15 @@ public class MapService {
 				
 				if(mapDTO.getThumbnail()!=null)
 					newMap.setThumbnail(mapDTO.getThumbnail());
+                                if(mapDTO.getIsDefault()){
+                                    List<Map> allMaps = getAllMaps();
+                                    for (Map m : allMaps){
+                                         m.setIsDefault(false);
+                                     };
+                                    newMap.setIsDefault(true);
+                                    
+                                    mapRepository.updateAll(session, allMaps);
+                                }
 				
 				mapRepository.save(session, newMap);
 				
@@ -164,6 +173,16 @@ public class MapService {
 				existingMap.setDotsPerInch(mapDTO.getDotsPerInch());
 				if(mapDTO.getThumbnail()!=null)
 					existingMap.setThumbnail(mapDTO.getThumbnail());
+                                
+                                if(mapDTO.getIsDefault()){
+                                    List<Map> allMaps = getAllMaps();
+                                    for (Map m : allMaps){
+                                        m.setIsDefault(false);
+                                    };
+                                    existingMap.setIsDefault(true);
+                                    
+                                    mapRepository.updateAll(session, allMaps);
+                                }
 				
 				mapRepository.update(session, existingMap);
 				
@@ -181,13 +200,15 @@ public class MapService {
 		}
 	}
         /**
-         * Bussiness method for delete maps
+         * Business method for delete maps
          * @author Agencia de Implementacion
          */
-        public void deleteMap(Map map) throws Exception{
-
+        public boolean deleteMap(Map map) throws Exception{
+            boolean result = false;
             Session session = null;
             try{
+                if(map.getIsDefault())
+                    return false;
                 session = SessionFactoryManager.openSession();
                 MapRepository mapRepository = new MapRepository();
 		
@@ -202,12 +223,14 @@ public class MapService {
                 }
                 //delete map
                 mapRepository.delete(map);
+                result = true;
             }catch (Exception x) {
                 log.debug(x);
+                result = false;
             } finally {
                 session.close();
             }
-
+            return result;
         }
         
         private List<Role> getRolesByIds(List<Integer> ids) {
