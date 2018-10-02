@@ -91,7 +91,7 @@ public class MapConfigServlet extends HttpServlet {
 		
 		int idMap = -1;
 		try{
-			it.gesp.geoportal.dao.entities.Map defaultMap = new MapService().getAllMaps().get(0);
+			it.gesp.geoportal.dao.entities.Map defaultMap = new MapService().getDefaultMap();
 			idMap = defaultMap.getIdMap();
 		}catch(Exception e){
 			
@@ -247,7 +247,12 @@ public class MapConfigServlet extends HttpServlet {
 				MapDTO mapDTO = gson.fromJson(settingsJson, MapDTO.class);
                                 
 				MapService mapService = new MapService();
-				mapService.updateMap(mapDTO);
+				boolean result = mapService.updateMap(mapDTO);
+                                if(!result){
+                                    jsonRes = GeoportalResponse.createErrorResponse(userMessages.getString("DEFAULT_MAP_ERROR"));
+                                    ServletUtils.writeAndFlush(log, w, jsonRes);
+                                    return;
+                                }
 				
 				jsonRes = GeoportalResponse.createSuccessResponse(null, true);
 				ServletUtils.writeAndFlush(log, w, jsonRes);
