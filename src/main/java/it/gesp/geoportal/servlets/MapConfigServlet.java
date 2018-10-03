@@ -92,7 +92,12 @@ public class MapConfigServlet extends HttpServlet {
 		int idMap = -1;
 		try{
 			it.gesp.geoportal.dao.entities.Map defaultMap = new MapService().getDefaultMap();
-			idMap = defaultMap.getIdMap();
+                        if(defaultMap != null)
+                            idMap = defaultMap.getIdMap();
+                        else{
+                            defaultMap = new MapService().getAllMaps().get(0);
+                            idMap = defaultMap.getIdMap();
+                        }
 		}catch(Exception e){
 			
 			jsonRes = GeoportalResponse.createErrorResponse(userMessages.getString("NO_STORED_MAP_ERROR"));
