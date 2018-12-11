@@ -10,7 +10,7 @@
     <!-- 		<property name="connection.datasource">java:comp/env/jdbc/GEOPORTAL_POSTGIS_DS</property> -->
     <property name="hibernate.connection.username">geoportal_user</property>
     <property name="hibernate.connection.password">geoportal_user</property>
-    <property name="hibernate.connection.url">jdbc:postgresql://localhost:5432/geoportal</property>
+    <property name="hibernate.connection.url">jdbc:postgresql://172.17.0.1:5432/geoportal</property>
     <!-- Use the C3P0 connection pool. -->
     <property name="c3p0.min_size">1</property>
     <property name="c3p0.max_size">1</property>
