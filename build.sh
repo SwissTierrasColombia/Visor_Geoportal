@@ -26,5 +26,5 @@ mvn -Dmaven.test.failure.ignore clean package # artefacto en: target/geoportal.w
 
 if [ "$IGAC_DEPLOY" == "yes" ]
 then
-  scp target/geoportal.war build.sh web:/opt/tomcat8/webapps
+  scp target/geoportal.war web:/opt/tomcat8/webapps
 fi
