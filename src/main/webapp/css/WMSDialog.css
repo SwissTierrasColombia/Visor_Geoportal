@@ -32,7 +32,7 @@ Makes the height of FlexiGrid and not resizable
     overflow-y: auto;
     max-height: 350px;
     overflow-x: hidden;
-    width: 400px; 
+    width: 475px;
 }
 .info-feat-header {
     overflow: hidden;
