@@ -1007,3 +1007,17 @@ text {
     overflow: hidden;
     padding: 3px 10px 3px 0;
 }
+
+.mask, .mask div.tools{
+    margin-top: 0px !important;
+    margin-bottom: 0px !important;
+}
+
+.mask{
+    height: 100%;
+}
+
+.mask a p{
+    margin-bottom: 24px !important;
+}
+

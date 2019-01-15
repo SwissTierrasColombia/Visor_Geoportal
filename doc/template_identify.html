@@ -1,0 +1,55 @@
+{"template":{"GENERATE_CERTIFICATE_A":"
+<div class='' role='tabpanel' data-example-id='togglable-tabs'>
+    <ul id='myTab' class='nav nav-tabs bar_tabs' role='tablist'>
+    <li role='presentation' class='active'>
+    <a href='#{{fid}}-tab-predio' id='{{fid}}-predio-tab' role='tab' data-toggle='tab' aria-expanded='true'>Predio</a>
+    </li>
+    <li role='presentation' class=''>
+    <a href='#{{fid}}-tab-derechos' role='tab' id='{{fid}}-derechos-tab' data-toggle='tab' aria-expanded='false'>Interesados y Derechos</a>
+    </li>
+    <li role='presentation' class=''>
+    <a href='#{{fid}}-tab-construccion' role='tab' id='{{fid}}-construccion-tab' data-toggle='tab' aria-expanded='false'>Construcciones</a>
+    </li>
+    </ul>
+    <div class='tab-content'>
+        <div role='tabpanel' class='tab-pane fade active in' id='{{fid}}-tab-predio' aria-labelledby='{{fid}}-predio-tab'><div class='info-hyperlink-container'><div><a style='cursor:pointer;' data-report-id='Reporte_Restricciones_La_Palma' onclick='loadReport_{{t_id}}(\"{{fid}}-frm-reportes-predio\",this.getAttribute(\"data-report-id\"),\"{{t_id}}\")' ><i class='fa fa-file-pdf-o'></i> Imprimir reporte de restricciones</a></div> </div> <div id='{{fid}}-frm-reportes-predio' class='collapse'></div></div>
+        <div role='tabpanel' class='tab-pane fade' id='{{fid}}-tab-derechos' aria-labelledby='{{fid}}-derechos-tab'><div class='info-hyperlink-container'> <div><a style='cursor:pointer;' data-report-id='Reporte_Derechos_Catastro_Registro_Nucleo_V2_2_1' onclick='loadReport_{{t_id}}(\"{{fid}}-frm-reportes-derechos\",this.getAttribute(\"data-report-id\"),\"{{t_id}}\")' ><i class='fa fa-file-pdf-o'></i> Ver reporte de derechos</a></div> </div> <div id='{{fid}}-frm-reportes-derechos' class='collapse'></div></div>
+        <div role='tabpanel' class='tab-pane fade' id='{{fid}}-tab-construccion' aria-labelledby='{{fid}}-construccion-tab'></div>
+    </div>
+</div>
+<script>
+function addField_{{t_id}}(table, content) {
+    var tbl = $('<table>').addClass('info-popup-table');
+    $(table).append(tbl);
+    for(var prop in content){
+        if (prop === 'derecho'){
+            for (var i = 0; i < content[prop].length; i++){
+                addField_{{t_id}}($('#{{fid}}-tab-derechos'), content[prop][i]);
+            }
+        }else{
+            if (prop === 'construccion'){
+                for (var i = 0; i < content[prop].length; i++){
+                    addField_{{t_id}}($('#{{fid}}-tab-construccion'), content[prop][i]);
+                }
+            }else{
+                if(content[prop]){
+                    $(tbl).append('<tr><td><b>' + prop + ':</b></td><td>' + content[prop] + '</td></tr>');
+                }
+            }
+        }
+    }
+}
+function loadReport_{{t_id}}(panel,reportId,elementId){
+    $('#' + panel).collapse('toggle');
+    var frame = $('#' + panel).find('iframe');
+    if(!frame.length){
+        frame = $('<iframe width=\"100%\" height=\"190\" src=\"http://ladmcol.igac.gov.co:8000/repositorio_documental-1.0-SNAPSHOT/reporteRestricciones.html?tipo=' + reportId + '&predio_id='+ elementId + '\"></iframe>').appendTo('#' + panel);
+    }
+}
+$.ajax({method:'POST',url:'http://ladmcol.igac.gov.co:8000/ws/ws/LA_PALMA_LADM_V221',dataType:'json',data: {id:'{{t_id}}'}}).done(function(results){
+    $.each(results,function(indice,resultado){
+        addField_{{t_id}}($('#{{fid}}-tab-predio'),resultado);
+    });
+});
+</script>
+"},"attributes":{},"log":false}
