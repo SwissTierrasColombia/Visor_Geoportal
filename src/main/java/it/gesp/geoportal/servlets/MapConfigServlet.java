@@ -782,8 +782,8 @@ public class MapConfigServlet extends HttpServlet {
 
 				if(mapId==-1)
 					mapId = idMap;
-				
-				String res = new MapConfigService().getConfigAsJson(mapId);
+				// TODO: Quitar el ID 4 y consultar el id del rol anónimo
+        			String res = new MapConfigService().getConfigAsJson(mapId, currentUser!=null?currentUser.getRole().getIdRole():4);
 				ServletUtils.writeAndFlush(log, w, res);
 			}
 			

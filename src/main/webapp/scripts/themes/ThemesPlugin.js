@@ -23,6 +23,7 @@ var themesPlugin = {
         }
     ],
     init: function (mapsList) {
+        console.log("Themes:", mapsList);
         if (mapsList !== null) {
             this.themes = mapsList;
         }

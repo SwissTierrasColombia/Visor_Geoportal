@@ -98,7 +98,6 @@ public class LoginService {
 				hasPermission = true;
 			}
 		}
-		log.log(Priority.INFO, "BIANCO: Checking if user " + user.getUsername() + " has permission " + permission + ": " + hasPermission);
 		return hasPermission;
 	}
 	
