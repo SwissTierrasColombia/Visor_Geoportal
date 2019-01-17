@@ -49,7 +49,7 @@ public class GeneralSettingDTO {
 			List<GeneralSetting> settings) {
 		GeneralSettingDTO settingDTO = new GeneralSettingDTO();
 
-		for (GeneralSetting s : settings) {
+		/*for (GeneralSetting s : settings) {
 
 			if (GeneralSettings.INITIAL_MESSAGE.equals(s.getConfigKey())) {
 				settingDTO.setInitialMessage(s.getConfigValue());
@@ -79,7 +79,7 @@ public class GeneralSettingDTO {
 				settingDTO.setInformationMessage(s.getConfigValue());
 				continue;
 			}
-		}
+		}*/
 
 		return settingDTO;
 	}
