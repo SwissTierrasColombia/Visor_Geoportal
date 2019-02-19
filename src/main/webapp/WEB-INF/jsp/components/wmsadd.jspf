@@ -1,5 +1,0 @@
-<%@page import="it.gesp.geoportal.utils.ConfigUtils"%>
-<%@page import="it.gesp.geoportal.locale.LocaleUtils, it.gesp.geoportal.services.LoginService,it.gesp.geoportal.constants.Permissions, it.gesp.geoportal.dao.entities.User, it.gesp.geoportal.services.SystemSettingService" %>
-<!-- ADD WMS -->
-
-<!-- ADD WMS END-->
