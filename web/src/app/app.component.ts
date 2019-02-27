@@ -4,6 +4,7 @@ import Map from 'ol/Map';
 import View from 'ol/View';
 import LayerTile from 'ol/layer/Tile';
 import XYZ from 'ol/source/XYZ';
+import { fromLonLat } from 'ol/proj';
 
 @Component({
   selector: 'app-root',
@@ -23,8 +24,8 @@ export class AppComponent implements OnInit {
         })
       ],
       view: new View({
-        center: [0, 0],
-        zoom: 2
+        center: fromLonLat([-74.0836, 4.6612]),
+        zoom: 13
       })
     });
 
