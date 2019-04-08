@@ -576,7 +576,7 @@
         <%@ include file="components/feedback.jspf" %>
         <script>
             $(document).ready(function () {
-                Print_Configuration.printerHealthCheck();
+                // Print_Configuration.printerHealthCheck();
             });
         </script>
         <script>var console = {log: function (a) {}, info: function (a) {}}</script>

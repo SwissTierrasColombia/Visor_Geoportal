@@ -147,7 +147,7 @@
     var GLOBAL_SETTINGS = globalSystemSettingsJson.result;
     var GENERAL_SETTINGS = generalSystemSettingsJson.result;
 
-    var removedLB = GENERAL_SETTINGS.informationMessage.replace(/(\r\n|\n|\r)/gm, "");
+    var removedLB = GENERAL_SETTINGS.informationMessage?GENERAL_SETTINGS.informationMessage.replace(/(\r\n|\n|\r)/gm, ""):"";
     var PRINT_SETTINGS = {informationMessage: $(removedLB).text()};
 
     var OL_PROXY_URL = GLOBAL_SETTINGS.proxyUrl;

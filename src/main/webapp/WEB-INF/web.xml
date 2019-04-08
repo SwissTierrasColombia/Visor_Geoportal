@@ -5,10 +5,10 @@
         <servlet-name>SuggestServlet</servlet-name>
         <servlet-class>it.gesp.geoportal.servlets.SuggestServlet</servlet-class>
     </servlet>
-    <servlet-mapping>
+    <!--servlet-mapping>
         <servlet-name>Faces Servlet</servlet-name>
         <url-pattern>/faces/*</url-pattern>
-    </servlet-mapping>
+    </servlet-mapping-->
     <!--
   Alternatively, all JSP-pages of the webapp would need to have the following at the top of them 
   <%@page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
@@ -114,11 +114,11 @@
         <servlet-class>it.gesp.geoportal.servlets.PdfServlet</servlet-class>
     </servlet>
     <!-- Servlet mappings -->
-    <servlet>
+    <!--servlet>
         <servlet-name>Faces Servlet</servlet-name>
         <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
-    </servlet>
+    </servlet-->
     <servlet-mapping>
         <servlet-name>main</servlet-name>
         <url-pattern>/main</url-pattern>
