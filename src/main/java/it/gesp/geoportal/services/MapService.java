@@ -61,14 +61,14 @@ public class MapService {
     public Map getDefaultMap() {
         Session session = null;
 
-        try{
+        try {
             session = SessionFactoryManager.openSession();
             MapRepository mr = new MapRepository();
             return mr.getDefaultMap(session);
-        }catch(Exception e){
+        } catch (Exception e) {
             log.debug(e);
             return null;
-        }finally{
+        } finally {
             session.close();
         }
 
@@ -195,32 +195,40 @@ public class MapService {
                 }
 
                 List<Map> allMaps = getAllMaps();
-                if (!mapDTO.getIsDefault()) {
+                if (mapDTO.getIsDefault() != null) {
+                    if (mapDTO.getIsDefault() == Boolean.TRUE) {
+
+                        for (Map m : allMaps) {
+                            m.setIsDefault(false);
+                        }
+                        existingMap.setIsDefault(true);
+
+                        mapRepository.updateAll(session, allMaps);
+                        result = true;
+                    }
+                } else {
 
                     for (Map m : allMaps) { //remove itself from list
                         if (m.getIdMap() == mapDTO.getIdMap()) {
                             allMaps.remove(m);
+                            break;
                         }
                     }
 
                     boolean thereIsDefaultMap = false;
                     for (Map m : allMaps) { //list without map itself
-                        if (m.getIsDefault()) {
-                            thereIsDefaultMap = true;
+                        if (m.getIsDefault() != null) {
+                            if (m.getIsDefault() == Boolean.TRUE) {
+                                thereIsDefaultMap = true;
+                                result = true;
+                                break;
+                            }
                         }
                     }
 
                     if (allMaps.isEmpty() || !thereIsDefaultMap) {
                         return false;
                     }
-                } else {
-                    for (Map m : allMaps) {
-                        m.setIsDefault(false);
-                    }
-                    existingMap.setIsDefault(true);
-
-                    mapRepository.updateAll(session, allMaps);
-                    result = true;
                 }
 
                 mapRepository.update(session, existingMap);
