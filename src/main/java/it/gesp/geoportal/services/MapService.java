@@ -120,7 +120,7 @@ public class MapService {
                 }
 
                 List<Map> allMaps = getAllMaps();
-                if (mapDTO.getIsDefault() || allMaps.isEmpty()) {
+                if ((mapDTO.getIsDefault()!=null && mapDTO.getIsDefault()) || allMaps.isEmpty()) {
                     for (Map m : allMaps) {
                         m.setIsDefault(false);
                     }
@@ -257,7 +257,7 @@ public class MapService {
         boolean result = false;
         Session session = null;
         try {
-            if (map.getIsDefault()) {
+            if (map.getIsDefault()!=null && map.getIsDefault() == true) {
                 return false;
             }
             session = SessionFactoryManager.openSession();

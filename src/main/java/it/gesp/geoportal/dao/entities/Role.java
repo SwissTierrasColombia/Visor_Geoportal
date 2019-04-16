@@ -23,73 +23,73 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
 @Entity
-@Table(name = "roles", uniqueConstraints = { @UniqueConstraint(columnNames = { "id_role" }) })
+@Table(name = "roles", uniqueConstraints = {
+    @UniqueConstraint(columnNames = {"id_role"})})
 public class Role {
 
-	private int idRole;
-	private String roleName;
-	private String roleDescription;
-        
-        @GsonExclude
-	private List<Map> maps;
-	
-	@GsonExclude
-	private Set<Permission> permissions = new HashSet<Permission>();
-        
-        
+    private int idRole;
+    private String roleName;
+    private String roleDescription;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id_role", nullable = false, unique = true, length = 11)
-	public int getIdRole() {
-		return idRole;
-	}
+    @GsonExclude
+    private List<Map> maps;
 
-	public void setIdRole(int idRole) {
-		this.idRole = idRole;
-	}
+    @GsonExclude
+    private Set<Permission> permissions = new HashSet<Permission>();
 
-	@Column(name = "role_name", nullable=false)
-	public String getRoleName() {
-		return roleName;
-	}
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_role", nullable = false, unique = true, length = 11)
+    public int getIdRole() {
+        return idRole;
+    }
 
-	public void setRoleName(String roleName) {
-		this.roleName = roleName;
-	}
+    public void setIdRole(int idRole) {
+        this.idRole = idRole;
+    }
 
-	/*
+    @Column(name = "role_name", nullable = false)
+    public String getRoleName() {
+        return roleName;
+    }
+
+    public void setRoleName(String roleName) {
+        this.roleName = roleName;
+    }
+
+    /*
 	 * Rimosso CascadeType = Delete perchè errore di cascade sul delete (da ruoli cercava di cancellare permission)
-	 */
-	@ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-	@JoinTable(name = "role_permission", joinColumns = { @JoinColumn(name = "id_role", nullable = false, updatable = false) }, inverseJoinColumns = { @JoinColumn(name = "id_permission", nullable = false, updatable = false) })
-	//@BatchSize(size = 5)
-	// Look: http://www.theotherian.com/2013/07/hibernate-joins-maxresults.html
-	public Set<Permission> getPermissions() {
-		return permissions;
-	}
+     */
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @JoinTable(name = "role_permission", joinColumns = {
+        @JoinColumn(name = "id_role", nullable = false, updatable = false)}, inverseJoinColumns = {
+        @JoinColumn(name = "id_permission", nullable = false, updatable = false)})
+    //@BatchSize(size = 5)
+    // Look: http://www.theotherian.com/2013/07/hibernate-joins-maxresults.html
+    public Set<Permission> getPermissions() {
+        return permissions;
+    }
 
-	public void setPermissions(Set<Permission> permissions) {
-		this.permissions = permissions;
-	}
+    public void setPermissions(Set<Permission> permissions) {
+        this.permissions = permissions;
+    }
 
-	@Column(name = "description")
-	public String getRoleDescription() {
-		return roleDescription;
-	}
+    @Column(name = "description")
+    public String getRoleDescription() {
+        return roleDescription;
+    }
 
-	public void setRoleDescription(String roleDescription) {
-		this.roleDescription = roleDescription;
-	}
+    public void setRoleDescription(String roleDescription) {
+        this.roleDescription = roleDescription;
+    }
 
-        @ManyToMany(mappedBy = "roles")
-        public List<Map> getMaps() {
-            return maps;
-        }
+    @ManyToMany(mappedBy = "roles")
+    public List<Map> getMaps() {
+        return maps;
+    }
 
-        public void setMaps(List<Map> maps) {
-            this.maps = maps;
-        }
-        
-        
+    public void setMaps(List<Map> maps) {
+        this.maps = maps;
+    }
+
 }
