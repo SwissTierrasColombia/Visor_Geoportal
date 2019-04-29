@@ -152,15 +152,21 @@ public class MapService {
         MapRepository mapRepository = new MapRepository();
 
         Session session = null;
+        Session session2 = null;
         try {
             session = SessionFactoryManager.openSession();
             Transaction tx = session.beginTransaction();
+            session2 = SessionFactoryManager.openSession();
+            Transaction tx2 = session2.beginTransaction();
             try {
 
                 Map existingMap = mapRepository.getById(session, Map.class, mapDTO.getIdMap());
                 if (existingMap == null) {
                     throw OperationInvalidException.createMissingIdExeption("Map", mapDTO.getIdMap());
                 }
+                
+                if(mapDTO.getIsDefault()==null)
+                    mapDTO.setIsDefault(existingMap.getIsDefault());
 
                 existingMap.setMapName(mapDTO.getMapName());
 
@@ -203,7 +209,8 @@ public class MapService {
                         }
                         existingMap.setIsDefault(true);
 
-                        mapRepository.updateAll(session, allMaps);
+                        mapRepository.updateAll(session2, allMaps);
+                        tx2.commit();
                         result = true;
                     }
                 } else {
@@ -227,7 +234,7 @@ public class MapService {
                     }
 
                     if (allMaps.isEmpty() || !thereIsDefaultMap) {
-                        return false;
+                         return false;
                     }
                 }
 
