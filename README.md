@@ -15,8 +15,10 @@ git clone https://github.com/AgenciaImplementacion/print_server.git
 
 Instalar Gradle, puedes seguir esta guía https://linuxize.com/post/how-to-install-gradle-on-ubuntu-18-04/
 
-Instalar Maven, sudo apt-get install maven
-
+Instalar Maven
+```
+sudo apt-get install maven
+```
 Instalar Tomcat, puedes seguir esta guía https://linuxize.com/post/how-to-install-tomcat-8-5-on-ubuntu-18.04/
 Se debe crear el rol de administración
 
@@ -46,7 +48,7 @@ cd xtf2json/
 ```
 
 Crear carpetas
-
+```
 /opt/ilivalidator/tmp/uploads
 /opt/ilivalidator/tmp/downloads
 /opt/ilivalidator/tmp/ili
@@ -55,3 +57,4 @@ Crear carpetas
 
 
 ./build/libs/webservices.jar
+```
